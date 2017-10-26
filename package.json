@@ -1,0 +1,20 @@
+{
+  "name": "simple-todos",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "lodash": "^4.17.4",
+    "meteor-node-stubs": "~0.2.4",
+    "ramda": "^0.25.0",
+    "react": "^16.0.0",
+    "react-addons-pure-render-mixin": "^15.6.2",
+    "react-codemirror": "^1.0.0",
+    "react-dom": "^16.0.0",
+    "react-meteor-data": "^0.2.10",
+    "react-router-dom": "^4.2.2",
+    "tone": "^0.11.11"
+  }
+}
