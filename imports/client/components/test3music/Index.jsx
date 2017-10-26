@@ -1,6 +1,6 @@
 import React from 'react';
 import Tone from 'tone';
-import {arrayWithoutThis, getThis} from './utils/currys';
+import {arrayWithoutObjFrom, objInArrayFrom, arrayWithUpdatedObjFrom} from './utils/currys';
 
 import AddSound from './AddSound.jsx';
 import SoundsList from './SoundsList.jsx';
@@ -25,19 +25,26 @@ export default class Test3Music extends React.Component {
   }
 
   removeSound = soundId => {
-    let arrayWithoutThisName = arrayWithoutThis('name')
+    let arrayWithoutObjFromName = arrayWithoutObjFrom('name')
     this.setState({
-      sounds: arrayWithoutThisName(soundId, this.state.sounds)
+      sounds: arrayWithoutObjFromName(soundId, this.state.sounds)
     });
   }
 
   selectSound = soundId => {
-    let getThisName = getThis('name')
-    this.setState({selectedSound: getThisName(soundId, this.state.sounds)})
+    let objInArrayFromName = objInArrayFrom('name')
+    this.setState({selectedSound: objInArrayFromName(soundId, this.state.sounds)})
   }
 
-  saveSoundCode = sound => {
-    console.log(sound)
+  saveSoundCode = code => {
+    let arrayWithUpdatedObjFromName = arrayWithUpdatedObjFrom('name')
+
+    let updatedSound = this.state.selectedSound
+    updatedSound.code = code
+
+    this.setState({
+      sounds: arrayWithUpdatedObjFromName(updatedSound.name, updatedSound, this.state.sounds)
+    })
   }
 
 	render() {
@@ -46,7 +53,7 @@ export default class Test3Music extends React.Component {
         test3Music
         <Editor
           sound={this.state.selectedSound}
-          onSaveCode={this.saveSoundCode.bind(this, this.state.selectedSound)}/>
+          onSaveCode={this.saveSoundCode}/>
         <SoundsList
           sounds={this.state.sounds}
           onSelectSound={this.selectSound}

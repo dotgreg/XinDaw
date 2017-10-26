@@ -7,19 +7,15 @@ export default class Editor extends React.Component {
 
   constructor(props){
     super(props)
-    // this.state = {
-    //   code: "// Code",
-    //   old: false,
-    // }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.sound) return false
-
-    console.log(nextProps)
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props.sound) return false
 
     const codeMirror = this.refs['editor'].getCodeMirrorInstance();
-    const MyCodeMirror = this.refs['editor'].getCodeMirror();
+    // const MyCodeMirror = this.refs['editor'].getCodeMirror();
+
+    this.refs.editor.getCodeMirror().setValue(this.props.sound.code);
 
     let options = {
       hint: codeMirror.hint.javascript,
@@ -29,7 +25,7 @@ export default class Editor extends React.Component {
     }
   }
 
-	saveSoundCode = newCode => this.props.onSaveCode(newCode)
+	saveCode = newCode => this.props.onSaveCode(this.refs.editor.getCodeMirror().getValue())
 
 	render() {
     if (!this.props.sound) return false
@@ -40,11 +36,13 @@ export default class Editor extends React.Component {
 
 		return (
       <div className="editorWrapper">
+        <h1>{this.props.sound.name}</h1>
+        <textarea value={this.props.sound.code}></textarea>
         <CodeMirror
           ref="editor"
           value={this.props.sound.code}
           options={options} />
-        <button onClick={this.saveSoundCode}> Save </button>
+        <button onClick={this.saveCode}> Save </button>
       </div>
     )
   }

@@ -5,6 +5,7 @@ export default class Sound {
   constructor (config) {
     this.src = config.src
     this.name = config.name
+    this.code = 'dssadasdas'
   }
 
   sayHello () {
