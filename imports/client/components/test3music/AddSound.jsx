@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import {random} from 'lodash';
 import React from 'react';
 
 import Sound from './classes/Sound'
@@ -11,8 +11,8 @@ export default class AddSound extends React.Component {
 
   createSound = () => {
     let newSound = new Sound({
-      src: _.random(10000),
-      name: `sound-${_.random(10000)}`
+      src: random(10000),
+      name: `sound-${random(10000)}`
     })
     this.props.onNewSound(newSound)
   }

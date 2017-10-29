@@ -1,4 +1,23 @@
+import _ from 'ramda';
 import R from 'ramda';
+
+//// NUMBERS
+export const intervalWithIntVariation = (callback, min, max, step, intTime) => {
+  step = step || 1
+  intTime = intTime || 100
+  let nb = min
+  let up = true
+
+  return setInterval(() => {
+    nb = up ? nb + step : nb - step
+    if (nb === max) up = false
+    if (nb === min) up = true
+    console.log(nb)
+    callback(nb)
+  }, intTime)
+}
+
+
 
 //// ARRAY MANIP
 // +

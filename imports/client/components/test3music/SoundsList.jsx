@@ -8,6 +8,7 @@ export default class SoundsList extends React.Component {
 
   removeThatSound = soundName => this.props.onRemoveSound(soundName)
   selectThatSound = soundName => this.props.onSelectSound(soundName)
+  toggleThatSound = soundName => this.props.onToggleSound(soundName)
 
   getStyles = () => {
     return {
@@ -36,6 +37,7 @@ export default class SoundsList extends React.Component {
               onClick={this.selectThatSound.bind(this, s.name)}>
               {s.name}
             </p>
+            <button onClick={this.toggleThatSound.bind(this, s.name)}> {} </button>
             <button onClick={this.removeThatSound.bind(this, s.name)}> X </button>
           </li>
         )}
