@@ -1,9 +1,7 @@
 import React from 'react';
-
 import { Meteor } from 'meteor/meteor'
-import styled from 'styled-components';
 
-export default class Sound extends React.Component {
+export default class Song extends React.Component {
 
   constructor(props){
     super(props)
@@ -13,11 +11,29 @@ export default class Sound extends React.Component {
   selectThatSound = () => Meteor.call('sounds.select', this.props.sound._id);
   toggleThatSound = () => Meteor.call('sounds.toggleMute', this.props.sound._id);
 
+  getStyles = () => {
+    return {
+      ul: {
+        li: {
+          p: {
+            display: 'inline-block'
+          },
+          button: {
+
+          }
+        }
+      }
+    }
+  }
+
 	render() {
+    const styles = this.getStyles()
 		return (
       <li
         key={this.props.sound.name}>
-        <Par selected={this.props.sound.selected}> {this.props.sound.name} </Par>
+        <p style={styles.ul.li.p}>
+          {this.props.sound.name}
+        </p>
         <button onClick={this.selectThatSound}> Modify </button>
         <button onClick={this.toggleThatSound}> {this.props.sound.muted ? 'unmute' : 'mute'} </button>
         <button onClick={this.removeThatSound}> X </button>
@@ -25,8 +41,3 @@ export default class Sound extends React.Component {
     )
   }
 }
-
-const Par = styled.p`
-  display: inline-block;
-  color: ${props => props.selected && 'blue'};
-`;
