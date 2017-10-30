@@ -1,7 +1,7 @@
 import React from 'react';
 import Tone from 'tone';
 import {filter, find, remove} from 'lodash';
-// import _ from 'lodash';
+
 
 import { Sounds } from '/imports/api/sounds.js';
 import { Meteor } from 'meteor/meteor'
@@ -14,19 +14,22 @@ export default class Player extends React.Component {
     super(props)
   }
 
-  updateSound = (id, sound, event) => {
+  updateSound = (id, fields, event) => {
+    let sound = Sounds.findOne(id)
+
     let alreadyExist = find(soundsInTransport, {'id': id})
     if (alreadyExist) Tone.Transport.clear(alreadyExist.transportId);
 
-    let newTransportId = eval(sound.code)
-    alreadyExist ? alreadyExist.transportId = newTransportId : soundsInTransport.push({id: id, transportId: newTransportId})
+    if (!sound.muted) {
+      let newTransportId = eval(sound.code)
+      alreadyExist ? alreadyExist.transportId = newTransportId : soundsInTransport.push({id: id, transportId: newTransportId})
+    }
   }
 
   removeSound = (id) => {
     let alreadyExist = find(soundsInTransport, {'id': id})
     if (alreadyExist) Tone.Transport.clear(alreadyExist.transportId);
     remove(soundsInTransport, s => s.id === id)
-    console.log(soundsInTransport)
   }
 
   componentDidMount () {
