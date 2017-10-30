@@ -8,7 +8,7 @@ export const Songs = new Mongo.Collection('songs');
 if (!Meteor.isServer) return false
 
 Meteor.methods({
-  'songs.insert'(code) {
+  'songs.insert'() {
 
     Songs.insert({
       'name': `song-${random(10000)}`,

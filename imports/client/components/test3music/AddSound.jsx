@@ -3,7 +3,6 @@ import React from 'react';
 import dedent from 'dedent-js';
 
 import { Meteor } from 'meteor/meteor'
-import {Sounds} from '/imports/api/sounds.js'
 
 let notes = ['A2','B2','C2','D2','E2','F2','G2']
 let timeNotes = ['2n','4n','8n','16n']
@@ -29,9 +28,7 @@ export default class AddSound extends React.Component {
 
 	render() {
 		return (
-      <button
-        onClick={this.createSound}
-        className="addSound">
+      <button onClick={this.createSound}>
         addSound
       </button>
     )
