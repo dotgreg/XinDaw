@@ -1,7 +1,13 @@
 import {random} from 'lodash';
 import React from 'react';
+import dedent from 'dedent-js';
 
-import Sound from './classes/Sound'
+import { Meteor } from 'meteor/meteor'
+import {Sounds} from '/imports/api/sounds.js'
+
+let notes = ['A2','B2','C2','D2','E2','F2','G2']
+let timeNotes = ['2n','4n','8n','16n']
+let times = ['0.5','1','1.5','2','2.5']
 
 export default class AddSound extends React.Component {
 
@@ -10,11 +16,15 @@ export default class AddSound extends React.Component {
   }
 
   createSound = () => {
-    let newSound = new Sound({
-      src: random(10000),
-      name: `sound-${random(10000)}`
-    })
-    this.props.onNewSound(newSound)
+    let codeDefault = dedent(`
+      let freeverb = new Tone.Freeverb().toMaster();
+      freeverb.dampening.value = ${random(1000,5000)};
+      let synth = new Tone.AMSynth().connect(freeverb);
+      Tone.Transport.schedule(time => {
+        synth.triggerAttackRelease('${notes[random(notes.length - 1)]}', '${timeNotes[random(timeNotes.length - 1)]}', time)
+      }, ${times[random(times.length - 1)]})`)
+
+    Meteor.call('sounds.insert', codeDefault);
   }
 
 	render() {

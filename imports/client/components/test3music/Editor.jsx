@@ -1,6 +1,8 @@
 import React from 'react';
 import CodeMirror from 'react-codemirror';
 
+import { Meteor } from 'meteor/meteor'
+
 require('codemirror/lib/codemirror.css');
 
 export default class Editor extends React.Component {
@@ -13,7 +15,6 @@ export default class Editor extends React.Component {
     if (!this.props.sound) return false
 
     const codeMirror = this.refs['editor'].getCodeMirrorInstance();
-    // const MyCodeMirror = this.refs['editor'].getCodeMirror();
 
     this.refs.editor.getCodeMirror().setValue(this.props.sound.code);
 
@@ -25,7 +26,7 @@ export default class Editor extends React.Component {
     }
   }
 
-	saveCode = newCode => this.props.onSaveCode(this.refs.editor.getCodeMirror().getValue())
+	saveCode = () => Meteor.call('sounds.updateCode', this.props.sound._id, this.refs.editor.getCodeMirror().getValue())
 
 	render() {
     if (!this.props.sound) return false
