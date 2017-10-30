@@ -7,6 +7,8 @@ export const Sounds = new Mongo.Collection('sounds');
 
 if (!Meteor.isServer) return false
 
+Meteor.publish('sounds', () => Sounds.find())
+
 Meteor.methods({
   'sounds.insert'(code) {
 

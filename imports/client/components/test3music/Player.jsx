@@ -1,12 +1,9 @@
 import React from 'react';
 import Tone from 'tone';
-import {filter, find, remove} from 'lodash';
+import Songs from '/imports/api/songs';
+import {filter, find, remove, differenceWith, isEqual} from 'lodash';
 
-
-import { Sounds } from '/imports/api/sounds.js';
 import { Meteor } from 'meteor/meteor'
-
-import {intervalWithIntVariation, arrayWithoutObjFrom, objInArrayFrom, arrayWithUpdatedObjFrom} from './utils/currys';
 
 export default class Player extends React.Component {
 
@@ -14,8 +11,27 @@ export default class Player extends React.Component {
     super(props)
   }
 
-  updateSound = (id, fields, event) => {
-    let sound = Sounds.findOne(id)
+  componentDidMount () {
+    Tone.Transport.start('+0.1')
+    Tone.Transport.loopEnd = '2m'
+    Tone.Transport.loop = true
+    window.Tone = Tone
+
+    soundsInTransport = []
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+    let diffObj = differenceWith(prevProps.sounds, this.props.sounds, isEqual)[0]
+    let diffObjAdd = differenceWith(this.props.sounds, prevProps.sounds, isEqual)[0]
+
+    if (prevProps.sounds.length > this.props.sounds.length && typeof diffObj === 'object') console.log(`removed ${diffObj._id}`)
+    if (prevProps.sounds.length < this.props.sounds.length && typeof diffObjAdd === 'object') console.log(`added ${diffObjAdd._id}`)
+    if (prevProps.sounds.length === this.props.sounds.length && typeof diffObj === 'object') console.log(`modif ${diffObj._id}`)
+  }
+
+  updateSound = (sound, event) => {
+    // let sound = Sounds.findOne(id)
 
     let alreadyExist = find(soundsInTransport, {'id': id})
     if (alreadyExist) Tone.Transport.clear(alreadyExist.transportId);
@@ -32,21 +48,8 @@ export default class Player extends React.Component {
     remove(soundsInTransport, s => s.id === id)
   }
 
-  componentDidMount () {
-    Tone.Transport.start('+0.1')
-    Tone.Transport.loopEnd = '2m'
-    Tone.Transport.loop = true
-    window.Tone = Tone
 
-    soundsInTransport = []
 
-    var cursor = Sounds.find();
-    cursor.observeChanges({
-        added: (id, fields) => this.updateSound(id, fields, 'added'),
-        changed: (id, fields) => this.updateSound(id, fields, 'changed'),
-        removed: id => this.removeSound(id)
-    });
-  }
 
   componentWillUnmount () {
     console.log('componentWillUnmount')

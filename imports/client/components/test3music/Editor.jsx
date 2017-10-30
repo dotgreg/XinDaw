@@ -37,7 +37,7 @@ export default class Editor extends React.Component {
 
 		return (
       <div className="editorWrapper">
-        <h1>{this.props.sound.name}</h1>
+        <h3>{this.props.sound.name}</h3>
         <CodeMirror
           ref="editor"
           value={this.props.sound.code}

@@ -16,7 +16,7 @@ export default class Song extends React.Component {
 		return (
       <li
         key={this.props.song.name}>
-        <Par selected={this.props.song.selected}> {this.props.song.name} </Par>
+        <Par selected={this.props.song.selected}> {this.props.song.name} ({this.props.song.sounds.length})</Par>
         <button onClick={this.selectThatSong}> Select </button>
         <button onClick={this.removeThatSong}> X </button>
       </li>
@@ -26,5 +26,7 @@ export default class Song extends React.Component {
 
 const Par = styled.p`
   display: inline-block;
+  height: 0px;
+  margin: 0px;
   color: ${props => props.selected && 'blue'};
 `;
