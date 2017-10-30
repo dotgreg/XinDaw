@@ -25,31 +25,30 @@ export default class Player extends React.Component {
     let diffObj = differenceWith(prevProps.sounds, this.props.sounds, isEqual)[0]
     let diffObjAdd = differenceWith(this.props.sounds, prevProps.sounds, isEqual)[0]
 
-    if (prevProps.sounds.length > this.props.sounds.length && typeof diffObj === 'object') console.log(`removed ${diffObj._id}`)
-    if (prevProps.sounds.length < this.props.sounds.length && typeof diffObjAdd === 'object') console.log(`added ${diffObjAdd._id}`)
-    if (prevProps.sounds.length === this.props.sounds.length && typeof diffObj === 'object') console.log(`modif ${diffObj._id}`)
+    if (prevProps.sounds.length > this.props.sounds.length && typeof diffObj === 'object') this.removeSound(diffObj)
+    if (prevProps.sounds.length < this.props.sounds.length && typeof diffObjAdd === 'object') this.updateSound(diffObjAdd)
+    if (prevProps.sounds.length === this.props.sounds.length && typeof diffObj === 'object') this.updateSound(diffObj)
   }
 
-  updateSound = (sound, event) => {
-    // let sound = Sounds.findOne(id)
-
-    let alreadyExist = find(soundsInTransport, {'id': id})
+  updateSound = (sound) => {
+    // console.log(sound)
+    let alreadyExist = find(soundsInTransport, {'id': sound._id})
     if (alreadyExist) Tone.Transport.clear(alreadyExist.transportId);
 
     if (!sound.muted) {
       let newTransportId = eval(sound.code)
-      alreadyExist ? alreadyExist.transportId = newTransportId : soundsInTransport.push({id: id, transportId: newTransportId})
+      alreadyExist ? alreadyExist.transportId = newTransportId : soundsInTransport.push({id: sound._id, transportId: newTransportId})
     }
+    // console.log(soundsInTransport)
   }
 
-  removeSound = (id) => {
-    let alreadyExist = find(soundsInTransport, {'id': id})
+  removeSound = (sound) => {
+    let alreadyExist = find(soundsInTransport, {'id': sound._id})
     if (alreadyExist) Tone.Transport.clear(alreadyExist.transportId);
-    remove(soundsInTransport, s => s.id === id)
+    remove(soundsInTransport, s => s.id === sound._id)
+
+    // console.log(soundsInTransport)
   }
-
-
-
 
   componentWillUnmount () {
     console.log('componentWillUnmount')
