@@ -55,5 +55,9 @@ Meteor.methods({
   'sounds.updateCode'(soundId, code) {
     check(soundId, String);
     Sounds.update(soundId, { $set: { code: code } })
+  },
+  'sounds.updateName'(soundId, name) {
+    check(soundId, String);
+    Sounds.update(soundId, { $set: { name: name } })
   }
 });

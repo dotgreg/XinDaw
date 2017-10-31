@@ -27,6 +27,11 @@ export default class Editor extends React.Component {
   }
 
 	saveCode = () => Meteor.call('sounds.updateCode', this.props.sound._id, this.refs.editor.getCodeMirror().getValue())
+	saveName = () => Meteor.call('sounds.updateName', this.props.sound._id, this.refs.name.value)
+	save = () => {
+    this.saveCode()
+    // this.saveTitle()
+  }
 
 	render() {
     if (!this.props.sound) return false
@@ -37,12 +42,16 @@ export default class Editor extends React.Component {
 
 		return (
       <div className="editorWrapper">
-        <h3>{this.props.sound.name}</h3>
+        <input
+          type="text"
+          ref="name"
+          onChange={this.saveName}
+          defaultValue={this.props.sound.name} />
         <CodeMirror
           ref="editor"
           value={this.props.sound.code}
           options={options} />
-        <button onClick={this.saveCode}> Save </button>
+        <button onClick={this.save}> Save Code</button>
       </div>
     )
   }
