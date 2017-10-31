@@ -1,14 +1,18 @@
 import React from 'react';
 import Tone from 'tone';
 import Songs from '/imports/api/songs';
-import {filter, find, remove, differenceWith, isEqual} from 'lodash';
+import {filter, find, remove, differenceWith, isEqual, each} from 'lodash';
 
 import { Meteor } from 'meteor/meteor'
+import styled from 'styled-components';
 
 export default class Player extends React.Component {
 
   constructor(props){
     super(props)
+    this.state = {
+      codeErrors: false
+    }
   }
 
   componentDidMount () {
@@ -17,37 +21,78 @@ export default class Player extends React.Component {
     Tone.Transport.loop = true
     window.Tone = Tone
 
-    soundsInTransport = []
+    tones = []
+    window.tones = tones
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  // initializeSounds
+  componentWillReceiveProps(nextProps) {
+    let addOrModif = differenceWith(nextProps.sounds, this.props.sounds, isEqual)
+    let rm = differenceWith(this.props.sounds, nextProps.sounds, isEqual)
 
-    let diffObj = differenceWith(prevProps.sounds, this.props.sounds, isEqual)[0]
-    let diffObjAdd = differenceWith(this.props.sounds, prevProps.sounds, isEqual)[0]
+    if (addOrModif.length >= 1) each(addOrModif, sound => this.updateSound(sound))
+    else if (rm.length >= 1) each(rm, sound => this.removeSound(sound))
 
-    if (prevProps.sounds.length > this.props.sounds.length && typeof diffObj === 'object') this.removeSound(diffObj)
-    if (prevProps.sounds.length < this.props.sounds.length && typeof diffObjAdd === 'object') this.updateSound(diffObjAdd)
-    if (prevProps.sounds.length === this.props.sounds.length && typeof diffObj === 'object') this.updateSound(diffObj)
+    // console.log(this.props.sounds, nextProps.sounds)
+    // console.log(addOrModif, rm)
   }
+
+  //
+  // HOT SOUND SWAPPING ENGINE
+  //
 
   updateSound = (sound) => {
-    // console.log(sound)
-    let alreadyExist = find(soundsInTransport, {'id': sound._id})
-    if (alreadyExist) Tone.Transport.clear(alreadyExist.transportId);
+    console.log(`updateSound => ${sound.name}`)
+    this.removeSound(sound, true)
+    if (sound.muted) return false
 
-    if (!sound.muted) {
-      let newTransportId = eval(sound.code)
-      alreadyExist ? alreadyExist.transportId = newTransportId : soundsInTransport.push({id: sound._id, transportId: newTransportId})
-    }
-    // console.log(soundsInTransport)
+    let tone = this.evalCode(sound.code)
+    this.startTone(tone)
+
+    tones.push({id: sound._id, tone: tone})
+    console.log(tones)
   }
 
-  removeSound = (sound) => {
-    let alreadyExist = find(soundsInTransport, {'id': sound._id})
-    if (alreadyExist) Tone.Transport.clear(alreadyExist.transportId);
-    remove(soundsInTransport, s => s.id === sound._id)
+  removeSound = (sound, precleaning) => {
+    !precleaning && console.log(`removeSound => ${sound.name}`)
+    let old = find(tones, {'id': sound._id})
+    old && this.stopTone(old.tone)
+    tones = filter(tones, t => t.id !== sound._id)
+  }
 
-    // console.log(soundsInTransport)
+  stopTone = (tone) => {
+    let type = this.getToneType(tone)
+    type === 'loop' && tone.stop().cancel().dispose()
+    type === 'transport-event' && Tone.Transport.clear(tone)
+  }
+
+  startTone = (tone) => {
+    let type = this.getToneType(tone)
+    type === 'loop' && tone.start(0)
+    // type === 'transport-event' && Tone.Transport.clear(tone)
+  }
+
+  getToneType = (tone) => {
+    if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Sequence/) && tone.constructor.toString().match(/Tone\.Sequence/).length === 1) return 'loop'
+    if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Loop/) && tone.constructor.toString().match(/Tone\.Loop/).length === 1) return 'loop'
+    if (typeof tone === 'number') return 'transport-event'
+    return false
+  }
+
+  //
+  // CODE EVAL
+  //
+
+  evalCode = (code) => {
+    this.setState({codeErrors: false})
+    try {
+        return eval(code);
+    } catch (e) {
+        if (e instanceof SyntaxError) {
+            let error = `EDITOR SYNTAX ERROR => ${e.message}`
+            return this.setState({codeErrors: error})
+        }
+    }
   }
 
   componentWillUnmount () {
@@ -56,8 +101,18 @@ export default class Player extends React.Component {
   }
 
 	render() {
+    let errors = this.state.codeErrors ? this.state.codeErrors : 'no synthax error'
+
 		return (
-      <div> player </div>
+      <div>
+        <Result error={this.state.codeErrors}> {errors} </Result>
+      </div>
+
     )
   }
 }
+
+
+const Result = styled.p`
+  color: ${props => props.error ? 'red' : 'green'};
+`;

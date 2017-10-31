@@ -4,7 +4,7 @@ import { Sounds } from '/imports/api/sounds.js';
 import { Songs } from '/imports/api/songs.js';
 
 import React from 'react';
-import { find, times } from 'lodash';
+import { find, times, random } from 'lodash';
 
 import AddSound from './AddSound.jsx';
 import Sound from './Sound.jsx';
@@ -21,27 +21,33 @@ export class Test3Music extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      songSounds: []
+      songSounds: [],
+      selectedSong: false
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
     let selectedSong = find(nextProps.songs, {selected: true})
     let sounds = times(selectedSong.sounds.length, id => Sounds.findOne(selectedSong.sounds[id]))
+
     nextState.songSounds = sounds
+    nextState.selectedSong = selectedSong
   }
 
 	render() {
 		return (
       <div className="test3Music">
+
         <Editor
           sound={this.props.selectedSound} />
+
+        <Player sounds={this.state.songSounds}/>
 
         <h3> SONG SOUNDS</h3>
 
         <ul>
           {this.state.songSounds.map(sound =>
-            <Sound key={sound._id} sound={sound} type="songSound"/>
+            <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
           )}
         </ul>
 
@@ -63,7 +69,7 @@ export class Test3Music extends React.Component {
 
         <AddSong />
 
-        <Player sounds={this.state.songSounds}/>
+
 
       </div>
     )

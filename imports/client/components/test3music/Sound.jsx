@@ -23,19 +23,18 @@ export default class Sound extends React.Component {
     let buttons = null
     if (this.props.type === 'songSound') {
       buttons = ([
-        <button onClick={this.toggleThatSound}> {this.props.sound.muted ? 'unmute' : 'mute'} </button>,
-        <button onClick={this.removeToSong}> sX </button>
+        <button key='1' onClick={this.toggleThatSound}> {this.props.sound.muted ? 'unmute' : 'mute'} </button>,
+        <button key='2' onClick={this.removeToSong}> sX </button>
       ])
     } else {
       buttons = ([
-        <button onClick={this.addToSong}> Add To Song </button>,
-        <button onClick={this.removeThatSound}> X </button>
+        <button key='3' onClick={this.addToSong}> Add To Song </button>,
+        <button key='4' onClick={this.removeThatSound}> X </button>
       ])
     }
 
 		return (
-      <li
-        key={this.props.sound.name}>
+      <li>
         <Par selected={this.props.sound.selected}> {this.props.sound.name} </Par>
 
         <button onClick={this.selectThatSound}> Modify </button>
