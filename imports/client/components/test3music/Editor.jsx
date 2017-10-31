@@ -46,7 +46,7 @@ export default class Editor extends React.Component {
           type="text"
           ref="name"
           onChange={this.saveName}
-          defaultValue={this.props.sound.name} />
+          value={this.props.sound.name} />
         <CodeMirror
           ref="editor"
           value={this.props.sound.code}
