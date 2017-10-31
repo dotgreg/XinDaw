@@ -44,13 +44,13 @@ export default class Player extends React.Component {
   updateSound = (sound) => {
     console.log(`updateSound => ${sound.name}`)
     this.removeSound(sound, true)
-    if (sound.muted) return false
+
+    if (sound.muted) return true
 
     let tone = this.evalCode(sound.code)
     this.startTone(tone)
 
     tones.push({id: sound._id, tone: tone})
-    console.log(tones)
   }
 
   removeSound = (sound, precleaning) => {
