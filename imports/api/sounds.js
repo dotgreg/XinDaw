@@ -27,6 +27,17 @@ Meteor.methods({
 
     Sounds.remove(soundId);
   },
+  'sounds.clone'(soundId) {
+    check(soundId, String);
+    let sound = Sounds.findOne(soundId)
+    Sounds.insert({
+      'name': `${sound.name}-clone`,
+      'selected': sound.selected,
+      'muted': sound.muted,
+      'code': sound.code,
+      'createdAt': new Date()
+    });
+  },
   //
   // UPDATERS
   //

@@ -15,6 +15,7 @@ export default class Sound extends React.Component {
   removeThatSound = () => Meteor.call('sounds.remove', this.props.sound._id);
   selectThatSound = () => Meteor.call('sounds.select', this.props.sound._id);
   toggleThatSound = () => Meteor.call('sounds.toggleMute', this.props.sound._id);
+  cloneThatSound = () => Meteor.call('sounds.clone', this.props.sound._id);
 
   addToSong = () => Meteor.call('songs.addSound', this.props.sound._id);
   removeToSong = () => Meteor.call('songs.removeSound', this.props.sound._id);
@@ -37,6 +38,7 @@ export default class Sound extends React.Component {
       <li>
         <Par selected={this.props.sound.selected}> {this.props.sound.name} </Par>
 
+        <button onClick={this.cloneThatSound}> Clone </button>
         <button onClick={this.selectThatSound}> Modify </button>
         {buttons}
       </li>
