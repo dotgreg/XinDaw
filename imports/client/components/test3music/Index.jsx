@@ -14,6 +14,7 @@ import Song from './Song.jsx';
 
 import Editor from './Editor.jsx';
 import Player from './Player.jsx';
+import Explorer from './explorer/Explorer.jsx';
 
 
 export class Test3Music extends React.Component {
@@ -43,6 +44,8 @@ export class Test3Music extends React.Component {
 
         <Player sounds={this.state.songSounds}/>
 
+        <Explorer />
+
         <h3> SONG SOUNDS</h3>
 
         <ul>
@@ -51,13 +54,6 @@ export class Test3Music extends React.Component {
           )}
         </ul>
 
-        <h3> SOUNDS</h3>
-
-        <ul>
-          {this.props.sounds.map(sound =>
-            <Sound key={sound._id} sound={sound} />
-          )}
-        </ul>
         <AddSound />
 
         <h3> SONGS </h3>

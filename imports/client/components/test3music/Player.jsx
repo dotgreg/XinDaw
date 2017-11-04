@@ -42,7 +42,7 @@ export default class Player extends React.Component {
   //
 
   updateSound = (sound) => {
-    // compare 
+    // compare
 
     console.log(`updateSound => ${sound.name}`)
     this.removeSound(sound, true)
@@ -55,7 +55,7 @@ export default class Player extends React.Component {
     tones.push({id: sound._id, tone: tone})
   }
 
-  this.compareCode = (sound) => {
+  compareCode = (sound) => {
 
   }
 
