@@ -35,11 +35,10 @@ export default class Sound extends React.Component {
     }
 
 		return (
-      <li>
+      <li onClick={this.selectThatSound}>
         <Par selected={this.props.sound.selected}> {this.props.sound.name} </Par>
 
         <button onClick={this.cloneThatSound}> Clone </button>
-        <button onClick={this.selectThatSound}> Modify </button>
         {buttons}
       </li>
     )

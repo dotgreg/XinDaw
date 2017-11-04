@@ -1,7 +1,7 @@
 import React from 'react';
 import Tone from 'tone';
 import Songs from '/imports/api/songs';
-import {filter, find, remove, differenceWith, isEqual, each} from 'lodash';
+import {filter, reduce, find, remove, difference, differenceBy, differenceWith, isEqual, each} from 'lodash';
 
 import { Meteor } from 'meteor/meteor'
 import styled from 'styled-components';
@@ -17,7 +17,7 @@ export default class Player extends React.Component {
 
   componentDidMount () {
     Tone.Transport.start('+0.1')
-    Tone.Transport.loopEnd = '2m'
+    Tone.Transport.loopEnd = '4m'
     Tone.Transport.loop = true
     window.Tone = Tone
 
@@ -27,11 +27,50 @@ export default class Player extends React.Component {
 
   // initializeSounds
   componentWillReceiveProps(nextProps) {
-    let addOrModif = differenceWith(nextProps.sounds, this.props.sounds, isEqual)
-    let rm = differenceWith(this.props.sounds, nextProps.sounds, isEqual)
+    // let addOrModif = differenceWith(nextProps.sounds, this.props.sounds, isEqual)
+    // let rm = differenceWith(this.props.sounds, nextProps.sounds, isEqual)
+    // let a = (nextProps.sounds.length > this.props.sounds.length) ? [this.props.sounds, nextProps.sounds] : [nextProps.sounds, this.props.sounds]
+    let a =[this.props.sounds, nextProps.sounds]
+    // console.log(a[0], a[1])
 
-    if (addOrModif.length >= 1) each(addOrModif, sound => this.updateSound(sound))
-    else if (rm.length >= 1) each(rm, sound => this.removeSound(sound))
+    // console.log(a[0].length, a[1].length)
+
+    // if (a[0].length > a[1].length) {
+    //   // console.log(1)
+    //   let deleted = differenceWith(a[0], a[1], isEqual)
+    //   deleted[0] && console.log(deleted, `=> DELETED`)
+    //   // deleted && console.log(deleted[0].name, `=> DELETED`)
+    // }
+
+    // if (a[0].length < a[1].length) {
+    //   let added = differenceWith(a[1], a[0], isEqual)
+    //   added[0] && console.log(added, `=> ADDED`)
+    //   // added && console.log(added[0].name, `=> ADDED`)
+    // }
+    // let a = [this.props.sounds, nextProps.sounds]
+
+    each(a[1], sound => {
+      let oldSound = find(a[0], {'_id': sound._id})
+      if (!oldSound) return console.log(`${sound.name} ADDED`)
+    })
+
+    each(a[0], sound => {
+      let newSound = find(a[1], {'_id': sound._id})
+      // console.log(newSound)
+      if (!newSound) return console.log(`${sound.name} DELETED`)
+
+      let res = reduce(sound, (result, value, key) => isEqual(value, newSound[key]) ? result : result.concat(key), [])
+      res.length > 0 && console.log(`${sound.name} => ${res}`)
+      // console.log(res)
+
+
+      // !newSound && console.log(`${sound._id} => DELETED`)
+      // console. log(differenceBy(sound, newSound, isEqual))
+    })
+    console.log('===================')
+
+    // if (addOrModif.length >= 1) each(addOrModif, sound => this.updateSound(sound))
+    // else if (rm.length >= 1) each(rm, sound => this.removeSound(sound))
 
     // console.log(this.props.sounds, nextProps.sounds)
     // console.log(addOrModif, rm)

@@ -16,6 +16,7 @@ import Editor from './Editor.jsx';
 import Player from './Player.jsx';
 import Explorer from './explorer/Explorer.jsx';
 
+import styled from 'styled-components';
 
 export class Test3Music extends React.Component {
 
@@ -39,36 +40,46 @@ export class Test3Music extends React.Component {
 		return (
       <div className="test3Music">
 
-        <Editor
-          sound={this.props.selectedSound} />
+        <Panel w={30}>
 
-        <Player sounds={this.state.songSounds}/>
+          <p> SOUNDS SONG </p>
+          <ul>
+            {this.state.songSounds.map(sound =>
+              <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
+            )}
+          </ul>
 
-        <p> SONG SOUNDS</p>
 
-        <ul>
-          {this.state.songSounds.map(sound =>
-            <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
-          )}
-        </ul>
+          <p> SONGS </p>
+          <ul>
+            {this.props.songs.map(song =>
+              <Song key={song._id} song={song} />
+            )}
+          </ul>
+          <AddSong />
+        </Panel>
 
-        <AddSound />
+        <Panel w={40}>
+          <Editor
+            sound={this.props.selectedSound} />
 
-        <p> SONGS </p>
-        <ul>
-          {this.props.songs.map(song =>
-            <Song key={song._id} song={song} />
-          )}
-        </ul>
+          <Player sounds={this.state.songSounds}/>
+        </Panel>
 
-        <AddSong />
-
-        <Explorer />
-
+        <Panel w={30}>
+          <Explorer />
+          <AddSound />
+        </Panel>
       </div>
     )
   }
 }
+
+const Panel = styled.div`
+  width: ${props => props.w}%;
+  overflow-y: scroll;
+  float: left;
+`;
 
 export default withTracker(props => {
   Meteor.subscribe('sounds');
