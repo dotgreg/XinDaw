@@ -44,9 +44,7 @@ export class Test3Music extends React.Component {
 
         <Player sounds={this.state.songSounds}/>
 
-        <Explorer />
-
-        <h3> SONG SOUNDS</h3>
+        <p> SONG SOUNDS</p>
 
         <ul>
           {this.state.songSounds.map(sound =>
@@ -56,7 +54,7 @@ export class Test3Music extends React.Component {
 
         <AddSound />
 
-        <h3> SONGS </h3>
+        <p> SONGS </p>
         <ul>
           {this.props.songs.map(song =>
             <Song key={song._id} song={song} />
@@ -65,7 +63,7 @@ export class Test3Music extends React.Component {
 
         <AddSong />
 
-
+        <Explorer />
 
       </div>
     )
