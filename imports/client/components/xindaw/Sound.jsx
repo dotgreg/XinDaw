@@ -4,6 +4,8 @@ import Songs from '/imports/api/songs'
 import React from 'react';
 import styled from 'styled-components';
 
+import Icon from './utils/Icon'
+
 import {filter} from 'lodash';
 
 export default class Sound extends React.Component {
@@ -24,30 +26,52 @@ export default class Sound extends React.Component {
     let buttons = null
     if (this.props.type === 'songSound') {
       buttons = ([
-        <button key='1' onClick={this.toggleThatSound}> {this.props.sound.muted ? 'unmute' : 'mute'} </button>,
-        <button key='2' onClick={this.removeToSong}> sX </button>
+        <button key='1' onClick={this.toggleThatSound}>
+          <Icon name={this.props.sound.muted ? 'volume-off' : 'volume-up'}/>
+        </button>,
+        <button key='2' onClick={this.removeToSong}>
+          <Icon name="times"/>
+        </button>
       ])
     } else {
       buttons = ([
-        <button key='3' onClick={this.addToSong}> Add To Song </button>,
-        <button key='4' onClick={this.removeThatSound}> X </button>
+        <button key='3' onClick={this.addToSong}>
+          <Icon name="plus"/>
+        </button>,
+        <button key='4' onClick={this.removeThatSound}>
+          <Icon name="trash-o"/>
+        </button>
       ])
     }
 
 		return (
-      <li onClick={this.selectThatSound}>
-        <Par selected={this.props.sound.selected}> {this.props.sound.name} </Par>
-
-        <button onClick={this.cloneThatSound}> Clone </button>
-        {buttons}
-      </li>
+      <OneSound onClick={this.selectThatSound}>
+        <Name selected={this.props.sound.selected}> {this.props.sound.name} </Name>
+        <Buttons>
+          <button onClick={this.cloneThatSound}>
+            <Icon name="clone"/>
+          </button>
+          {buttons}
+        </Buttons>
+      </OneSound>
     )
   }
 }
 
-const Par = styled.p`
-  display: inline-block;
-  height: 0px;
+const OneSound = styled.li`
+  position: relative;
+`;
+
+const Name = styled.p`
+display: inline-block;
+height: 0px;
+margin: 0px;
+color: ${props => props.selected && 'blue'};
+`;
+
+const Buttons = styled.p`
+  position: absolute;
+  top: 0px;
   margin: 0px;
-  color: ${props => props.selected && 'blue'};
+  right: 0px;
 `;

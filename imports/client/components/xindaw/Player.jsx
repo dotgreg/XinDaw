@@ -1,7 +1,7 @@
 import React from 'react';
 import Tone from 'tone';
 import Songs from '/imports/api/songs';
-import {filter, reduce, find, remove, difference, differenceBy, differenceWith, isEqual, each} from 'lodash';
+import {filter, reduce, indexOf, find, isEqual, each} from 'lodash';
 
 import { Meteor } from 'meteor/meteor'
 import styled from 'styled-components';
@@ -27,62 +27,43 @@ export default class Player extends React.Component {
 
   // initializeSounds
   componentWillReceiveProps(nextProps) {
-    // let addOrModif = differenceWith(nextProps.sounds, this.props.sounds, isEqual)
-    // let rm = differenceWith(this.props.sounds, nextProps.sounds, isEqual)
-    // let a = (nextProps.sounds.length > this.props.sounds.length) ? [this.props.sounds, nextProps.sounds] : [nextProps.sounds, this.props.sounds]
     let a =[this.props.sounds, nextProps.sounds]
-    // console.log(a[0], a[1])
 
-    // console.log(a[0].length, a[1].length)
-
-    // if (a[0].length > a[1].length) {
-    //   // console.log(1)
-    //   let deleted = differenceWith(a[0], a[1], isEqual)
-    //   deleted[0] && console.log(deleted, `=> DELETED`)
-    //   // deleted && console.log(deleted[0].name, `=> DELETED`)
-    // }
-
-    // if (a[0].length < a[1].length) {
-    //   let added = differenceWith(a[1], a[0], isEqual)
-    //   added[0] && console.log(added, `=> ADDED`)
-    //   // added && console.log(added[0].name, `=> ADDED`)
-    // }
-    // let a = [this.props.sounds, nextProps.sounds]
-
+    // 1 DETECT SOUNDS ADDED
     each(a[1], sound => {
       let oldSound = find(a[0], {'_id': sound._id})
-      if (!oldSound) return console.log(`${sound.name} ADDED`)
+      if (!oldSound) {
+        this.updateSound(sound)
+        return console.log(`${sound.name} ADDED`)
+      }
     })
 
+    // 2 DETECT SOUNDS DELETED
     each(a[0], sound => {
       let newSound = find(a[1], {'_id': sound._id})
-      // console.log(newSound)
-      if (!newSound) return console.log(`${sound.name} DELETED`)
+      if (!newSound) {
+        this.removeSound(sound)
+        return console.log(`${sound.name} DELETED`)
+      }
 
+      // 3 DETECT SOUNDS UPDATED
       let res = reduce(sound, (result, value, key) => isEqual(value, newSound[key]) ? result : result.concat(key), [])
-      res.length > 0 && console.log(`${sound.name} => ${res}`)
-      // console.log(res)
 
-
-      // !newSound && console.log(`${sound._id} => DELETED`)
-      // console. log(differenceBy(sound, newSound, isEqual))
+      if (res.length === 0) return
+      if (indexOf(['code', 'muted'], res[0]) > 0)  {
+        this.updateSound(sound)
+        console.log('code change, UPDATE')
+      } else {
+        console.log(`${res[0]}, do nothing`)
+      }
     })
     console.log('===================')
-
-    // if (addOrModif.length >= 1) each(addOrModif, sound => this.updateSound(sound))
-    // else if (rm.length >= 1) each(rm, sound => this.removeSound(sound))
-
-    // console.log(this.props.sounds, nextProps.sounds)
-    // console.log(addOrModif, rm)
   }
 
   //
   // HOT SOUND SWAPPING ENGINE
   //
-
   updateSound = (sound) => {
-    // compare
-
     console.log(`updateSound => ${sound.name}`)
     this.removeSound(sound, true)
 
@@ -94,12 +75,7 @@ export default class Player extends React.Component {
     tones.push({id: sound._id, tone: tone})
   }
 
-  compareCode = (sound) => {
-
-  }
-
-  removeSound = (sound, precleaning) => {
-    !precleaning && console.log(`removeSound => ${sound.name}`)
+  removeSound = (sound) => {
     let old = find(tones, {'id': sound._id})
     old && this.stopTone(old.tone)
     tones = filter(tones, t => t.id !== sound._id)

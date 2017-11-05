@@ -1,6 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor'
 
+import Icon from './utils/Icon'
+
 import styled from 'styled-components';
 
 export default class Song extends React.Component {
@@ -14,19 +16,32 @@ export default class Song extends React.Component {
 
 	render() {
 		return (
-      <li
+      <OneSong
         key={this.props.song.name}>
-        <Par selected={this.props.song.selected}> {this.props.song.name} ({this.props.song.sounds.length})</Par>
-        <button onClick={this.selectThatSong}> Select </button>
-        <button onClick={this.removeThatSong}> X </button>
-      </li>
+        <Name selected={this.props.song.selected}> {this.props.song.name} ({this.props.song.sounds.length})</Name>
+        <Buttons>
+          <button onClick={this.selectThatSong}> <Icon name='plus'/> </button>
+          <button onClick={this.removeThatSong}> <Icon name='trash-o'/> </button>
+        </Buttons>
+      </OneSong>
     )
   }
 }
 
-const Par = styled.p`
-  display: inline-block;
-  height: 0px;
+const OneSong = styled.li`
+  position: relative;
+`;
+
+const Name = styled.p`
+display: inline-block;
+height: 0px;
+margin: 0px;
+color: ${props => props.selected && 'blue'};
+`;
+
+const Buttons = styled.p`
+  position: absolute;
+  top: 0px;
   margin: 0px;
-  color: ${props => props.selected && 'blue'};
+  right: 0px;
 `;
