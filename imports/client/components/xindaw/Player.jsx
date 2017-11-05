@@ -34,7 +34,7 @@ export default class Player extends React.Component {
       let oldSound = find(a[0], {'_id': sound._id})
       if (!oldSound) {
         this.updateSound(sound)
-        return console.log(`${sound.name} ADDED`)
+        // return console.log(`${sound.name} ADDED`)
       }
     })
 
@@ -43,18 +43,18 @@ export default class Player extends React.Component {
       let newSound = find(a[1], {'_id': sound._id})
       if (!newSound) {
         this.removeSound(sound)
-        return console.log(`${sound.name} DELETED`)
+        // return console.log(`${sound.name} DELETED`)
       }
 
       // 3 DETECT SOUNDS UPDATED
       let res = reduce(sound, (result, value, key) => isEqual(value, newSound[key]) ? result : result.concat(key), [])
 
       if (res.length === 0) return
-      if (indexOf(['code', 'muted'], res[0]) > 0)  {
-        this.updateSound(sound)
-        console.log('code change, UPDATE')
+      if (indexOf(['code', 'muted'], res[0]) >= 0)  {
+        this.updateSound(newSound)
+        console.log(`${res[0]} change, UPDATE`)
       } else {
-        console.log(`${res[0]}, do nothing`)
+        // console.log(`${res[0]}, do nothing`)
       }
     })
     console.log('===================')
@@ -64,7 +64,6 @@ export default class Player extends React.Component {
   // HOT SOUND SWAPPING ENGINE
   //
   updateSound = (sound) => {
-    console.log(`updateSound => ${sound.name}`)
     this.removeSound(sound, true)
 
     if (sound.muted) return true
@@ -73,12 +72,14 @@ export default class Player extends React.Component {
     this.startTone(tone)
 
     tones.push({id: sound._id, tone: tone})
+    console.log('sound added', tones)
   }
 
   removeSound = (sound) => {
     let old = find(tones, {'id': sound._id})
     old && this.stopTone(old.tone)
     tones = filter(tones, t => t.id !== sound._id)
+    console.log('sound removed', tones)
   }
 
   stopTone = (tone) => {

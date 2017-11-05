@@ -4,6 +4,9 @@ import CodeMirror from 'react-codemirror';
 import { Meteor } from 'meteor/meteor'
 
 require('codemirror/lib/codemirror.css');
+require('codemirror/theme/monokai.css');
+require('codemirror/keymap/sublime.js');
+require('codemirror/mode/javascript/javascript.js');
 
 export default class Editor extends React.Component {
 
@@ -17,13 +20,6 @@ export default class Editor extends React.Component {
     const codeMirror = this.refs['editor'].getCodeMirrorInstance();
 
     this.refs.editor.getCodeMirror().setValue(this.props.sound.code);
-
-    let options = {
-      hint: codeMirror.hint.javascript,
-      disableKeywords: true,
-      completeSingle: false,
-      completeOnSingleClick: false
-    }
   }
 
 	saveCode = () => Meteor.call('sounds.updateCode', this.props.sound._id, this.refs.editor.getCodeMirror().getValue())
@@ -36,9 +32,20 @@ export default class Editor extends React.Component {
 	render() {
     if (!this.props.sound) return false
 
-		var options = {
-			lineNumbers: true,
-		};
+    let options = {
+      keyMap: "sublime",
+      mode: "javascript",
+      theme: "monokai",
+      disableKeywords: true,
+      completeSingle: false,
+      lineNumbers: true,
+      extraKeys: {
+        "Ctrl-S": () => {
+          this.saveCode()
+        }
+      },
+      completeOnSingleClick: false
+    }
 
 		return (
       <div className="editorWrapper">

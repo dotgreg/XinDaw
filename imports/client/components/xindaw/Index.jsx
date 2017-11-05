@@ -18,7 +18,7 @@ import Explorer from './explorer/Explorer.jsx';
 
 import styled from 'styled-components';
 
-export class Test3Music extends React.Component {
+export class Xindaw extends React.Component {
 
   constructor(props){
     super(props)
@@ -89,4 +89,4 @@ export default withTracker(props => {
     songs: Songs.find({}, { sort: { createdAt: -1 } }).fetch(),
     selectedSound: Sounds.findOne({selected: true})
   };
-})(Test3Music);
+})(Xindaw);
