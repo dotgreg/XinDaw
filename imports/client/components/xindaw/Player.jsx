@@ -17,7 +17,7 @@ export default class Player extends React.Component {
 
   componentDidMount () {
     Tone.Transport.start('+0.1')
-    Tone.Transport.loopEnd = '4m'
+    Tone.Transport.loopEnd = '2m'
     Tone.Transport.loop = true
     window.Tone = Tone
 
@@ -54,10 +54,10 @@ export default class Player extends React.Component {
         this.updateSound(newSound)
         console.log(`${res[0]} change, UPDATE`)
       } else {
-        // console.log(`${res[0]}, do nothing`)
+        console.log(`${res[0]}, do nothing`)
       }
     })
-    console.log('===================')
+    // console.log('===================')
   }
 
   //
@@ -90,8 +90,7 @@ export default class Player extends React.Component {
 
   startTone = (tone) => {
     let type = this.getToneType(tone)
-    type === 'loop' && tone.start(0)
-    // type === 'transport-event' && Tone.Transport.clear(tone)
+    type === 'loop' && setTimeout(() => tone.start(0), 2000)
   }
 
   getToneType = (tone) => {
