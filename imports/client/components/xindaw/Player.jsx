@@ -17,7 +17,7 @@ export default class Player extends React.Component {
 
   componentDidMount () {
     Tone.Transport.start('+0.1')
-    Tone.Transport.loopEnd = '2m'
+    Tone.Transport.loopEnd = '4m'
     Tone.Transport.loop = true
     window.Tone = Tone
 

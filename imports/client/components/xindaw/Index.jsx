@@ -12,6 +12,7 @@ import Sound from './Sound.jsx';
 import AddSong from './AddSong.jsx';
 import Song from './Song.jsx';
 
+import Bpm from './Bpm.jsx';
 import Editor from './Editor.jsx';
 import Player from './Player.jsx';
 import Explorer from './explorer/Explorer.jsx';
@@ -41,7 +42,8 @@ export class Xindaw extends React.Component {
       <div className="test3Music">
 
         <Panel w={30}>
-
+          <Bpm />
+          
           <p> SOUNDS SONG </p>
           <ul>
             {this.state.songSounds.map(sound =>
