@@ -85,13 +85,13 @@ export default class Player extends React.Component {
 
   stopTone = (tone) => {
     let type = this.getToneType(tone)
-    type === 'loop' && setTimeout(() => tone.stop().cancel().dispose(), 1900)
+    type === 'loop' && Tone.Transport.scheduleOnce(t => tone.stop().cancel().dispose(), 0)
     type === 'transport-event' && Tone.Transport.clear(tone)
   }
 
   startTone = (tone) => {
     let type = this.getToneType(tone)
-    type === 'loop' && setTimeout(() => tone.start(0), 2000)
+    type === 'loop' && Tone.Transport.scheduleOnce(t => tone.start(0), 0)
   }
 
   getToneType = (tone) => {
