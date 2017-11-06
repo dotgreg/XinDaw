@@ -1,7 +1,7 @@
 import React from 'react';
 import Tone from 'tone';
 import Songs from '/imports/api/songs';
-import {filter, reduce, indexOf, find, isEqual, each} from 'lodash';
+import {filter, reduce, intersection, indexOf, find, isEqual, each} from 'lodash';
 
 import { Meteor } from 'meteor/meteor'
 import styled from 'styled-components';
@@ -42,15 +42,16 @@ export default class Player extends React.Component {
     each(a[0], sound => {
       let newSound = find(a[1], {'_id': sound._id})
       if (!newSound) {
-        this.removeSound(sound)
+        return this.removeSound(sound)
         // return console.log(`${sound.name} DELETED`)
       }
 
       // 3 DETECT SOUNDS UPDATED
+
       let res = reduce(sound, (result, value, key) => isEqual(value, newSound[key]) ? result : result.concat(key), [])
 
       if (res.length === 0) return
-      if (indexOf(['code', 'muted'], res[0]) >= 0)  {
+      if (intersection(['code', 'muted'], res).length >= 0)  {
         this.updateSound(newSound)
         console.log(`${res[0]} change, UPDATE`)
       } else {
@@ -84,7 +85,7 @@ export default class Player extends React.Component {
 
   stopTone = (tone) => {
     let type = this.getToneType(tone)
-    type === 'loop' && tone.stop().cancel().dispose()
+    type === 'loop' && setTimeout(() => tone.stop().cancel().dispose(), 1900)
     type === 'transport-event' && Tone.Transport.clear(tone)
   }
 
@@ -94,9 +95,11 @@ export default class Player extends React.Component {
   }
 
   getToneType = (tone) => {
-    if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Sequence/) && tone.constructor.toString().match(/Tone\.Sequence/).length === 1) return 'loop'
-    if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Loop/) && tone.constructor.toString().match(/Tone\.Loop/).length === 1) return 'loop'
+    // if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Sequence/) && tone.constructor.toString().match(/Tone\.Sequence/).length === 1) return 'loop'
+    // if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Loop/) && tone.constructor.toString().match(/Tone\.Loop/).length === 1) return 'loop'
     if (typeof tone === 'number') return 'transport-event'
+    else if (typeof tone === 'object') return 'loop'
+
     return false
   }
 
