@@ -20,7 +20,7 @@ export default class Song extends React.Component {
         key={this.props.song.name}>
         <Name selected={this.props.song.selected}> {this.props.song.name} ({this.props.song.sounds.length})</Name>
         <Buttons>
-          <button onClick={this.selectThatSong}> <Icon name='plus'/> </button>
+          <button onClick={this.selectThatSong}> <Icon name={this.props.song.selected ? 'pause' : 'play'}/> </button>
           <button onClick={this.removeThatSong}> <Icon name='trash-o'/> </button>
         </Buttons>
       </OneSong>
