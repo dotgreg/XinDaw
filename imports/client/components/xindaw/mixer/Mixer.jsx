@@ -20,7 +20,7 @@ export default class Mixer extends React.Component {
             <SoundMixer key={tone.id}>
               <p>{tone.name}</p>
               <div>
-                 {tone.options.vars.map((v,i) =>
+                 {(tone.options && tone.options.vars) && tone.options.vars.map((v,i) =>
                     <Knob key={`${tone.id}-${i}`} variable={v} />
                  )}
               </div>

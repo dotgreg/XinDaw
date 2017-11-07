@@ -18,6 +18,10 @@ export default class Knob extends React.Component {
     this.state.variable.value = e.target.value
   }
 
+  componentWillUpdate (nextProps, nextState) {
+    nextState.variable = nextProps.variable
+  }
+
   //
   // UX : touch management
   //
@@ -28,6 +32,7 @@ export default class Knob extends React.Component {
   }
 
   handlePanStart = e => {
+    console.log(this.state.variable)
     this.setState({startingValue: this.state.variable.value})
   }
 
@@ -39,6 +44,7 @@ export default class Knob extends React.Component {
         direction="DIRECTION_VERTICAL"
         options={this.state.hammerOptions}>
         <div>
+          {this.state.variable.name}
           <input
             type="number"
             min="-100"
