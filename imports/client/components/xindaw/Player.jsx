@@ -17,7 +17,7 @@ export default class Player extends React.Component {
 
   componentDidMount () {
     Tone.Transport.start('+0.1')
-    Tone.Transport.loopEnd = '4m'
+    Tone.Transport.loopEnd = '2m'
     Tone.Transport.loop = true
     window.Tone = Tone
 
@@ -51,7 +51,7 @@ export default class Player extends React.Component {
       let res = reduce(sound, (result, value, key) => isEqual(value, newSound[key]) ? result : result.concat(key), [])
 
       if (res.length === 0) return
-      if (intersection(['code', 'muted'], res).length >= 0)  {
+      if (intersection(['code', 'muted'], res).length > 0)  {
         this.updateSound(newSound)
         console.log(`${res[0]} change, UPDATE`)
       } else {
@@ -67,12 +67,18 @@ export default class Player extends React.Component {
   updateSound = (sound) => {
     this.removeSound(sound, true)
 
-    if (sound.muted) return true
+    if (sound.muted) return
 
-    let tone = this.evalCode(sound.code)
-    this.startTone(tone)
+    let codeToEval = `(function self(){${sound.code}}())`
+    let result = this.evalCode(codeToEval)
 
-    tones.push({id: sound._id, tone: tone})
+    console.log(result)
+    if (!result) return
+    result = {id: sound._id, tone: result.c, type: result.t, options: result.o}
+
+    this.startTone(result.tone)
+    tones.push(result)
+
     console.log('sound added', tones)
   }
 
@@ -110,12 +116,17 @@ export default class Player extends React.Component {
   evalCode = (code) => {
     this.setState({codeErrors: false})
     try {
-        return eval(code);
+      let result =  eval(code);
+      //the result should return an object with the following structure :
+      console.log(result);
+      let error = `EDITOR RESULT ERROR => result structure returned not correct ({t:'type', c:'object/number', o:'options'})`
+      if(!result || typeof result !== 'object') return this.setState({codeErrors: error})
+      if(!result.t) return this.setState({codeErrors: error})
+      if(!result.c) return this.setState({codeErrors: error})
+      return result
     } catch (e) {
-        if (e instanceof SyntaxError) {
-            let error = `EDITOR SYNTAX ERROR => ${e.message}`
-            return this.setState({codeErrors: error})
-        }
+      let error = `EDITOR SYNTAX ERROR => ${e.message}`
+      return this.setState({codeErrors: error})
     }
   }
 
