@@ -14,9 +14,10 @@ import Song from './Song.jsx';
 
 import Bpm from './Bpm.jsx';
 import Editor from './Editor.jsx';
-import Mixer from './Mixer.jsx';
 import Player from './Player.jsx';
 import Explorer from './explorer/Explorer.jsx';
+
+import Mixer from './mixer/Mixer.jsx';
 
 import styled from 'styled-components';
 
