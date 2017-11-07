@@ -16,10 +16,6 @@ export default class Mixer extends React.Component {
 
 
  componentWillReceiveProps(nextProps) {
-  //  var dial = Nexus.Add.Dial('#instrument',{
-  //     'size': [100,100]
-  //   });
-  // console.log(nx)
   console.log(window.nx)
   console.log(Nexus)
  }
