@@ -1,8 +1,6 @@
 import Tone from 'tone';
 import React from 'react';
 
-import { Meteor } from 'meteor/meteor'
-
 export default class Bpm extends React.Component {
 
   constructor(props){

@@ -14,6 +14,7 @@ import Song from './Song.jsx';
 
 import Bpm from './Bpm.jsx';
 import Editor from './Editor.jsx';
+import Mixer from './Mixer.jsx';
 import Player from './Player.jsx';
 import Explorer from './explorer/Explorer.jsx';
 
@@ -25,7 +26,8 @@ export class Xindaw extends React.Component {
     super(props)
     this.state = {
       songSounds: [],
-      selectedSong: false
+      selectedSong: false,
+      tones: []
     }
   }
 
@@ -37,9 +39,12 @@ export class Xindaw extends React.Component {
     nextState.selectedSong = selectedSong
   }
 
-  onTonesUpdate = tones =>  {
-      console.log(tones)
-  }
+  //
+  // CHILD2PARENTS DATA FLOWS
+  //
+
+  // Tones objs : PLAYER -> INDEX
+  onTonesUpdate = tones =>  this.setState({tones: tones})
 
 	render() {
 		return (
@@ -55,6 +60,7 @@ export class Xindaw extends React.Component {
             )}
           </ul>
 
+          <Mixer tones={this.state.tones} />
 
           <p> SONGS </p>
           <ul>

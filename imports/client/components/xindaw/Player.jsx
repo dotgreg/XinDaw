@@ -72,7 +72,6 @@ export default class Player extends React.Component {
     let codeToEval = `(function self(){${sound.code}}())`
     let result = this.evalCode(codeToEval)
 
-    console.log(result)
     if (!result) return
     result = {id: sound._id, tone: result.c, type: result.t, options: result.o}
 
@@ -126,8 +125,6 @@ export default class Player extends React.Component {
     this.setState({codeErrors: false})
     try {
       let result =  eval(code);
-      //the result should return an object with the following structure :
-      console.log(result);
       let error = `EDITOR RESULT ERROR => result structure returned not correct ({t:'type', c:'object/number', o:'options'})`
       if(!result || typeof result !== 'object') return this.setState({codeErrors: error})
       if(!result.t) return this.setState({codeErrors: error})
