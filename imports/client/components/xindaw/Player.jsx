@@ -73,7 +73,7 @@ export default class Player extends React.Component {
     let result = this.evalCode(codeToEval)
 
     if (!result) return
-    result = {id: sound._id, tone: result.c, type: result.t, options: result.o}
+    result = {id: sound._id, name: sound.name, tone: result.c, type: result.t, options: result.o}
 
     this.startTone(result.tone)
     tones.push(result)

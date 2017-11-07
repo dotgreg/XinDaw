@@ -23,7 +23,7 @@ export default class Bpm extends React.Component {
 		return (
       <div>
         <input
-          type="text"
+          type="number"
           size="2"
           ref="bpm"
           defaultValue={this.state.bpm} />
