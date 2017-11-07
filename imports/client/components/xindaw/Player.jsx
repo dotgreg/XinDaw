@@ -80,6 +80,7 @@ export default class Player extends React.Component {
     tones.push(result)
 
     console.log('sound added', tones)
+    this.outputTones()
   }
 
   removeSound = (sound) => {
@@ -87,6 +88,7 @@ export default class Player extends React.Component {
     old && this.stopTone(old.tone)
     tones = filter(tones, t => t.id !== sound._id)
     console.log('sound removed', tones)
+    this.outputTones()
   }
 
   stopTone = (tone) => {
@@ -107,6 +109,13 @@ export default class Player extends React.Component {
     else if (typeof tone === 'object') return 'loop'
 
     return false
+  }
+
+  //
+  // GET TONES TO PARENT
+  //
+  outputTones = () => {
+    this.props.outputTones(tones)
   }
 
   //

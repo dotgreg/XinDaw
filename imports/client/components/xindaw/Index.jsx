@@ -37,13 +37,17 @@ export class Xindaw extends React.Component {
     nextState.selectedSong = selectedSong
   }
 
+  onTonesUpdate = tones =>  {
+      console.log(tones)
+  }
+
 	render() {
 		return (
       <div className="test3Music">
 
         <Panel w={30}>
           <Bpm />
-          
+
           <p> SOUNDS SONG </p>
           <ul>
             {this.state.songSounds.map(sound =>
@@ -65,7 +69,7 @@ export class Xindaw extends React.Component {
           <Editor
             sound={this.props.selectedSound} />
 
-          <Player sounds={this.state.songSounds}/>
+          <Player sounds={this.state.songSounds} outputTones={this.onTonesUpdate}/>
         </Panel>
 
         <Panel w={30}>
