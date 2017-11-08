@@ -47,7 +47,6 @@ export default class Player extends React.Component {
       }
 
       // 3 DETECT SOUNDS UPDATED
-
       let res = reduce(sound, (result, value, key) => isEqual(value, newSound[key]) ? result : result.concat(key), [])
 
       if (res.length === 0) return
@@ -58,7 +57,6 @@ export default class Player extends React.Component {
         console.log(`${res[0]}, do nothing`)
       }
     })
-    // console.log('===================')
   }
 
   //
@@ -75,10 +73,12 @@ export default class Player extends React.Component {
     if (!result) return
     result = {id: sound._id, name: sound.name, tone: result.c, type: result.t, options: result.o}
 
+    // check in the mongo if ID + name vars exist, if yes, change the options.vars[namevars].value accordingly
+
     this.startTone(result.tone)
     tones.push(result)
 
-    console.log('sound added', tones)
+    // console.log('sound added', tones)
     this.outputTones()
   }
 
@@ -86,7 +86,7 @@ export default class Player extends React.Component {
     let old = find(tones, {'id': sound._id})
     old && this.stopTone(old.tone)
     tones = filter(tones, t => t.id !== sound._id)
-    console.log('sound removed', tones)
+    // console.log('sound removed', tones)
     this.outputTones()
   }
 
@@ -94,6 +94,8 @@ export default class Player extends React.Component {
     let type = this.getToneType(tone)
     type === 'loop' && Tone.Transport.scheduleOnce(t => tone.stop().cancel().dispose(), 0)
     type === 'transport-event' && Tone.Transport.clear(tone)
+
+    // remove the mongo ID params values
   }
 
   startTone = (tone) => {
@@ -114,7 +116,7 @@ export default class Player extends React.Component {
   // GET TONES TO PARENT
   //
   outputTones = () => {
-    this.props.outputTones(tones)
+    // this.props.outputTones(tones)
   }
 
   //
