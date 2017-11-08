@@ -7,15 +7,9 @@ export default class Knob extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      startingValue: 0,
-      variable: props.variable,
-      hammerOptions: {},
+      startingVal: 0,
+      val: props.val
     }
-  }
-
-  changeValue = e => {
-    console.log(this.state.variable)
-    this.state.variable.value = e.target.value
   }
 
   componentWillUpdate (nextProps, nextState) {
@@ -27,13 +21,24 @@ export default class Knob extends React.Component {
   //
 
   handlePan = e => {
-    this.state.variable.value =  Math.round(this.state.startingValue + e.deltaY)
-    this.refs.input.value = Math.round(this.state.variable.value)
+    this.state.val =  parseInt(Math.round(this.state.startingVal + e.deltaY))
+    this.refs.input.value = Math.round(this.state.val)
+    this.props.onValueChange(this.state.val)
   }
 
   handlePanStart = e => {
-    console.log(this.state.variable)
-    this.setState({startingValue: this.state.variable.value})
+    // console.log(this.state.val)
+    this.setState({startingVal: this.state.val})
+  }
+
+  //
+  // DATA FLOW
+  //
+
+  changeValue = e => {
+    console.log(this.state.val)
+    this.state.val = parseInt(e.target.value)
+    this.props.onValueChange(this.state.val)
   }
 
 	render() {
@@ -44,13 +49,13 @@ export default class Knob extends React.Component {
         direction="DIRECTION_VERTICAL"
         options={this.state.hammerOptions}>
         <div>
-          {this.state.variable.name}
+          {this.props.name}
           <input
             type="number"
             min="-100"
             max="100"
             ref="input"
-            defaultValue={Math.round(this.state.variable.value)}
+            defaultValue={Math.round(this.state.val)}
             onChange={this.changeValue} />
         </div>
       </Hammer>
