@@ -1,8 +1,8 @@
 # XinDaw
 
 ## Introduction
-A Live Coding environment &amp; Daw experimentation leveraging websockets (ToneJS/React/Meteor)
-A surely far too ambitious project 
+* A Live Coding environment &amp; Daw experimentation leveraging websockets (ToneJS/React/Meteor)
+* A surely far too ambitious project 
 
 ## Why
 Its like a Daw using live coding as its base 
