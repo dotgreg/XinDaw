@@ -32,8 +32,6 @@ export let persistTone = tone => {
 }
 
 export let observeTones = () => {
-  console.log('start observeTones')
-  console.log(Tones.find())
   var handle = Tones.find().observeChanges({
     changed: function(id, fields) {
       console.log(id, fields)

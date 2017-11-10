@@ -2,14 +2,14 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 
-import { BrowserRouter, Router, Route, hashHistory } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
-import App from '/imports/client/App.jsx';
+import RouterWrapper from '/imports/client/router/Router.jsx';
 // require('/imports/client/router/index.jsx');
 
 const AppWrapper = () => (
   <BrowserRouter>
-    <Route path="/" component={App}/>
+    <RouterWrapper />
   </BrowserRouter>
 )
 

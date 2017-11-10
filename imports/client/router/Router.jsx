@@ -1,8 +1,9 @@
-import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router-dom'
+import {Route, Switch, IndexRoute } from 'react-router-dom'
 import React from 'react';
 
 import MainScreen from '../components/xindaw/screens/Main';
 import MixerScreen from '../components/xindaw/screens/Mixer';
+import IndexScreen from '../components/xindaw/screens/Index';
 
 export default class RouterWrapper extends React.Component {
 
@@ -12,10 +13,11 @@ export default class RouterWrapper extends React.Component {
 
 	render() {
 		return (
-      <div className="routes">
+      <Switch>
+        <Route exact path='/' component={IndexScreen}/>
         <Route path="/main" component={MainScreen} />
         <Route path="/mixer" component={MixerScreen} />
-      </div>
+      </Switch>
     )
   }
 }
