@@ -6,7 +6,7 @@ export let soundsWatcher = (props) => {
     let oldSound = find(props.array2, {'_id': sound._id})
     if (!oldSound) {
       if (props.added) {
-        console.log(`${sound.name} added`)
+        // console.log(`${sound.name} added`)
         return props.added(sound)
       }
     }
@@ -17,7 +17,7 @@ export let soundsWatcher = (props) => {
     let newSound = find(props.array1, {'_id': sound._id})
     if (!newSound) {
       if (props.deleted) {
-        console.log(`${sound.name} deleted`)
+        // console.log(`${sound.name} deleted`)
         return props.deleted(sound)
       }
     }
@@ -29,12 +29,12 @@ export let soundsWatcher = (props) => {
 
     if (intersection(['code', 'muted'], res).length > 0)  {
       if (props.updated) {
-        console.log(`${newSound.name} updated, prop ${res[0]} changed`)
+        // console.log(`${newSound.name} updated, prop ${res[0]} changed`)
         return props.updated(newSound, res[0])
       }
     } else {
       if (props.nothing) {
-        console.log(`${newSound.name} NOT updated, prop ${res[0]} changed`)
+        // console.log(`${newSound.name} NOT updated, prop ${res[0]} changed`)
         return props.nothing(newSound, res[0])
       }
     }

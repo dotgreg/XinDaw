@@ -2,7 +2,7 @@ import Tone from 'tone';
 import { Meteor } from 'meteor/meteor'
 
 import { Tones } from '/imports/api/tones';
-import { each } from 'lodash';
+import { each, find, keys, get, set } from 'lodash';
 
 Meteor.subscribe('tones');
 
@@ -33,8 +33,15 @@ export let persistTone = tone => {
 
 export let observeTones = () => {
   var handle = Tones.find().observeChanges({
-    changed: function(id, fields) {
-      console.log(id, fields)
+    changed: function(id, field) {
+      console.log(id, field)
+      let soundId = Tones.findOne(id).id
+      let tone = find(tones, {id: soundId})
+      let vars = field['options']['vars']
+
+      each(vars, (v,i) => {
+        tone['options']['vars'][i].value = v.persistedValue
+      })
     }
   })
 }

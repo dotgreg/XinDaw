@@ -18,7 +18,7 @@ Meteor.methods({
   },
 
   'tones.remove'(toneId) {
-    Tones.remove(toneId);
+    Tones.remove({id: toneId});
   },
 
   'tones.removeAll'() {
