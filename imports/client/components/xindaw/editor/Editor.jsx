@@ -3,6 +3,10 @@ import CodeMirror from 'react-codemirror';
 
 import { Meteor } from 'meteor/meteor'
 
+import styled from 'styled-components';
+
+require('./editor.css');
+
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/monokai.css');
 require('codemirror/keymap/sublime.js');
@@ -48,7 +52,7 @@ export default class Editor extends React.Component {
     }
 
 		return (
-      <div className="editorWrapper">
+      <div className="component-editor">
         <input
           type="text"
           ref="name"

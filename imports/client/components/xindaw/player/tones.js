@@ -27,7 +27,7 @@ export let startTone = tone => {
 }
 
 export let persistTone = tone => {
-  each(tone.options.vars, v => v.persistedValue = v.value)
+  each(tone.options.vars, v => v[1].persistedValue = v[1].value)
   Meteor.call('tones.insert', tone)
 }
 
@@ -40,7 +40,7 @@ export let observeTones = () => {
       let vars = field['options']['vars']
 
       each(vars, (v,i) => {
-        tone['options']['vars'][i].value = v.persistedValue
+        tone['options']['vars'][i][1].value = v[1].persistedValue
       })
     }
   })

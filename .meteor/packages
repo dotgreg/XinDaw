@@ -19,3 +19,4 @@ shell-server            # Server-side component of the `meteor shell` command
 
 react-meteor-data
 fortawesome:fontawesome
+fourseven:scss

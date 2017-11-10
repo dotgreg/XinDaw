@@ -13,7 +13,7 @@ import AddSong from '../AddSong.jsx';
 import Song from '../Song.jsx';
 
 import Bpm from '../Bpm.jsx';
-import Editor from '../Editor.jsx';
+import Editor from '../editor/Editor.jsx';
 import Player from '../player/Player.jsx';
 import Explorer from '../explorer/Explorer.jsx';
 
@@ -40,9 +40,9 @@ export class MainScreen extends React.Component {
 
 	render() {
 		return (
-      <div className="test3Music">
+      <div className="MainsScreen">
 
-        <Panel w={30}>
+        <Panel w={25}>
           <Bpm />
 
           <p> SOUNDS SONG </p>
@@ -61,14 +61,14 @@ export class MainScreen extends React.Component {
           <AddSong />
         </Panel>
 
-        <Panel w={40}>
+        <Panel w={50}>
           <Editor
             sound={this.props.selectedSound} />
 
           <Player sounds={this.state.songSounds} />
         </Panel>
 
-        <Panel w={30}>
+        <Panel w={25}>
           <Explorer />
           <AddSound />
         </Panel>
