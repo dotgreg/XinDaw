@@ -7,7 +7,7 @@ import React from 'react';
 import {each} from 'lodash';
 import styled from 'styled-components';
 
-import MixTable from '../MixTable';
+import MixTable from '../mixer/MixTable';
 
 
 class MixerScreen extends React.Component {

@@ -1,0 +1,36 @@
+// =icon($url, $size)
+//   width: $size
+//   height: $size
+//   background-image: url($url)
+//   background-size: contain
+//   background-repeat: none
+
+// ****************************
+// VARIABLES
+// ****************************
+
+$font: monospace;
+$font-size-s: 9px;
+
+// ****************************
+// BASE
+// ****************************
+body {
+  font-family: monospace;
+}
+
+// ****************************
+// MIXINS
+// ****************************
+
+@mixin icon($url, $size) {
+  width: $size;
+  height: $size;
+  background-image: url($url);
+  background-size: contain;
+  background-repeat: none;
+}
+
+// ****************************
+// FONT
+// ****************************

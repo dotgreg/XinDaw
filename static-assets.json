@@ -1,0 +1,6 @@
+{
+    "map": {
+        "imports/client/components/xindaw/mixer/knob/assets/": "knob/"
+    },
+    "verbose": true
+}

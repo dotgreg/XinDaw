@@ -5,7 +5,8 @@ import { Meteor } from 'meteor/meteor'
 
 import styled from 'styled-components';
 
-require('./editor.css');
+// require('./editor.css');
+require('./editor.sass');
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/monokai.css');
