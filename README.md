@@ -11,7 +11,7 @@ Its like a Daw using live coding as its base
 Under intensive care right now, should reach a first usable state + some docs soonish
 
 ## Screenshots
-![Interface](https://res.cloudinary.com/dotgreg/image/upload/v1510289179/ScreenClip_yhuacw.png)
+![Interface](https://res.cloudinary.com/dotgreg/image/upload/v1510488404/ScreenClip_tyywkt.png)
 
 
 
