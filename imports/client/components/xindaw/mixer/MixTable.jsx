@@ -65,7 +65,7 @@ const SoundName = styled.div`
 
 const SoundMixer = styled.div`
   background: #f3f3f3;
-  max-width: 30%;
+  max-width: 50%;
   margin: 5px;
   float: left;
 `;

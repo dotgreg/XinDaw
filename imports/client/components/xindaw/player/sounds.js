@@ -1,7 +1,7 @@
 import { evalCode } from './evalCode';
 import { stopTone, startTone, persistTone } from './tones';
 
-import {filter, reduce, intersection, indexOf, find, isEqual, each} from 'lodash';
+import {filter, reduce, intersection, indexOf, find, isEqual, each, get} from 'lodash';
 
 tones = []
 window.tones = tones
@@ -10,13 +10,14 @@ export let updateSound = (sound, props) => {
 
   removeSound(sound, true)
 
+  if (sound.muted) return {status:'ok'}
+
   let result = evalCode(sound.code)
 
   if (result.status === 'err') return result
-  if (sound.muted) return {status:'ok'}
 
   result = result.body
-  result = {id: sound._id, name: sound.name, tone: result.c, type: result.t, options: result.o}
+  result = {id: sound._id, name: sound.name, tone: result.c, elementsToDispose: result.e, type: result.t, options: result.o}
 
   startTone(result.tone)
   tones.push(result)
@@ -28,7 +29,11 @@ export let updateSound = (sound, props) => {
 
 export let removeSound = (sound) => {
   let old = find(tones, {'id': sound._id})
+
   old && stopTone(old.tone)
+  if (get(old, 'elementsToDispose')) Tone.Transport.scheduleOnce(t => {
+    each(old.elementsToDispose, e => e.dispose())
+  }, 1)
 
   tones = filter(tones, t => t.id !== sound._id)
   Meteor.call('tones.remove', sound._id)

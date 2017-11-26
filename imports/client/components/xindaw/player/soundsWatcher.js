@@ -6,7 +6,7 @@ export let soundsWatcher = (props) => {
     let oldSound = find(props.array2, {'_id': sound._id})
     if (!oldSound) {
       if (props.added) {
-        // console.log(`${sound.name} added`)
+        console.log(`${sound.name} added`)
         return props.added(sound)
       }
     }

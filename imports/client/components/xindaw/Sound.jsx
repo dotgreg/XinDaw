@@ -60,6 +60,7 @@ export default class Sound extends React.Component {
 
 const OneSound = styled.li`
   position: relative;
+  min-height: 25px;
 `;
 
 const Name = styled.p`

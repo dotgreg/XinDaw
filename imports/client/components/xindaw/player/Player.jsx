@@ -2,7 +2,10 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
 
 import React from 'react';
+
 import Tone from 'tone';
+import teoria from 'teoria'
+import _ from 'lodash'
 
 import styled from 'styled-components';
 
@@ -26,6 +29,9 @@ export default class Player extends React.Component {
     Tone.Transport.loopEnd = '2m'
     Tone.Transport.loop = true
     window.Tone = Tone
+
+    Tone.context.latencyHint = "interactive"
+    console.log('toneeeeeee staaaartttteddd yeaaahahahahahhaha')
 
     observeTones()
   }

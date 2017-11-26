@@ -30,6 +30,7 @@ export default class Song extends React.Component {
 
 const OneSong = styled.li`
   position: relative;
+  min-height: 25px;
 `;
 
 const Name = styled.p`
