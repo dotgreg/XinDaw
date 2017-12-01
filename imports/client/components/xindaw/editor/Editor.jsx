@@ -55,29 +55,29 @@ export default class Editor extends React.Component {
 
 		return (
       <div className="component-editor">
-        <div className="fields">
+        <css.Inline>
           <css.FieldWrapper>
-            <css.FieldLabel>title:</css.FieldLabel>
-            <css.FieldText
+            <css.Label>title:</css.Label>
+            <css.Input
               type="text"
               ref="name"
               onChange={this.saveName}
               value={this.props.sound.name} />
           </css.FieldWrapper>
-          <div className="fieldWrapper">
-            <div className="label">tags:</div>
-            <input
+          <css.FieldWrapper>
+            <css.Label>tags:</css.Label>
+            <css.Input
               type="text"
               ref="tags"
               onChange={this.saveTags}
               value={this.props.sound.tags} />
-          </div>
-        </div>
+          </css.FieldWrapper>
+        </css.Inline>
         <CodeMirror
           ref="editor"
           value={this.props.sound.code}
           options={options} />
-        <button onClick={this.save}> Save Code</button>
+        <css.Button onClick={this.save}> Save Code</css.Button>
       </div>
     )
   }

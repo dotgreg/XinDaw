@@ -22,8 +22,8 @@ class FileExplorer extends React.Component {
 		return (
       <div>
         <css.FieldWrapper>
-          <css.FieldLabel>search: </css.FieldLabel>
-          <css.FieldText
+          <css.Label>search: </css.Label>
+          <css.Input
           type='text'
           value={this.state.searchedTerm}
           onChange={this.updateSearchedTerm} />

@@ -1,6 +1,8 @@
 import Tone from 'tone';
 import React from 'react';
 
+import * as css from '/imports/client/components/xindaw/css/styles.js'
+
 export default class Bpm extends React.Component {
 
   constructor(props){
@@ -21,14 +23,14 @@ export default class Bpm extends React.Component {
 
 	render() {
 		return (
-      <div>
-        <input
+      <css.FieldWrapper>
+        <css.Number
           type="number"
-          size="2"
+          width="50px"
           ref="bpm"
           defaultValue={this.state.bpm} />
-        <button onClick={this.updateBpm} > Change BPM </button>
-      </div>
+        <css.Button onClick={this.updateBpm} > Change BPM </css.Button>
+      </css.FieldWrapper>
     )
   }
 }

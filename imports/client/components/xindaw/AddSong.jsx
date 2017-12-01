@@ -4,6 +4,8 @@ import dedent from 'dedent-js';
 
 import { Meteor } from 'meteor/meteor'
 
+import * as css from '/imports/client/components/xindaw/css/styles.js'
+
 export default class AddSong extends React.Component {
 
   constructor(props){
@@ -16,9 +18,9 @@ export default class AddSong extends React.Component {
 
 	render() {
 		return (
-      <button onClick={this.createSong}>
+      <css.Button onClick={this.createSong}>
         addSong
-      </button>
+      </css.Button>
     )
   }
 }

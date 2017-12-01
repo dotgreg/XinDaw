@@ -18,7 +18,8 @@ import Player from '../player/Player.jsx';
 import Explorer from '../explorer/Explorer.jsx';
 // import Explorer from '../explorer/Explorer2.jsx';
 
-import styled from 'styled-components';
+// import styled from 'styled-components';
+import * as css from '/imports/client/components/xindaw/css/styles.js'
 
 export class MainScreen extends React.Component {
 
@@ -42,10 +43,8 @@ export class MainScreen extends React.Component {
 	render() {
 		return (
       <div className="MainsScreen">
-
-        <Panel w={25}>
+        <css.Panel w={23}>
           <Bpm />
-
           <p> SOUNDS SONG </p>
           <ul>
             {this.state.songSounds.map(sound =>
@@ -60,29 +59,23 @@ export class MainScreen extends React.Component {
             )}
           </ul>
           <AddSong />
-        </Panel>
+        </css.Panel>
 
-        <Panel w={50}>
+        <css.Panel w={48}>
           <Editor
             sound={this.props.selectedSound} />
 
           <Player sounds={this.state.songSounds} />
-        </Panel>
+        </css.Panel>
 
-        <Panel w={25}>
+        <css.Panel w={23}>
           <Explorer />
           <AddSound />
-        </Panel>
+        </css.Panel>
       </div>
     )
   }
 }
-
-const Panel = styled.div`
-  width: ${props => props.w}%;
-  overflow-y: scroll;
-  float: left;
-`;
 
 //
 // DATA CONTAINER (METEOR)
