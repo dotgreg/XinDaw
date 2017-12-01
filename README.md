@@ -1,6 +1,7 @@
 # XinDaw
 
-![Interface](https://res.cloudinary.com/dotgreg/image/upload/v1510488828/ScreenClip_ed8blw.png)
+![Interface](https://user-images.githubusercontent.com/2981891/33467752-cfe98452-d691-11e7-8aac-9078a29bc421.jpg)
+
 
 ## Introduction
 * A Live Coding environment &amp; Daw experimentation leveraging websockets (ToneJS/React/Meteor)
