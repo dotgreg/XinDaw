@@ -16,6 +16,7 @@ import Bpm from '../Bpm.jsx';
 import Editor from '../editor/Editor.jsx';
 import Player from '../player/Player.jsx';
 import Explorer from '../explorer/Explorer.jsx';
+// import Explorer from '../explorer/Explorer2.jsx';
 
 import styled from 'styled-components';
 

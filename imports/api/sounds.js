@@ -16,6 +16,7 @@ Meteor.methods({
 
     Sounds.insert({
       'name': `sound-${random(10000)}`,
+      'tags': ``,
       'selected': false,
       'muted': false,
       'code': code,
@@ -32,6 +33,7 @@ Meteor.methods({
     let sound = Sounds.findOne(soundId)
     Sounds.insert({
       'name': `${sound.name}-clone`,
+      'tags': sound.tags,
       'selected': sound.selected,
       'muted': sound.muted,
       'code': sound.code,
@@ -59,5 +61,9 @@ Meteor.methods({
   'sounds.updateName'(soundId, name) {
     check(soundId, String);
     Sounds.update(soundId, { $set: { name: name } })
+  },
+  'sounds.updateTags'(soundId, tags) {
+    check(soundId, String);
+    Sounds.update(soundId, { $set: { tags: tags } })
   }
 });

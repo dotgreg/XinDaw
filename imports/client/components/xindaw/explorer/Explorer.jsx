@@ -4,7 +4,7 @@ import { Sounds } from '/imports/api/sounds.js';
 import React from 'react';
 import Sound from '../Sound.jsx';
 
-import styled from 'styled-components';
+import * as css from '/imports/client/components/xindaw/css/styles.js'
 
 class FileExplorer extends React.Component {
 
@@ -21,11 +21,13 @@ class FileExplorer extends React.Component {
 	render() {
 		return (
       <div>
-        Explorer
-        <input
+        <css.FieldWrapper>
+          <css.FieldLabel>search: </css.FieldLabel>
+          <css.FieldText
           type='text'
           value={this.state.searchedTerm}
           onChange={this.updateSearchedTerm} />
+        </css.FieldWrapper>
         <ul>
           {this.props.soundsFiltered(new RegExp(this.state.searchedTerm)).map(sound =>
             <Sound key={sound._id} sound={sound} />
@@ -39,6 +41,7 @@ class FileExplorer extends React.Component {
 export default withTracker(props => {
   return {
     sounds: Sounds.find().fetch(),
-    soundsFiltered: search => Sounds.find({"name": search}, { sort: { name: -1 } }).fetch()
+    soundsFiltered: search => Sounds.find( { $or : [ { name : search }, { tags : search } ] }, { sort: { name: -1 } }).fetch()
+    // soundsFiltered: search => Sounds.find({"name": search}, { sort: { name: -1 } }).fetch()
   };
 })(FileExplorer);

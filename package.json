@@ -18,6 +18,8 @@
     "react-hammerjs": "^1.0.1",
     "react-meteor-data": "^0.2.10",
     "react-router-dom": "^4.2.2",
+    "react-sortable-tree": "^1.5.2",
+    "react-sortable-tree-theme-file-explorer": "^1.1.2",
     "styled-components": "^2.2.3",
     "teoria": "^2.5.0",
     "tone": "^0.11.11"

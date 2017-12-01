@@ -3,7 +3,7 @@ import CodeMirror from 'react-codemirror';
 
 import { Meteor } from 'meteor/meteor'
 
-import styled from 'styled-components';
+import * as css from '/imports/client/components/xindaw/css/styles.js'
 
 // require('./editor.css');
 require('./editor.sass');
@@ -29,6 +29,7 @@ export default class Editor extends React.Component {
 
 	saveCode = () => Meteor.call('sounds.updateCode', this.props.sound._id, this.refs.editor.getCodeMirror().getValue())
 	saveName = () => Meteor.call('sounds.updateName', this.props.sound._id, this.refs.name.value)
+	saveTags = () => Meteor.call('sounds.updateTags', this.props.sound._id, this.refs.tags.value)
 	save = () => {
     this.saveCode()
     // this.saveTitle()
@@ -54,11 +55,24 @@ export default class Editor extends React.Component {
 
 		return (
       <div className="component-editor">
-        <input
-          type="text"
-          ref="name"
-          onChange={this.saveName}
-          value={this.props.sound.name} />
+        <div className="fields">
+          <css.FieldWrapper>
+            <css.FieldLabel>title:</css.FieldLabel>
+            <css.FieldText
+              type="text"
+              ref="name"
+              onChange={this.saveName}
+              value={this.props.sound.name} />
+          </css.FieldWrapper>
+          <div className="fieldWrapper">
+            <div className="label">tags:</div>
+            <input
+              type="text"
+              ref="tags"
+              onChange={this.saveTags}
+              value={this.props.sound.tags} />
+          </div>
+        </div>
         <CodeMirror
           ref="editor"
           value={this.props.sound.code}
