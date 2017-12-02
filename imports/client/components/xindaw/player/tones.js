@@ -7,9 +7,6 @@ import { each, find, keys, get, set } from 'lodash';
 Meteor.subscribe('tones');
 
 export let getToneType = tone => {
-  // if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Sequence/) && tone.constructor.toString().match(/Tone\.Sequence/).length === 1) return 'loop'
-  // if (typeof tone === 'object' && tone.constructor.toString().match(/Tone\.Loop/) && tone.constructor.toString().match(/Tone\.Loop/).length === 1) return 'loop'
-  console.log(tone)
   if (typeof tone === 'number') return 'transport-event'
   else if (typeof tone === 'object') return 'loop'
 

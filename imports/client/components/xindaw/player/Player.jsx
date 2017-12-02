@@ -31,7 +31,6 @@ export default class Player extends React.Component {
     window.Tone = Tone
 
     Tone.context.latencyHint = "interactive"
-    console.log('toneeeeeee staaaartttteddd yeaaahahahahahhaha')
 
     observeTones()
   }
