@@ -9,9 +9,10 @@ import { Songs } from '/imports/api/songs.js';
 import { find, times, each } from 'lodash';
 
 import React from 'react';
+import styled from 'styled-components';
 
 import MixTable from '../mixer/MixTable';
-import Sound from '../sound/Sound.jsx';
+import SoundPush from '../sound/SoundPush.jsx';
 
 class MixerScreen2 extends React.Component {
   constructor(props){
@@ -24,7 +25,6 @@ class MixerScreen2 extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     // get the selected song and its related sounds
-    console.log(nextProps.songs, find(nextProps.songs, {selected: true}))
     let selectedSong = find(nextProps.songs, {selected: true})
     let songSounds = times(selectedSong.sounds.length, id => Sounds.findOne(selectedSong.sounds[id]))
 
@@ -35,16 +35,25 @@ class MixerScreen2 extends React.Component {
 	render() {
 		return (
       <div className="Mixer2">
-        <MixTable tones={this.props.tones} />
-        <ul>
+        <SoundsPushs>
           {this.state.songSounds.map(sound =>
-            <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
+            <SoundPush key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
           )}
-        </ul>
+        </SoundsPushs>
+        <MixTable tones={this.props.tones} />
       </div>
     )
   }
 }
+
+// CSS
+
+const SoundsPushs = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  // justify-content: space-between;
+  flex-direction: row;
+`;
 
 
 //

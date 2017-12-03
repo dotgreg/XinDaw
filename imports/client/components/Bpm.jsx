@@ -1,7 +1,7 @@
 import Tone from 'tone';
 import React from 'react';
 
-import * as css from '/imports/client/components/xindaw/css/styles.js'
+import * as css from '/imports/client/components/css/styles.js'
 
 export default class Bpm extends React.Component {
 

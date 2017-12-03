@@ -4,7 +4,7 @@ import dedent from 'dedent-js';
 
 import { Meteor } from 'meteor/meteor'
 
-import * as css from '/imports/client/components/xindaw/css/styles.js'
+import * as css from '/imports/client/components/css/styles.js'
 
 export default class AddSong extends React.Component {
 

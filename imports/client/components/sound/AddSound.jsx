@@ -8,7 +8,7 @@ let notes = ['A2','B2','C2','D2','E2','F2','G2']
 let timeNotes = ['2n','4n','8n','16n']
 let times = ['0.5','1','1.5','2','2.5']
 
-import * as css from '/imports/client/components/xindaw/css/styles.js'
+import * as css from '/imports/client/components/css/styles.js'
 
 export default class AddSound extends React.Component {
 

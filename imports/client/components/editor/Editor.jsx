@@ -3,7 +3,7 @@ import CodeMirror from 'react-codemirror';
 
 import { Meteor } from 'meteor/meteor'
 
-import * as css from '/imports/client/components/xindaw/css/styles.js'
+import * as css from '/imports/client/components/css/styles.js'
 
 // require('./editor.css');
 require('./editor.sass');

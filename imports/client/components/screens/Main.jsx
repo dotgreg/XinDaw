@@ -19,7 +19,7 @@ import Explorer from '../explorer/Explorer.jsx';
 // import Explorer from '../explorer/Explorer2.jsx';
 
 // import styled from 'styled-components';
-import * as css from '/imports/client/components/xindaw/css/styles.js'
+import * as css from '/imports/client/components/css/styles.js'
 
 export class MainScreen extends React.Component {
 

@@ -5,7 +5,6 @@ import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 
 import RouterWrapper from '/imports/client/router/Router.jsx';
-// require('/imports/client/router/index.jsx');
 
 const AppWrapper = () => (
   <BrowserRouter>

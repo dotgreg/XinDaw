@@ -4,7 +4,7 @@ import { Sounds } from '/imports/api/sounds.js';
 import React from 'react';
 import Sound from '../sound/Sound.jsx';
 
-import * as css from '/imports/client/components/xindaw/css/styles.js'
+import * as css from '/imports/client/components/css/styles.js'
 
 class FileExplorer extends React.Component {
 
