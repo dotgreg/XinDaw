@@ -4,7 +4,7 @@ import Songs from '/imports/api/songs'
 import React from 'react';
 import styled from 'styled-components';
 
-import Icon from './utils/Icon'
+import Icon from '../utils/Icon'
 
 import {filter} from 'lodash';
 

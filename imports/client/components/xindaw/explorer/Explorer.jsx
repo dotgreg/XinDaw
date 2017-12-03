@@ -2,7 +2,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
 import { Sounds } from '/imports/api/sounds.js';
 import React from 'react';
-import Sound from '../Sound.jsx';
+import Sound from '../sound/Sound.jsx';
 
 import * as css from '/imports/client/components/xindaw/css/styles.js'
 

@@ -6,8 +6,8 @@ import { Songs } from '/imports/api/songs.js';
 import React from 'react';
 import { find, times, random } from 'lodash';
 
-import AddSound from '../AddSound.jsx';
-import Sound from '../Sound.jsx';
+import AddSound from '../sound/AddSound.jsx';
+import Sound from '../sound/Sound.jsx';
 
 import AddSong from '../AddSong.jsx';
 import Song from '../Song.jsx';
@@ -33,10 +33,11 @@ export class MainScreen extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    // get the selected song and its related sounds
     let selectedSong = find(nextProps.songs, {selected: true})
-    let sounds = times(selectedSong.sounds.length, id => Sounds.findOne(selectedSong.sounds[id]))
+    let songSounds = times(selectedSong.sounds.length, id => Sounds.findOne(selectedSong.sounds[id]))
 
-    nextState.songSounds = sounds
+    nextState.songSounds = songSounds
     nextState.selectedSong = selectedSong
   }
 

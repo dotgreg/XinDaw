@@ -14,6 +14,7 @@ export default class IndexScreen extends React.Component {
         <ul>
           <li><Link to="/main">Main Screen</Link></li>
           <li><Link to="/mixer">Mixer Screen</Link></li>
+          <li><Link to="/mixer2">Mixer2 Screen</Link></li>
         </ul>
       </div>
     )

@@ -2,7 +2,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
 import { Sounds } from '/imports/api/sounds.js';
 import React from 'react';
-import Sound from '../Sound.jsx';
+import Sound from '../sound/Sound.jsx';
 
 import SortableTree, { addNodeUnderParent, removeNodeAtPath, getFlatDataFromTree, getTreeFromFlatData } from 'react-sortable-tree';
 import FileExplorerTheme from 'react-sortable-tree-theme-file-explorer';

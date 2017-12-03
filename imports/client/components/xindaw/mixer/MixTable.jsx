@@ -15,7 +15,6 @@ export default class MixTable extends React.Component {
 
   changeValue = (tone, i, value) => {
     tone.options.vars[i][1].persistedValue = value
-    // console.log(tone, tone.options.vars[i].persistedValue, i, value)
     Meteor.call('tones.update', tone)
   }
 
