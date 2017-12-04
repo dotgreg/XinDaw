@@ -19,6 +19,12 @@ export default class Editor extends React.Component {
     super(props)
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.props.sound) return false
+    console.log(nextProps)
+    if (!nextProps.sound.tags) nextProps.sound.tags = ''
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (!this.props.sound) return false
 
@@ -58,17 +64,19 @@ export default class Editor extends React.Component {
         <css.Inline>
           <css.FieldWrapper>
             <css.Label>title:</css.Label>
-            <css.Input
+            <input
               type="text"
               ref="name"
+              className="input text"
               onChange={this.saveName}
               value={this.props.sound.name} />
           </css.FieldWrapper>
           <css.FieldWrapper>
             <css.Label>tags:</css.Label>
-            <css.Input
+            <input
               type="text"
               ref="tags"
+              className="input text"
               onChange={this.saveTags}
               value={this.props.sound.tags} />
           </css.FieldWrapper>

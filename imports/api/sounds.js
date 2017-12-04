@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
-import {random} from 'lodash';
+import {random, each, filter} from 'lodash';
+
+import {Songs} from './songs';
 
 export const Sounds = new Mongo.Collection('sounds');
 
@@ -27,6 +29,9 @@ Meteor.methods({
     check(soundId, String);
 
     Sounds.remove(soundId);
+
+    // Clean orphan sounds id in songs
+    Meteor.call('songs.cleanSoundsSongs')
   },
   'sounds.clone'(soundId) {
     check(soundId, String);

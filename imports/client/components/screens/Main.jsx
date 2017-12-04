@@ -36,6 +36,7 @@ export class MainScreen extends React.Component {
     // get the selected song and its related sounds
     let selectedSong = find(nextProps.songs, {selected: true})
     let songSounds = times(selectedSong.sounds.length, id => Sounds.findOne(selectedSong.sounds[id]))
+    // console.log(songSounds)
 
     nextState.songSounds = songSounds
     nextState.selectedSong = selectedSong
@@ -48,8 +49,10 @@ export class MainScreen extends React.Component {
           <Bpm />
           <p> SOUNDS SONG </p>
           <ul>
-            {this.state.songSounds.map(sound =>
-              <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
+            {this.state.songSounds.map(sound => {
+                // console.log(sound)
+                // return <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
+              }
             )}
           </ul>
 

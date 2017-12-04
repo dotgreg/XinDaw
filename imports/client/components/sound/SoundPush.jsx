@@ -15,12 +15,9 @@ export default class SoundPush extends React.Component {
     super(props)
   }
 
-  removeThatSound = () => Meteor.call('sounds.remove', this.props.sound._id);
   selectThatSound = () => Meteor.call('sounds.select', this.props.sound._id);
   toggleThatSound = () => Meteor.call('sounds.toggleMute', this.props.sound._id);
-  cloneThatSound = () => Meteor.call('sounds.clone', this.props.sound._id);
 
-  addToSong = () => Meteor.call('songs.addSound', this.props.sound._id);
   removeToSong = () => Meteor.call('songs.removeSound', this.props.sound._id);
 
   toggleAndSelectThatSound = () => { this.selectThatSound(); this.toggleThatSound() }
@@ -51,14 +48,15 @@ export default class SoundPush extends React.Component {
 
 const OneSound = styled.li`
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
   margin: 10px;
   padding: 10px;
   border: 2px black solid;
   min-height: 25px;
   list-style: none;
+  font-size: 10px;
   background: ${props => props.muted && 'rgba(255, 233, 77, 0.5)'};
 `;
 

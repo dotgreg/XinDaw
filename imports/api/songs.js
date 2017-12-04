@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
-import { random, filter, uniq } from 'lodash';
+import { random, filter, uniq, each } from 'lodash';
 
 import {Sounds} from './sounds';
 
@@ -47,5 +47,18 @@ Meteor.methods({
   'songs.selectSound'(soundId) {
     let song = Songs.findOne({selected: true})
     Songs.update(song._id, { $set: { selectedSound: soundId } })
+  },
+
+  // clean all songs from possible orphans id
+  'songs.cleanSoundsSongs' () {
+    let songs = Songs.find().fetch()
+
+    each(songs, song => {
+      Songs.update(song._id, { $set: { sounds: filter(song.sounds, sid => {
+          // if the sound still exist keep it, otherwise remove it
+          return Sounds.find(sid).fetch().length > 0
+        })
+      }})
+    })
   }
 });

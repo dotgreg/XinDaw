@@ -3,6 +3,8 @@ import {filter, reduce, intersection, indexOf, find, isEqual, each} from 'lodash
 export let soundsWatcher = (props) => {
   // 1 DETECT SOUNDS ADDED
   each(props.array1, sound => {
+    if (!sound) return false
+
     let oldSound = find(props.array2, {'_id': sound._id})
     if (!oldSound) {
       if (props.added) {
@@ -14,6 +16,8 @@ export let soundsWatcher = (props) => {
 
   // 2 DETECT SOUNDS DELETED
   each(props.array2, sound => {
+    if (!sound) return false
+
     let newSound = find(props.array1, {'_id': sound._id})
     if (!newSound) {
       if (props.deleted) {
