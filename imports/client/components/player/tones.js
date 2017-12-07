@@ -2,7 +2,7 @@ import Tone from 'tone';
 import { Meteor } from 'meteor/meteor'
 
 import { Tones } from '/imports/api/tones';
-import { each, find, get, set, isNumber } from 'lodash';
+import { each, find, get, set, isNumber, round } from 'lodash';
 
 Meteor.subscribe('tones');
 
@@ -24,6 +24,15 @@ export let startTone = tone => {
   let type = getToneType(tone)
   type === 'loop' && Tone.Transport.scheduleOnce(t => tone.start(0), 1)
 }
+
+export let initTonesModifiers = (vars) => {
+  each(vars, v => {
+    if (v[5]) {
+      isNumber(v[1].value) ? v[1].value = v[5] : v[1][v[0]] = round(v[5],2)
+    }
+  })
+}
+
 
 // persist the window.tones object to a meteor collection
 export let persistTone = tone => {
@@ -57,8 +66,6 @@ export let observeTones = () => {
         // else if a number, update the number directly
         let nameProp = tone['options']['vars'][i][0]
         isNumber(v[1].persistedValue) ? tone['options']['vars'][i][1].value = v[1].persistedValue : tone['options']['vars'][i][1][nameProp] = v[1][nameProp]
-        // v[1].persistedValue && console.log(v[1].persistedValue)
-        // console.log(v[1])
       })
     }
   })

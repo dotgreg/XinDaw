@@ -1,5 +1,5 @@
-import { evalCode } from './evalCode';
-import { stopTone, startTone, persistTone } from './tones';
+import { evalCode } from '../code/evalCode';
+import { stopTone, startTone, persistTone, initTonesModifiers } from './tones';
 
 import {filter, isFunction, reduce, intersection, indexOf, find, isEqual, each, get} from 'lodash';
 
@@ -20,6 +20,9 @@ export let updateSound = (sound, props) => {
   result = {soundId: sound._id, name: sound.name, tone: result.c, elementsToDispose: result.e, options: result.o}
 
   startTone(result.tone)
+
+  initTonesModifiers(result.options.vars)
+
   window.tones.push(result)
 
   persistTone(result)
@@ -29,7 +32,6 @@ export let updateSound = (sound, props) => {
 
 export let removeSound = (sound) => {
   let old = find(window.tones, {'soundId': sound._id})
-  console.log(old)
 
   old && stopTone(old.tone)
 

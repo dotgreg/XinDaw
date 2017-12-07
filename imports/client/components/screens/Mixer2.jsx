@@ -40,7 +40,7 @@ class MixerScreen2 extends React.Component {
             <SoundPush key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
           )}
         </SoundsPushs>
-        <MixTable tones={this.props.tones} />
+        <MixTable tones={this.props.tones}/>
       </div>
     )
   }

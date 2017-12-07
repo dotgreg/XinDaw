@@ -13,9 +13,11 @@ export default class Knob extends React.Component {
     let decimals = (this.props.step + "").split(".")[1]
     let precision = decimals ? decimals.length : 0
 
+    let val = props.initVal ? props.initVal : props.val
+
     this.state = {
       startingVal: 0,
-      val: props.val,
+      val: val,
       currentPercentage: 0,
       precision: precision
     }
@@ -92,7 +94,7 @@ export default class Knob extends React.Component {
               max={this.props.max}
               step={this.props.step}
               ref="input"
-              defaultValue={Math.round(this.state.val)}
+              defaultValue={round(this.state.val, this.state.precision)}
               onChange={this.modifyValueByInput} />
           </div>
         </Hammer>
