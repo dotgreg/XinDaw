@@ -22,11 +22,15 @@ export default class MixTable extends React.Component {
     Meteor.call('tones.update', tone)
   }
 
+  saveParamsTone = (tone) => {
+    console.log(tone)
+  }
+
 	render() {
 		return (
       <Table>
         {this.props.tones.map(tone => (
-          <SoundMixer key={tone.id}>
+          <SoundMixer key={tone.soundId}>
             <SoundName>{tone.name}</SoundName>
             <div>
                {(tone.options && tone.options.vars) && tone.options.vars.map((v,i) =>
@@ -37,10 +41,11 @@ export default class MixTable extends React.Component {
                     min={v[2]}
                     max={v[3]}
                     step={v[4]}
-                    defaultVal={v[5]}
+                    initVal={v[5]}
                     onValueChange={this.changeValue.bind(this, tone, i)} />
                )}
             </div>
+            <div onClick={this.saveParamsTone.bind(this, tone)}>save</div>
           </SoundMixer>
           )
         )}
