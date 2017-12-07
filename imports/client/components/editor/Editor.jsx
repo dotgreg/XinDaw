@@ -19,11 +19,11 @@ export default class Editor extends React.Component {
     super(props)
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (!this.props.sound) return false
-    console.log(nextProps)
-    if (!nextProps.sound.tags) nextProps.sound.tags = ''
-  }
+  // componentWillUpdate(nextProps, nextState) {
+  //   if (!this.props.sound) return false
+  //   console.log(nextProps)
+  //   if (!nextProps.sound.tags) nextProps.sound.tags = ''
+  // }
 
   componentDidUpdate(prevProps, prevState) {
     if (!this.props.sound) return false

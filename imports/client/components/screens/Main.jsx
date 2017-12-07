@@ -50,8 +50,7 @@ export class MainScreen extends React.Component {
           <p> SOUNDS SONG </p>
           <ul>
             {this.state.songSounds.map(sound => {
-                // console.log(sound)
-                // return <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
+                return <Sound key={`${sound._id}-songSound`} sound={sound} type="songSound"/>
               }
             )}
           </ul>

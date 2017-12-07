@@ -7,7 +7,7 @@ import teoria from 'teoria'
 export let evalCode = (code) => {
 
   code = prepareCode(code)
-  console.log('evalCode '+code)
+  // console.log('evalCode '+code)
 
   try {
     let result =  eval(`(function self(){${code}}())`);

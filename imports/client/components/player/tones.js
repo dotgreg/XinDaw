@@ -25,18 +25,27 @@ export let startTone = tone => {
   type === 'loop' && Tone.Transport.scheduleOnce(t => tone.start(0), 1)
 }
 
+// persist the window.tones object to a meteor collection
 export let persistTone = tone => {
   if (!get(tone, 'options.vars')) return false
-  each(tone.options.vars, v => v[1].persistedValue = v[1].value)
+  each(tone.options.vars, (v,i) => {
+    if (!v[1]) {
+      console.warn(`the options ${v[0]} is not interpreted as its value is null`)
+      tone.options.vars.splice(i, 1)
+      return false
+    }
+    if (v[1].value) v[1].persistedValue = v[1].value
+  })
   Meteor.call('tones.insert', tone)
 }
 
+// if we have some vars inside the options that changed
+// spread the change to value inside  window.tones to modify sound
 export let observeTones = () => {
   var handle = Tones.find().observeChanges({
     changed: function(id, field) {
-      console.log(id, field)
       let soundId = Tones.findOne(id).id
-      let tone = find(tones, {id: soundId})
+      let tone = find(window.tones, {id: soundId})
       let vars = field['options']['vars']
 
       each(vars, (v,i) => {

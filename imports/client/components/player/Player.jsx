@@ -23,6 +23,7 @@ export default class Player extends React.Component {
   }
 
   componentDidMount () {
+    // clean all the meteor collection replication of the window.tones object
     Meteor.call('tones.removeAll')
 
     Tone.Transport.start('+0.1')

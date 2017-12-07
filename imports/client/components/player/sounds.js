@@ -20,7 +20,7 @@ export let updateSound = (sound, props) => {
   result = {id: sound._id, name: sound.name, tone: result.c, elementsToDispose: result.e, options: result.o}
 
   startTone(result.tone)
-  tones.push(result)
+  window.tones.push(result)
 
   persistTone(result)
 
@@ -28,7 +28,7 @@ export let updateSound = (sound, props) => {
 }
 
 export let removeSound = (sound) => {
-  let old = find(tones, {'id': sound._id})
+  let old = find(window.tones, {'id': sound._id})
 
   old && stopTone(old.tone)
 
@@ -42,6 +42,6 @@ export let removeSound = (sound) => {
     })
   }, 1)
 
-  tones = filter(tones, t => t.id !== sound._id)
+  window.tones = filter(window.tones, t => t.id !== sound._id)
   Meteor.call('tones.remove', sound._id)
 }

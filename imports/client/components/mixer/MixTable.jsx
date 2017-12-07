@@ -29,9 +29,11 @@ export default class MixTable extends React.Component {
                   <Knob
                     key={`${tone.id}-${i}`}
                     name={v[0]}
-                    val={v[1].persistedValue}
+                    val={v[1].persistedValue ? v[1].persistedValue : v[1]}
                     min={v[2]}
                     max={v[3]}
+                    step={v[4]}
+                    defaultVal={v[5]}
                     onValueChange={this.changeValue.bind(this, tone, i)} />
                )}
             </div>

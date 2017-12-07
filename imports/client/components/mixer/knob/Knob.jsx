@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Hammer from 'react-hammerjs';
-import { clamp } from 'lodash';
+import { clamp, round } from 'lodash';
 
 require('./knob.sass')
 
@@ -10,10 +10,14 @@ export default class Knob extends React.Component {
   constructor(props){
     super(props)
 
+    let decimals = (this.props.step + "").split(".")[1]
+    let precision = decimals ? decimals.length : 0
+
     this.state = {
       startingVal: 0,
       val: props.val,
-      currentPercentage: 0
+      currentPercentage: 0,
+      precision: precision
     }
   }
 
@@ -26,17 +30,16 @@ export default class Knob extends React.Component {
     nextState.variable = nextProps.variable
   }
 
-  updateKnob
-
   //
   // UX : touch management
   //
 
   handlePan = e => {
     let variator = (this.props.max / 200) * e.deltaY
-    this.state.val =  clamp(parseInt(Math.round(this.state.startingVal + variator)), this.props.min, this.props.max)
 
-    this.refs.input.value = Math.round(this.state.val)
+    this.state.val =  clamp(parseFloat(round(this.state.startingVal + variator, this.state.precision)), this.props.min, this.props.max)
+
+    this.refs.input.value = round(this.state.val, this.state.precision)
 
     this.changeValue()
   }
@@ -46,7 +49,7 @@ export default class Knob extends React.Component {
   }
 
   modifyValueByInput = e => {
-    this.state.val = parseInt(e.target.value)
+    this.state.val = parseFloat(e.target.value)
 
     this.changeValue()
   }
@@ -59,8 +62,6 @@ export default class Knob extends React.Component {
     let currentPercentage = currentRelativePosition / aPercent
 
     this.setState({currentPercentage: currentPercentage})
-
-    console.log(this.state.val, aPercent, currentRelativePosition, currentPercentage)
   }
 
   //
@@ -89,6 +90,7 @@ export default class Knob extends React.Component {
               type="number"
               min={this.props.min}
               max={this.props.max}
+              step={this.props.step}
               ref="input"
               defaultValue={Math.round(this.state.val)}
               onChange={this.modifyValueByInput} />
