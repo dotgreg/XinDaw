@@ -2,7 +2,7 @@ import Tone from 'tone';
 import { Meteor } from 'meteor/meteor'
 
 import { Tones } from '/imports/api/tones';
-import { each, find, keys, get, set } from 'lodash';
+import { each, find, get, set, isNumber } from 'lodash';
 
 Meteor.subscribe('tones');
 
@@ -42,6 +42,9 @@ export let persistTone = tone => {
 // if we have some vars inside the options that changed
 // spread the change to value inside  window.tones to modify sound
 export let observeTones = () => {
+  setTimeout(() => {
+    console.log(window.tones)
+  }, 2000)
   var handle = Tones.find().observeChanges({
     changed: function(id, field) {
       let soundId = Tones.findOne(id).id
@@ -49,7 +52,10 @@ export let observeTones = () => {
       let vars = field['options']['vars']
 
       each(vars, (v,i) => {
-        tone['options']['vars'][i][1].value = v[1].persistedValue
+        // if the options.vars.variable is a Tone.Param (obj), update its .value prop
+        // else if a number, update the number directly
+        let nameProp = tone['options']['vars'][i][0]
+        v[1].persistedValue ? tone['options']['vars'][i][1].value = v[1].persistedValue : tone['options']['vars'][i][1][nameProp] = v[1][nameProp]
       })
     }
   })

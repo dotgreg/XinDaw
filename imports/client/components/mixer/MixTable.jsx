@@ -1,7 +1,7 @@
 import Tone from 'tone';
 import React from 'react';
 
-import {each} from 'lodash';
+import { each, isNumber} from 'lodash';
 import styled from 'styled-components';
 
 import { Meteor } from 'meteor/meteor'
@@ -14,7 +14,11 @@ export default class MixTable extends React.Component {
   }
 
   changeValue = (tone, i, value) => {
-    tone.options.vars[i][1].persistedValue = value
+
+    let nameProp = tone.options.vars[i][0]
+    if (tone.options.vars[i][1].persistedValue) tone.options.vars[i][1].persistedValue = value
+    else tone.options.vars[i][1][nameProp] = value
+
     Meteor.call('tones.update', tone)
   }
 
@@ -29,7 +33,7 @@ export default class MixTable extends React.Component {
                   <Knob
                     key={`${tone.id}-${i}`}
                     name={v[0]}
-                    val={v[1].persistedValue ? v[1].persistedValue : v[1]}
+                    val={v[1].persistedValue ? v[1].persistedValue : v[1][v[0]]}
                     min={v[2]}
                     max={v[3]}
                     step={v[4]}
