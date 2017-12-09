@@ -24,6 +24,15 @@ export default class MixTable extends React.Component {
     Meteor.call('tones.update', tone)
   }
 
+  componentWillUpdate (nextProps, nextState) {
+    // console.log('MIXTABLE componentWillUpdate', nextProps, nextState)
+    // nextState.variable = nextProps.variable
+  }
+
+  // shouldComponentUpdate(nextProps, nextState){
+  //   return false;
+  // }
+
   saveParamsTone = tone => {
     updateParamsCode(tone.soundId, tone._id)
   }

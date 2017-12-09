@@ -15,9 +15,7 @@ export let updateParamsCode = (soundId, toneId) => {
 
   let newCode = sound.code
   each(tone.options.vars, v => {
-    // let regString = `\\[(\\'|\\")${v[0]}(\\'|\\")(.+)\\]`
     let regString = `\\[(\\'|\\")${v[0]}(\\'|\\")\\,(.+)\\,(.+)\\,(.+)\\,(.+)(\\,(.+))*\\]`
-    // let regString = `\\[(\\'|\\")${v[0]}(\\'|\\")\\,([^,]+)\\,([^,]+)\\,([^,]+)\\,(([^,]+)|(([^,]+)\\,([^,]+)))\\]`
     let regex = new RegExp(regString,"gi")
 
     let nameProp = v[0]
@@ -26,6 +24,5 @@ export let updateParamsCode = (soundId, toneId) => {
     // newCode = newCode.replace(regex, `['${v[0]}'$3, ${newValue}]`)
     newCode = newCode.replace(regex, `['${v[0]}',$3,$4,$5,${newValue}]`)
   })
-  console.log(newCode)
   Meteor.call('sounds.updateCode', soundId, newCode)
 }

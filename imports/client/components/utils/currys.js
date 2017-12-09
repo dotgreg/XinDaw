@@ -12,7 +12,6 @@ export const intervalWithIntVariation = (callback, min, max, step, intTime) => {
     nb = up ? nb + step : nb - step
     if (nb === max) up = false
     if (nb === min) up = true
-    console.log(nb)
     callback(nb)
   }, intTime)
 }

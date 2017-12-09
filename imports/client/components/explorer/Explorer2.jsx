@@ -19,9 +19,7 @@ class FileExplorer2 extends React.Component {
     }
 
     setTimeout(() => {
-      console.log(this.state.treeData)
       let newTreeData = [ ...this.state.treeData, { title: 'woooopreactivity', children: [ { title: 'Egg', otherprop: 'lolcats2' } ], otherprop: 'lolcats' }]
-      console.log(newTreeData)
       this.setState({treeData: newTreeData})
     }, 2000)
   }
@@ -30,12 +28,9 @@ class FileExplorer2 extends React.Component {
   updateSearchedTerm = e => this.setState({searchedTerm: e.target.value})
 
   updateTreeData = treeData => {
-    console.log(treeData)
 
     let flatmap = getFlatDataFromTree({treeData: treeData, getNodeKey: this.getNodeKey, ignoreCollapsed: false})
-    console.log(flatmap)
     flatmap = flatmap.map(({ node, path }) => {
-      console.log(node, path)
       return {
         id: node.id,
         name: node.name,
@@ -44,23 +39,19 @@ class FileExplorer2 extends React.Component {
         parent: path.length > 1 ? path[path.length - 2] : null,
       }
     })
-    console.log(flatmap)
 
     this.setState({ treeData })
   }
 
   createNode = (node) => {
-    // console.log(node , ' create new node')
     return {
       title: `helloworld ${
         node.title.split(' ')[0]
       }sson`,
     }
-    // console.log(this.getNodeKey)
   }
 
   generateNodePropsFunc = ({ node, path }) => {
-    console.log(node, path)
     let buttons = [
       <button onClick={this.addNode.bind(this, node, path)}> + </button>
     ]
@@ -69,13 +60,11 @@ class FileExplorer2 extends React.Component {
   }
 
  getNodeKey = ({ treeIndex }) => {
-    console.log(treeIndex)
     return treeIndex
   };
 
   // addNode = ({ node, path }) => {
   addNode = (node, path) => {
-    console.log(node, path)
     // return
     return this.setState(state => ({
       treeData: addNodeUnderParent({
@@ -89,7 +78,6 @@ class FileExplorer2 extends React.Component {
   }
 
   removeNode = (node, path) => {
-    console.log(node, path)
     return this.setState(state => ({
       treeData: removeNodeAtPath({
         treeData: state.treeData,

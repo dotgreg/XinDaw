@@ -58,7 +58,6 @@ export default class Player extends React.Component {
   }
 
   componentWillUnmount () {
-    console.log('componentWillUnmount')
     Tone.Transport.stop()
   }
 

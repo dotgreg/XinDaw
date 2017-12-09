@@ -36,7 +36,6 @@ export class MainScreen extends React.Component {
     // get the selected song and its related sounds
     let selectedSong = find(nextProps.songs, {selected: true})
     let songSounds = times(selectedSong.sounds.length, id => Sounds.findOne(selectedSong.sounds[id]))
-    // console.log(songSounds)
 
     nextState.songSounds = songSounds
     nextState.selectedSong = selectedSong

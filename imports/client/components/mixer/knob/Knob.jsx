@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Hammer from 'react-hammerjs';
-import { clamp, round } from 'lodash';
+import { clamp, round, throttle, debounce } from 'lodash';
 
 require('./knob.sass')
 
@@ -29,14 +29,23 @@ export default class Knob extends React.Component {
 
 
   componentWillUpdate (nextProps, nextState) {
+    // console.log('componentWillUpdate', nextProps, nextState)
     nextState.variable = nextProps.variable
   }
+
+  // shouldComponentUpdate(nextProps, nextState){
+  //   // return false;
+  // }
 
   //
   // UX : touch management
   //
 
+  throttleHandlePan = throttle(e => { this.handlePan(e) }, 100)
+
   handlePan = e => {
+    console.log('handlePan')
+    e.preventDefault()
     let variator = (this.props.max / 200) * e.deltaY
 
     this.state.val =  clamp(parseFloat(round(this.state.startingVal + variator, this.state.precision)), this.props.min, this.props.max)
@@ -47,6 +56,8 @@ export default class Knob extends React.Component {
   }
 
   handlePanStart = e => {
+    console.log('handlePanStart')
+    e.preventDefault()
     this.setState({startingVal: this.state.val})
   }
 
@@ -70,16 +81,21 @@ export default class Knob extends React.Component {
   // DATA FLOW
   //
 
-  changeValue = value => {
+  changeValue = () => {
     this.updateCurrentPercentage()
     this.props.onValueChange(this.state.val)
   }
+
+  // throttleChangeValue = throttle(() => {
+  //   this.updateCurrentPercentage()
+  //   this.props.onValueChange(this.state.val)
+  // }, 50)
 
 	render() {
 		return (
       <div className="component-knob">
         <Hammer
-          onPan={this.handlePan}
+          onPan={this.throttleHandlePan}
           onPanStart={this.handlePanStart}
           direction="DIRECTION_VERTICAL"
           options={this.state.hammerOptions}>

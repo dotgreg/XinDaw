@@ -51,12 +51,8 @@ export let persistTone = tone => {
 // if we have some vars inside the options that changed
 // spread the change to value inside  window.tones to modify sound
 export let observeTones = () => {
-  // setTimeout(() => {
-  //   console.log(window.tones)
-  // }, 2000)
   var handle = Tones.find().observeChanges({
     changed: function(id, field) {
-      // console.log(id, field, 'changed!')
       let soundId = Tones.findOne(id).soundId
       let tone = find(window.tones, {soundId: soundId})
       let vars = field['options']['vars']
