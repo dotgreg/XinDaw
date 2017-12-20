@@ -41,7 +41,7 @@ export default class Knob extends React.Component {
   // UX : touch management
   //
 
-  throttleHandlePan = throttle(e => { this.handlePan(e) }, 100)
+  throttleHandlePan = throttle(e => { this.handlePan(e) }, 200)
 
   handlePan = e => {
     console.log('handlePan')
@@ -95,7 +95,7 @@ export default class Knob extends React.Component {
 		return (
       <div className="component-knob">
         <Hammer
-          onPan={this.throttleHandlePan}
+          onPan={this.handlePan}
           onPanStart={this.handlePanStart}
           direction="DIRECTION_VERTICAL"
           options={this.state.hammerOptions}>

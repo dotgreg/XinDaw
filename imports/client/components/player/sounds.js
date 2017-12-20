@@ -6,6 +6,7 @@ import {filter, isFunction, reduce, intersection, indexOf, find, isEqual, each, 
 tones = []
 window.tones = tones
 
+// when sound is created or updated, call that function to generate its tome
 export let updateSound = (sound, props) => {
 
   removeSound(sound, true)
@@ -21,15 +22,16 @@ export let updateSound = (sound, props) => {
 
   startTone(result.tone)
 
-  initTonesModifiers(result.options.vars)
-
   window.tones.push(result)
 
   persistTone(result)
 
+  initTonesModifiers(result.options.vars)
+  
   return {status:'ok'}
 }
 
+// when tone get removed
 export let removeSound = (sound) => {
   let old = find(window.tones, {'soundId': sound._id})
 

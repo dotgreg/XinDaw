@@ -25,10 +25,12 @@ export let startTone = tone => {
   type === 'loop' && Tone.Transport.scheduleOnce(t => tone.start(0), 1)
 }
 
+// for each option var defined in the o array, apply the init value
 export let initTonesModifiers = (vars) => {
   each(vars, v => {
     if (v[5]) {
-      isNumber(v[1].value) ? v[1].value = v[5] : v[1][v[0]] = round(v[5],2)
+      isNumber(v[1][v[0]]) ? v[1][v[0]] = round(v[5],5) : v[1].value = v[5]
+      if (v[0] === 'vol' || v[0] === 'attack') console.log(v[0], v[5])
     }
   })
 }

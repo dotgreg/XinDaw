@@ -26,6 +26,8 @@ class MixerScreen2 extends React.Component {
   componentWillUpdate(nextProps, nextState) {
     // get the selected song and its related sounds
     let selectedSong = find(nextProps.songs, {selected: true})
+
+    if (!selectedSong) return false
     let songSounds = times(selectedSong.sounds.length, id => Sounds.findOne(selectedSong.sounds[id]))
 
     nextState.songSounds = songSounds

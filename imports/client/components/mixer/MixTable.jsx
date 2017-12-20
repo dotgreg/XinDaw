@@ -25,7 +25,7 @@ export default class MixTable extends React.Component {
   }
 
   componentWillUpdate (nextProps, nextState) {
-    // console.log('MIXTABLE componentWillUpdate', nextProps, nextState)
+    console.log('MIXTABLE componentWillUpdate', nextProps, nextState)
     // nextState.variable = nextProps.variable
   }
 
