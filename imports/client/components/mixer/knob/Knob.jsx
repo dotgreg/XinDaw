@@ -13,6 +13,7 @@ export default class Knob extends React.Component {
     let decimals = (this.props.step + "").split(".")[1]
     let precision = decimals ? decimals.length : 0
 
+    // console.log(props.initVal, )
     let val = props.initVal ? props.initVal : props.val
 
     this.state = {
@@ -21,6 +22,8 @@ export default class Knob extends React.Component {
       currentPercentage: 0,
       precision: precision
     }
+
+    // console.log(this.props.name, this.state.val, props.initVal, props.val)
   }
 
   componentDidMount () {
@@ -44,7 +47,6 @@ export default class Knob extends React.Component {
   throttleHandlePan = throttle(e => { this.handlePan(e) }, 200)
 
   handlePan = e => {
-    console.log('handlePan')
     e.preventDefault()
     let variator = (this.props.max / 200) * e.deltaY
 

@@ -9,6 +9,7 @@ window.tones = tones
 // when sound is created or updated, call that function to generate its tome
 export let updateSound = (sound, props) => {
 
+  console.log('updateSound')
   removeSound(sound, true)
 
   if (sound.muted) return {status:'ok'}
@@ -24,10 +25,10 @@ export let updateSound = (sound, props) => {
 
   window.tones.push(result)
 
+  initTonesModifiers(result.options.vars)
+
   persistTone(result)
 
-  initTonesModifiers(result.options.vars)
-  
   return {status:'ok'}
 }
 

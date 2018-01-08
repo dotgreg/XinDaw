@@ -14,6 +14,7 @@ export let getToneType = tone => {
 }
 
 export let stopTone = tone => {
+  console.log('stopTone')
   let type = getToneType(tone)
   type === 'loop' && Tone.Transport.scheduleOnce(t => tone.stop().dispose(), 1)
   type === 'transport-event' && Tone.Transport.clear(tone)
@@ -30,7 +31,6 @@ export let initTonesModifiers = (vars) => {
   each(vars, v => {
     if (v[5]) {
       isNumber(v[1][v[0]]) ? v[1][v[0]] = round(v[5],5) : v[1].value = v[5]
-      if (v[0] === 'vol' || v[0] === 'attack') console.log(v[0], v[5])
     }
   })
 }

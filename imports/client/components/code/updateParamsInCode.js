@@ -9,9 +9,14 @@ Meteor.subscribe('sounds');
 
 // Function that take the code that generate a tone and inject into the o/options array
 // the current tone value of the parameter
-export let updateParamsCode = (soundId, toneId) => {
+export let updateParamsInCode = (soundId, toneId) => {
+  console.log(soundId, toneId)
+
   let sound = Sounds.findOne(soundId)
   let tone = Tones.findOne(toneId)
+
+  let values = tone.options.vars.map(v => `${v[0]} - ${v[1][v[0]]} - ${ v[1].persistedValue ? v[1].persistedValue : ''}`)
+  console.log(values)
 
   let newCode = sound.code
   each(tone.options.vars, v => {

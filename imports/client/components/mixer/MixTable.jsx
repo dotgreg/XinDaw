@@ -8,7 +8,7 @@ import { Meteor } from 'meteor/meteor'
 import esprima from 'esprima'
 
 import Knob from './knob/Knob';
-import { updateParamsCode } from '../code/updateParamsCode';
+import { updateParamsInCode } from '../code/updateParamsInCode';
 
 export default class MixTable extends React.Component {
   constructor(props){
@@ -21,20 +21,19 @@ export default class MixTable extends React.Component {
     if (isNumber(tone.options.vars[i][1].persistedValue)) tone.options.vars[i][1].persistedValue = value
     else tone.options.vars[i][1][nameProp] = value
 
+    if (!tone.options.vars[i][1].amithesame) tone.options.vars[i][1].amithesame = 0
+    tone.options.vars[i][1].amithesame = tone.options.vars[i][1].amithesame + 1
+
     Meteor.call('tones.update', tone)
   }
 
   componentWillUpdate (nextProps, nextState) {
-    console.log('MIXTABLE componentWillUpdate', nextProps, nextState)
+    // console.log('MIXTABLE componentWillUpdate', nextProps, nextState)
     // nextState.variable = nextProps.variable
   }
 
-  // shouldComponentUpdate(nextProps, nextState){
-  //   return false;
-  // }
-
   saveParamsTone = tone => {
-    updateParamsCode(tone.soundId, tone._id)
+    updateParamsInCode(tone.soundId, tone._id)
   }
 
 	render() {
