@@ -11,6 +11,7 @@ export let updateSound = (sound, props) => {
 
   console.log('updateSound')
   removeSound(sound, true)
+  console.log('updateSound removeSound')
 
   if (sound.muted) return {status:'ok'}
 
@@ -22,6 +23,7 @@ export let updateSound = (sound, props) => {
   result = {soundId: sound._id, name: sound.name, tone: result.c, elementsToDispose: result.e, options: result.o}
 
   startTone(result.tone)
+  console.log('updateSound starttone')
 
   window.tones.push(result)
 

@@ -33,7 +33,7 @@ export let soundsWatcher = (props) => {
 
     if (intersection(['code', 'muted'], res).length > 0)  {
       if (props.updated) {
-        // console.log(`${newSound.name} updated, prop ${res[0]} changed`)
+        console.log(`${newSound.name} updated, prop ${res[0]} changed`)
         return props.updated(newSound, res[0])
       }
     } else {

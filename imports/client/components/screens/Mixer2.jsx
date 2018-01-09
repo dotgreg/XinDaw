@@ -34,8 +34,8 @@ class MixerScreen2 extends React.Component {
     nextState.selectedSong = selectedSong
 
     if (!nextProps.tones[0]) return false
-    let values = nextProps.tones[0].  options.vars.map(v => `${v[0]} - ${v[1][v[0]]}`)
-    console.log(values)
+    // let values = nextProps.tones[0].  options.vars.map(v => `${v[0]} - ${v[1][v[0]]}`)
+    // console.log(values)
   }
 
 	render() {

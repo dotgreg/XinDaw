@@ -29,7 +29,8 @@ export let startTone = tone => {
 // for each option var defined in the o array, apply the init value
 export let initTonesModifiers = (vars) => {
   each(vars, v => {
-    if (v[5]) {
+    // ['pitchDecay',     synth, 0,     0.5,     0.001 ,->0] which is init value of param
+    if (isNumber(v[5])) {
       isNumber(v[1][v[0]]) ? v[1][v[0]] = round(v[5],5) : v[1].value = v[5]
     }
   })
