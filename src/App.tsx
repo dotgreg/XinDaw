@@ -3,6 +3,10 @@ import './App.css';
 import TestSwitchTone from './components/TestSwitchTone';
 import TestSyncLocalStorage from './components/TestSyncLocalStorage';
 import LocalStorageWatcher from './components/LocalStorageWatcher';
+import TestToneOutput from './components/TestToneOutput';
+import TestAudioHtmlOutput from './components/TestAudioHtmlOutput';
+import TestSwitch from './components/testSwitch';
+import TestWebMidi from './components/TestWebMidi';
 
 interface State {
   data: any
@@ -31,31 +35,7 @@ class App extends React.Component<{}, State> {
   }
 
   componentDidMount() {
-    localStorage.setItem('myCat', 'Tom');
-    localStorage.setItem('myCat2', ` 
-    hydrateStateWithLocalStorage() {
-      // for all items in state
-      for (let key in this.state) {
-        // if the key exists in localStorage
-        if (localStorage.hasOwnProperty(key)) {
-          // get the key's value from localStorage
-          let value = localStorage.getItem(key);
-  
-          // parse the localStorage string and setState
-          try {
-            value = JSON.parse(value);
-            this.setState({ [key]: value });
-          } catch (e) {
-            // handle empty string
-            this.setState({ [key]: value });
-          }
-        }
-      }
-    }
-  
-    saveStateToLocalStorage() {
-      // for every item in React state
-      for (let key in this.state) {`);
+   
   }
 
   public render() {
@@ -65,6 +45,9 @@ class App extends React.Component<{}, State> {
         <button onClick={this.increment}>increment</button>
         <div>{this.state.data.counter}</div>
         <LocalStorageWatcher onUpdate={this.onLocalStorageUpdate} />
+        <TestToneOutput />
+        <TestWebMidi />
+        {/* <TestAudioHtmlOutput /> */}
       </div>
     );
   } 
