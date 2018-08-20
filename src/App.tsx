@@ -9,44 +9,42 @@ import TestWebMidi from './components/TestWebMidi';
 import { sounds } from './datas/sounds';
 import Sound, { iSound } from './components/Sound/Sound';
 import SoundsManager from './components/SoundsManager/SoundsManager';
+import LocalStorageStorageManager, { iStorageData } from './components/StorageManager/LocalStorageStorageManager';
 
 
 interface State {
-  data: any,
-  sounds: iSound[]
+  data: iStorageData,
 }
 
 class App extends React.Component<{}, State> {
+
+  store: LocalStorageStorageManager
+
   constructor(props) {
     super(props)
     this.state = {
-      data: {},
-      sounds: sounds
+      data: {
+        sounds: []
+      },
     }
   }
 
-  onLocalStorageUpdate = (data:any) => {
-    console.log('onLocalStorageUpdate', data)
-    this.setState({data: data})
-  }
-
-  increment(){
-    if (!localStorage.getItem('counter')) return localStorage.setItem('counter', '0')
-    
-    let currentVal = parseInt(localStorage.getItem('counter') as string)
-    let newVal = currentVal + 1
-    localStorage.setItem('counter', `${newVal}`)
-
-  }
-
-  componentDidMount() {
-   
+  onStorageUpdate = (data:iStorageData) => {
+      console.log('onStorageUpdate', data)
+      this.setState({ data: data })
   }
 
   public render() {
     return (
       <div className="App">
-        <SoundsManager />
+        <LocalStorageStorageManager 
+            ref={(instance:LocalStorageStorageManager) => { this.store = instance }}
+            onUpdate={this.onStorageUpdate}
+        />
+        
+        <SoundsManager 
+          sounds={this.state.data.sounds}
+          store={this.store} />
       </div>
     );
   } 

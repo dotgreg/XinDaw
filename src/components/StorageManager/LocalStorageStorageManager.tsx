@@ -60,28 +60,6 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
         this.setState({data: this.dataVerified(newData)})
     }
 
-    /////////////////////////////////////////////////
-    // FUNCTIONS
-    /////////////////////////////////////////////////
-
-    // compareData = (newData:any) => {
-    //     let dataString = JSON.stringify(newData)
-
-    //     if (this.hist === dataString) return
-
-    //     // trigger an update
-    //     newData = this.dataVerified(newData)
-    //     config.debug.storage && console.log('[STORAGE] update data ', newData)
-    //     this.props.onUpdate(newData)
-
-    //     // update the localstorage
-    //     each(newData, (value, name) => {
-    //         window.localStorage.setItem(name, JSON.stringify(value))
-    //     })
-
-    //     this.hist = dataString 
-    // }
-
     dataVerified = (newData:any):iStorageData => {
         return {
             sounds: (isArray(newData.sounds)) ? newData.sounds : []

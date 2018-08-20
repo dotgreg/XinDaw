@@ -6,14 +6,17 @@ import CodeEditor from '../CodeEditor/CodeEditor';
 import config from '../../config';
 import SoundForm from '../Sound.form/SoundForm';
 
+interface Props {
+    sounds: iSound[]
+    store: LocalStorageStorageManager
+}
+
 interface State {
     sounds: iSound[]
     editedSound: undefined | iSound
 }
 
-export default class SoundsManager extends React.Component<{},State> {
-
-    StorageManager: LocalStorageStorageManager
+export default class SoundsManager extends React.Component<Props,State> {
 
     constructor(props){
         super(props)
@@ -24,12 +27,12 @@ export default class SoundsManager extends React.Component<{},State> {
     }
 
     // STORAGE & SYNC
-    onStorageUpdate = (data:iStorageData) => {
-        console.log('onStorageUpdate', data)
-        this.setState({
-            sounds:data.sounds
-        })
+    componentWillUpdate(prevProps) {
+        if (this.props.sounds !== this.state.sounds) {
+            this.setState({sounds: this.props.sounds})
+        }
     }
+    
 
     //
     // SOUND CRUD
@@ -37,7 +40,7 @@ export default class SoundsManager extends React.Component<{},State> {
     createSound = (sound:iSound) => {
         let sounds = this.state.sounds
         sounds.push(sound)
-        this.StorageManager.update({sounds: sounds})
+        this.props.store.update({sounds: sounds})
     }
 
     updateSound = (sound:iSound) => {
@@ -46,14 +49,14 @@ export default class SoundsManager extends React.Component<{},State> {
         if (!isNumber(i)) return console.warn(`[SOUNDS CRUD] updating sound id ${sound.id} does not exists`, sounds)
         sounds[i] = sound
         config.debug.soundsCrud && console.log(`[SOUNDS CRUD] updating sound ${sounds[i].name} :`, sounds)
-        this.StorageManager.update({sounds: sounds})
+        this.props.store.update({sounds: sounds})
     }
     
     deleteSound = (soundToDelete:iSound) => {
         let sounds = this.state.sounds
         sounds = filter(sounds, sound => sound.id !== soundToDelete.id)
         config.debug.soundsCrud && console.log(`[SOUNDS CRUD] deleting sound ${soundToDelete.name}`)
-        this.StorageManager.update({sounds: sounds})
+        this.props.store.update({sounds: sounds})
     }
 
 
@@ -79,12 +82,6 @@ export default class SoundsManager extends React.Component<{},State> {
         return (
             <div>
                 <div>SoundsManager</div>
-
-                {/* STORAGE */}
-                <LocalStorageStorageManager 
-                    ref={(instance:LocalStorageStorageManager) => { this.StorageManager = instance }}
-                    onUpdate={this.onStorageUpdate}
-                />
 
                 {/* CRUD SOUND */}
 
