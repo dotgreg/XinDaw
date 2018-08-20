@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {random} from 'lodash'
 import config from '../../config';
+import { iSound } from '../Sound/Sound';
 
 interface Props {
     onCreate:Function
@@ -22,9 +23,10 @@ export default class SoundFormCreate extends React.Component<Props,State> {
     updateName = (ev:any) => this.setState({name: ev.target.value})
 
     createSound = () => {
-        let newSound = {
-            id: random(0,1000000),
-            name: this.state.name
+        let newSound:iSound = {
+            id: random(0,1000000).toString(),
+            name: this.state.name,
+            code: ''
         }
         config.debug.soundsCrud && console.log('[SOUNDS CRUD] sound create ', newSound)
         this.props.onCreate(newSound)

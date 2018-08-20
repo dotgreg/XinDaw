@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { iSound } from '../Sound/Sound';
 import config from '../../config';
-import {isArray} from 'lodash'
+import {isArray, each} from 'lodash'
 
 export interface iStorageData {
     sounds: iSound[]
@@ -9,7 +9,6 @@ export interface iStorageData {
 
 interface Props {
     onUpdate: Function
-    data: iStorageData
 }
 
 interface State {
@@ -17,20 +16,37 @@ interface State {
 
 export default class LocalStorageStorageManager extends React.Component<Props,State> {
     hist: string
-    int: any
+    watcher: any
 
     constructor(props){
         super(props)
     }
 
-    dataVerified = (newData:any):iStorageData => {
-        return {
-            sounds: (isArray(newData.sounds)) ? newData.sounds : []
-        }
+    /////////////////////////////////////////////////
+    // EVENTS
+    /////////////////////////////////////////////////
+
+    componentDidMount () {
+        this.watcher = setInterval(() => {  
+           this.compareData(this.getLocalStorage())
+        }, 500)
     }
 
-    compareData = (newData:iStorageData) => {
+    componentWillUnmount () {
+        clearInterval(this.watcher)
+    }
+    
+    public update (newData: any) {
+        this.compareData(newData)
+    }
+
+    /////////////////////////////////////////////////
+    // FUNCTIONS
+    /////////////////////////////////////////////////
+
+    compareData = (newData:any) => {
         let dataString = JSON.stringify(newData)
+
         if (this.hist === dataString) return
 
         // trigger an update
@@ -39,22 +55,33 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
         this.props.onUpdate(newData)
 
         // update the localstorage
-        window.localStorage
+        each(newData, (value, name) => {
+            window.localStorage.setItem(name, JSON.stringify(value))
+        })
 
         this.hist = dataString 
     }
 
-    componentDidMount () {
-        let data:any = window.localStorage
-
-        this.int = setInterval(() => {
-           this.compareData(data)
-        }, 500)
+    dataVerified = (newData:any):iStorageData => {
+        return {
+            sounds: (isArray(newData.sounds)) ? newData.sounds : []
+        }
     }
 
-    componentWillUnmount () {
-        clearInterval(this.int)
+    getLocalStorage = () => {
+        let data = {}
+        let ls = JSON.parse(JSON.stringify(window.localStorage))
+        each(ls, (value:string, name:string) => {
+            let res = value
+            try {
+                res = JSON.parse(value)
+            } catch (error) { }
+            data[name] = res
+        })
+        return data
     }
+
+    
 
     render() {
         return (<div></div>)

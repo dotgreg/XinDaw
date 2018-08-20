@@ -6,7 +6,7 @@ import TestToneOutput from './components/TestToneOutput';
 import TestAudioHtmlOutput from './components/TestAudioHtmlOutput';
 import TestSwitch from './components/testSwitch';
 import TestWebMidi from './components/TestWebMidi';
-import Editor from './components/Editor/Editor';
+import Editor from './components/editor/Editor';
 import { sounds } from './datas/sounds';
 import Sound, { iSound } from './components/Sound/Sound';
 import SoundsManager from './components/SoundsManager/SoundsManager';

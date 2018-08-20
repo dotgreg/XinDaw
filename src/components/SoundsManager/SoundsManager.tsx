@@ -9,10 +9,12 @@ interface State {
 
 export default class SoundsManager extends React.Component<{},State> {
 
+    StorageManager: LocalStorageStorageManager
+
     constructor(props){
         super(props)
         this.state = {
-            sounds: []
+            sounds: [],
         }
     }
 
@@ -24,8 +26,10 @@ export default class SoundsManager extends React.Component<{},State> {
     }
 
     // SOUND CRUD
-    createSound = () => {
-        
+    createSound = (sound:iSound) => {
+        let sounds = this.state.sounds
+        sounds.push(sound)
+        this.StorageManager.update({sounds: sounds})
     }
 
 
@@ -37,10 +41,8 @@ export default class SoundsManager extends React.Component<{},State> {
 
                 {/* STORAGE */}
                 <LocalStorageStorageManager 
+                    ref={(instance:LocalStorageStorageManager) => { this.StorageManager = instance }}
                     onUpdate={this.onStorageUpdate}
-                    data={{
-                        sounds: this.state.sounds
-                    }}
                 />
 
                 {/* CRUD SOUND */}
@@ -56,8 +58,8 @@ export default class SoundsManager extends React.Component<{},State> {
                     <h3>sounds</h3>
                     <ul>
                     {
-                        this.state.sounds.map(sound => (
-                            <Sound sound={sound}/>
+                        this.state.sounds.map((sound,i) => (
+                            <Sound key={i} sound={sound}/>
                         ))
                     }
                     </ul>
