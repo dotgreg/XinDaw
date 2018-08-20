@@ -13,6 +13,7 @@ interface Props {
     sound: iSound,
     onDelete: Function
     onEdit:Function
+    onAddCurrentPart?: Function
 }
 
 
@@ -53,6 +54,11 @@ export default class Sound extends React.Component<Props,{}> {
         return (
             <div>
                 <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
+                {
+                    this.props.onAddCurrentPart && (
+                        <button onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}>P</button>
+                    )
+                }
                 <button onClick={() => {this.props.onDelete(this.props.sound)}}>X</button>
             </div>
         )

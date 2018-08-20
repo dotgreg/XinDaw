@@ -20,6 +20,13 @@ const getItemFromProp = curry((prop:string, value:any, arr:any[]) => {
 
 export const getItemFromId = getItemFromProp('id')
 export const getEditedItem = getItemFromProp('edited', true)
+export const getActiveItem = getItemFromProp('active', true)
+
+const getObjsFromIdsInArr = curry((ids:string[], arr:any[]): any[] => {
+    if (!ids) return []
+    return ids.map(id => getItemFromId(id, arr))
+})
+export const getSoundsFromIds = getObjsFromIdsInArr()
 
 
 //
@@ -33,7 +40,7 @@ export const updateItemInArray = curry((item:any, arr:any[]) => {
     return arr
 })
 
-const updateItemPropInArray = curry((prop:any, value:any, id:string, arr:any[]) => {
+const updateItemPropInArray = curry((prop:string, value:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
     if (isNumber(index)) arr[index][prop] = value
     return arr
@@ -41,10 +48,8 @@ const updateItemPropInArray = curry((prop:any, value:any, id:string, arr:any[]) 
 export const updateItemToEdited = updateItemPropInArray('edited', true)
 export const updateItemToActive = updateItemPropInArray('active', true)
 
-
-
 // all
-export const updateItemsPropInArray = curry((prop:any, value:any, arr:any[]) => {
+export const updateItemsPropInArray = curry((prop:string, value:any, arr:any[]) => {
     return arr.map(item => {
         item[prop] = value
         return item
@@ -65,3 +70,20 @@ export const removeItem = curry((itemToDelete:any, arr:any[]) => {
     arr = filter(arr, item => item.id !== itemToDelete.id)
     return arr
 })
+
+
+// arr prop add
+const addItemArrPropInArray = curry((prop:string, itemToAdd:any, id:string, arr:any[]) => {
+    let index = getIndexFromId(id, arr)
+    if (isNumber(index)) arr[index][prop].push(itemToAdd)
+    return arr
+})
+export const addSoundToPart = addItemArrPropInArray('sounds')
+
+const removeItemArrPropInArray = curry((prop:string, itemToRemove:any, id:string, arr:any[]) => {
+    let index = getIndexFromId(id, arr)
+    if (isNumber(index)) arr[index][prop] = filter(arr[index][prop], item => item !== itemToRemove)
+    return arr
+})
+export const removeSoundToPart = removeItemArrPropInArray('sounds')
+

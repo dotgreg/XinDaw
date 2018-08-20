@@ -4,7 +4,8 @@ import { removeItem, updateItemToEdited, updateItemsToNotEdited } from '../../he
 
 interface Props {
     sounds: iSound[]
-    onUpdate: Function
+    onUpdate: Function,
+    onAddCurrentPart: Function
 }
 
 interface State {
@@ -38,6 +39,7 @@ export default class SoundsManager extends React.Component<Props,State> {
                                     sound={sound}
                                     onEdit={this.editSound}
                                     onDelete={this.deleteSound}
+                                    onAddCurrentPart={this.props.onAddCurrentPart}
                                 />
                             ))
                         }

@@ -4,39 +4,18 @@ import Sound, { iSound } from '../Sound/Sound';
 import { filter } from 'lodash'
 
 interface Props {
-    parts: iPart[],
+    part: iPart[],
     sounds: iSound[]
     onUpdate: Function
     onSoundEdit: Function
+    onRemoveCurrentPart: Function
 }
 
 interface State {
-    soundsPart: iSound[]
+    sounds: iSound[]
 }
 
-export default class ActivePartManager extends React.Component<Props,State> {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            soundsPart: []
-        }
-    }
-
-    componentDidUpdate() {
-        
-    }
-
-    getActivePart = () => {
-        let activePart = filter(this.props.parts, part => part.active === true)
-        if (activePart[0]) return activePart[0]
-        else return this.props.parts[0]
-    }
-
-    removeSound = () => {
-
-    }
-
+export default class SoundPartManager extends React.Component<Props,State> {
     render() {
         return (
             <div className="sounds" >
@@ -44,17 +23,16 @@ export default class ActivePartManager extends React.Component<Props,State> {
                 <div className="sounds" >
                     <h3> Sounds </h3>
                     <ul>
-                    {
-                            this.state.soundsPart.map((sound,i) => (
+                        {
+                            this.props.sounds.map((sound,i) => (
                                 <Sound 
                                     key={i} 
                                     sound={sound}
                                     onEdit={this.props.onSoundEdit}
-                                    onDelete={this.removeSound}
+                                    onDelete={this.props.onRemoveCurrentPart}
                                 />
                             ))
                         }
-                        
                     </ul>
                 </div>
             </div>

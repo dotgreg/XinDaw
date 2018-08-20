@@ -6,7 +6,7 @@ import './part.css'
 export interface iPart {
     id: string
     name: string
-    sounds: iSound[]
+    sounds: string[]
     active: boolean
 }
 

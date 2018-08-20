@@ -7,9 +7,9 @@ import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import ActivePartManager from './components/ActivePartManager/ActivePartManager';
-import { getEditedItem, updateItemsToNotEdited, updateItemToEdited, addItem, updateItemInArray} from './helpers/arrayHelper';
+import { getEditedItem, updateItemsToNotEdited, updateItemToEdited, addItem, updateItemInArray, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart} from './helpers/arrayHelper';
 import SoundEditor from './components/SoundEditor/SoundEditor';
+import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 interface State {
   sounds: iSound[],
@@ -48,12 +48,23 @@ class App extends React.Component<{}, State> {
     this.setState({sounds: updateItemInArray(sound, this.state.sounds)})
   }
 
+  addSoundToCurrentPart = (sound: iSound) => {
+    // @ts-ignore
+    this.setState({parts: addSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
+  }
+
+  removeSoundToCurrentPart = (sound: iSound) => {
+    // @ts-ignore
+    this.setState({parts: removeSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
+  }
+
   public render() {
     return (
       <div className="App"> 
         <SoundsManager 
           sounds={this.state.sounds} 
           onUpdate={this.updateSounds}
+          onAddCurrentPart={this.addSoundToCurrentPart}
         />
 
         <SoundEditor
@@ -67,11 +78,13 @@ class App extends React.Component<{}, State> {
           onUpdate={this.updateParts} 
         />
 
-        <ActivePartManager 
-          parts={this.state.parts} 
-          sounds={this.state.sounds} 
+        <SoundPartManager
+          part={getActiveItem(this.state.parts).sounds} 
+          // @ts-ignore
+          sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
           onUpdate={this.updateParts}
           onSoundEdit={this.onSoundEdit}
+          onRemoveCurrentPart={this.removeSoundToCurrentPart}
         />
 
       </div>

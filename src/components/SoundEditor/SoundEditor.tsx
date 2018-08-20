@@ -59,26 +59,6 @@ export default class SoundEditor extends React.Component<Props,State> {
         this.setState({mode: 'update'})
     }
 
-    // /////////////////////////////////
-    // // ACTIONS
-    // /////////////////////////////////
-
-    // createSound = (sound:iSound) => {
-    //     let sounds = this.state.sounds
-    //     sounds.push(sound)
-    //     this.props.onUpdate(sounds)
-    // }
-
-    // updateSound = (sound:iSound) => {
-    //     let i = this.getSoundIndexFromId(sound.id)
-    //     let sounds = this.state.sounds
-    //     if (!isNumber(i)) return console.warn(`[SOUNDS CRUD] updating sound id ${sound.id} does not exists`, sounds)
-    //     sounds[i] = sound
-    //     config.debug.soundsCrud && console.log(`[SOUNDS CRUD] updating sound ${sounds[i].name} :`, sounds)
-    //     this.props.onUpdate(sounds)
-    // }
-
-
     /////////////////////////////////
     // ACTIONS
     /////////////////////////////////
