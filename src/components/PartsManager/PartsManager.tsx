@@ -13,7 +13,6 @@ interface Props {
 
 interface State {
     formName: string
-    parts: iPart[]
 }
 
 export default class PartsManager extends React.Component<Props,State> {
@@ -22,7 +21,6 @@ export default class PartsManager extends React.Component<Props,State> {
         super(props)
         this.state = {
             formName: '',
-            parts: []
         }
     }
 
@@ -34,26 +32,36 @@ export default class PartsManager extends React.Component<Props,State> {
         let newPart:iPart = {
             id: random(0,100000).toString(),
             name: this.state.formName,
-            sounds: []
+            sounds: [],
+            active: false
         }
-        let parts = this.state.parts
+        let parts = this.props.parts
         parts.push(newPart)
         
         this.props.onUpdate(parts)
     }
     
     deletePart = (partToDelete:iPart) => {
-        let parts = this.state.parts
+        let parts = this.props.parts
         parts = filter(parts, sound => sound.id !== partToDelete.id)
         config.debug.partsCrud && console.log(`[parts CRUD] deleting sound ${partToDelete.name}`)
-        
+        this.props.onUpdate(parts)
+    }
+    
+    selectPart = (partToSelect:iPart) => {
+        let parts = this.props.parts.map(part => {
+            if (partToSelect.id === part.id) part.active = true
+            else part.active = false
+            return part 
+        })
+        config.debug.partsCrud && console.log(`[parts CRUD] selecting sound ${partToSelect.name}`)
         this.props.onUpdate(parts)
     }
 
     //
     // SUPPORT FUNCTIONS
     //
-    getPartIndexFromId = (id:string) => getIndexFromId(this.state.parts, id)
+    getPartIndexFromId = (id:string) => getIndexFromId(this.props.parts, id)
 
     updateFormName = (ev) => {
         this.setState({formName: ev.target.value})
@@ -74,11 +82,12 @@ export default class PartsManager extends React.Component<Props,State> {
                     <h3>parts</h3>
                     <ul>
                         {
-                            this.state.parts.map((part,i) => (
+                            this.props.parts.map((part,i) => (
                                 <Part 
                                     key={i} 
                                     part={part}
                                     onDelete={this.deletePart}
+                                    onSelect={this.selectPart}
                                 />
                             ))
                         }
