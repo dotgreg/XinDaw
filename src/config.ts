@@ -3,7 +3,8 @@ const config = {
         storage: true,
         soundsCrud: false,
         sound: true,
-        codeEditor: false
+        codeEditor: false,
+        partsCrud: true
     },
 }
 

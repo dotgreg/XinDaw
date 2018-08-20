@@ -2,9 +2,12 @@ import * as React from 'react';
 import { iSound } from '../Sound/Sound';
 import config from '../../config';
 import {isArray, each} from 'lodash'
+import { iPart } from '../Part/Part';
+import { areSame } from '../../helpers/areSame';
 
 export interface iStorageData {
     sounds: iSound[]
+    parts: iPart[]
 }
 
 interface Props {
@@ -23,7 +26,8 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
         super(props)
         this.state = {
             data: {
-                sounds: []
+                sounds: [],
+                parts: []
             }
         }
     }
@@ -56,13 +60,18 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
         clearInterval(this.watcher)
     }
     
-    public update (newData: any) {
-        this.setState({data: this.dataVerified(newData)})
+    public update (prop: string, newData: any) {
+        let data = this.state.data
+        data[prop] = newData
+        data = this.dataVerified(data)
+        config.debug.storage && console.log(`[STORAGE] update triggered for ${prop}`, newData, data)
+        this.setState({data: data})
     }
 
     dataVerified = (newData:any):iStorageData => {
         return {
-            sounds: (isArray(newData.sounds)) ? newData.sounds : []
+            sounds: (isArray(newData.sounds)) ? newData.sounds : [],
+            parts: (isArray(newData.parts)) ? newData.parts : [],
         }
     }
 
@@ -79,9 +88,25 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
         return data
     }
 
-    
+    shouldComponentUpdate(nextProps, nextState) {
+        if (areSame(nextState.data, this.state.data)) return false
+        else return true
+    }
 
     render() {
-        return (<div></div>)
+        console.log('render')
+        let children:any[] = []
+        if (!isArray(this.props.children)) children.push(this.props.children)
+        else children = this.props.children
+
+        let modifChildren = children.map( (child, i) => {
+            return React.cloneElement(child, { key: i, store: this });
+        });
+
+        return (
+            <div>
+                {modifChildren}
+            </div>
+        )
     }   
 }

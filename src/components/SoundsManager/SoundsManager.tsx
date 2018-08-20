@@ -5,10 +5,11 @@ import {filter, findIndex, isNumber} from 'lodash'
 import CodeEditor from '../CodeEditor/CodeEditor';
 import config from '../../config';
 import SoundForm from '../Sound.form/SoundForm';
+import { getIndexFromId } from '../../helpers/getIndexFromId';
 
 interface Props {
     sounds: iSound[]
-    store: LocalStorageStorageManager
+    store?: LocalStorageStorageManager
 }
 
 interface State {
@@ -28,6 +29,7 @@ export default class SoundsManager extends React.Component<Props,State> {
 
     // STORAGE & SYNC
     componentWillUpdate(prevProps) {
+        console.log(this.props)
         if (this.props.sounds !== this.state.sounds) {
             this.setState({sounds: this.props.sounds})
         }
@@ -40,7 +42,10 @@ export default class SoundsManager extends React.Component<Props,State> {
     createSound = (sound:iSound) => {
         let sounds = this.state.sounds
         sounds.push(sound)
-        this.props.store.update({sounds: sounds})
+        console.log(this.props)
+
+        // @ts-ignore
+        this.props.store.update('sounds', sounds)
     }
 
     updateSound = (sound:iSound) => {
@@ -49,14 +54,16 @@ export default class SoundsManager extends React.Component<Props,State> {
         if (!isNumber(i)) return console.warn(`[SOUNDS CRUD] updating sound id ${sound.id} does not exists`, sounds)
         sounds[i] = sound
         config.debug.soundsCrud && console.log(`[SOUNDS CRUD] updating sound ${sounds[i].name} :`, sounds)
-        this.props.store.update({sounds: sounds})
+        // @ts-ignore
+        this.props.store.update('sounds', sounds)
     }
     
     deleteSound = (soundToDelete:iSound) => {
         let sounds = this.state.sounds
         sounds = filter(sounds, sound => sound.id !== soundToDelete.id)
         config.debug.soundsCrud && console.log(`[SOUNDS CRUD] deleting sound ${soundToDelete.name}`)
-        this.props.store.update({sounds: sounds})
+        // @ts-ignore
+        this.props.store.update('sounds', sounds)
     }
 
 
@@ -71,12 +78,7 @@ export default class SoundsManager extends React.Component<Props,State> {
     //
     // SUPPORT FUNCTIONS
     //
-    getSoundIndexFromId = (id:string) => {
-        let sounds = this.state.sounds
-        let i = findIndex(sounds, sound => sound.id === id)
-        if (!isNumber(i)) return false
-        return i
-    }
+    getSoundIndexFromId = (id:string) => getIndexFromId(this.state.sounds, id)
    
     render() {
         return (

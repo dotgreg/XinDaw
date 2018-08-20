@@ -10,6 +10,7 @@ import { sounds } from './datas/sounds';
 import Sound, { iSound } from './components/Sound/Sound';
 import SoundsManager from './components/SoundsManager/SoundsManager';
 import LocalStorageStorageManager, { iStorageData } from './components/StorageManager/LocalStorageStorageManager';
+import PartsManager from './components/PartsManager/PartsManager';
 
 
 interface State {
@@ -18,14 +19,13 @@ interface State {
 
 class App extends React.Component<{}, State> {
 
-  store: LocalStorageStorageManager
-
   constructor(props) {
     super(props)
     this.state = {
       data: {
-        sounds: []
-      },
+        sounds: [],
+        parts: []
+      }
     }
   }
 
@@ -36,15 +36,16 @@ class App extends React.Component<{}, State> {
 
   public render() {
     return (
-      <div className="App">
-        <LocalStorageStorageManager 
-            ref={(instance:LocalStorageStorageManager) => { this.store = instance }}
-            onUpdate={this.onStorageUpdate}
-        />
+      <div className="App"> 
+        <LocalStorageStorageManager onUpdate={this.onStorageUpdate}>
+          
+          <SoundsManager sounds={this.state.data.sounds} />
+
+          <PartsManager parts={this.state.data.parts} />
+
+        </LocalStorageStorageManager>
         
-        <SoundsManager 
-          sounds={this.state.data.sounds}
-          store={this.store} />
+
       </div>
     );
   } 
