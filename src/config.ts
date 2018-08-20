@@ -2,7 +2,8 @@ const config = {
     debug: {
         storage: true,
         soundsCrud: true,
-        sound: true
+        sound: true,
+        codeEditor: true
     },
 }
 

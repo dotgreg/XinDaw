@@ -2,10 +2,13 @@ import * as React from 'react';
 import Sound, { iSound } from '../Sound/Sound';
 import LocalStorageStorageManager, { iStorageData } from '../StorageManager/LocalStorageStorageManager';
 import SoundFormCreate from '../Sound.form.create/SoundFormCreate';
-import {filter} from 'lodash'
+import {filter, findIndex, isNumber} from 'lodash'
+import CodeEditor from '../CodeEditor/CodeEditor';
+import config from '../../config';
 
 interface State {
     sounds: iSound[]
+    editedCodeSound: undefined | iSound
 }
 
 export default class SoundsManager extends React.Component<{},State> {
@@ -16,6 +19,7 @@ export default class SoundsManager extends React.Component<{},State> {
         super(props)
         this.state = {
             sounds: [],
+            editedCodeSound: undefined
         }
     }
 
@@ -26,7 +30,9 @@ export default class SoundsManager extends React.Component<{},State> {
         })
     }
 
+    //
     // SOUND CRUD
+    //
     createSound = (sound:iSound) => {
         let sounds = this.state.sounds
         sounds.push(sound)
@@ -36,6 +42,24 @@ export default class SoundsManager extends React.Component<{},State> {
     deleteSound = (soundToDelete:iSound) => {
         let sounds = this.state.sounds
         sounds = filter(sounds, sound => sound.id !== soundToDelete.id)
+        this.StorageManager.update({sounds: sounds})
+    }
+
+    //
+    // SOUND EDITION
+    //
+
+    startCodeEditor = (sound:iSound) => {
+        this.setState({editedCodeSound: sound})
+    }
+
+    saveCode = (newCode: string) => { 
+        if (!this.state.editedCodeSound) return console.warn('[EDIT] no editedCodeSound to save code to')
+        let sounds = this.state.sounds
+        let i = findIndex(sounds, sound => sound.id === (this.state.editedCodeSound as iSound).id)
+        if (!isNumber(i)) return
+        sounds[i].code = newCode
+        config.debug.soundsCrud && console.log(`[SOUNDS CRUD] updating code of sound ${sounds[i].name}`, sounds)
         this.StorageManager.update({sounds: sounds})
     }
 
@@ -58,6 +82,16 @@ export default class SoundsManager extends React.Component<{},State> {
                     onCreate={this.createSound}
                 />
 
+                {/* EDITOR */}
+                {
+                    this.state.editedCodeSound && (
+                        <CodeEditor
+                            onSave={this.saveCode}
+                            code={this.state.editedCodeSound.code}
+                        />
+                    )
+                }
+                 
 
                 {/* LIST SOUNDS */}
 
@@ -69,6 +103,7 @@ export default class SoundsManager extends React.Component<{},State> {
                             <Sound 
                                 key={i} 
                                 sound={sound}
+                                onEdit={this.startCodeEditor}
                                 onDelete={this.deleteSound}
                             />
                         ))

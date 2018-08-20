@@ -10,6 +10,7 @@ export interface iSound {
 interface Props {
     sound: iSound,
     onDelete: Function
+    onEdit:Function
 }
 
 
@@ -33,7 +34,7 @@ export default class Sound extends React.Component<Props,{}> {
     render() {
         return (
             <div>
-                sound {this.props.sound.name} 
+                <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
                 <button onClick={() => {this.props.onDelete(this.props.sound)}}>X</button>
             </div>
         )
