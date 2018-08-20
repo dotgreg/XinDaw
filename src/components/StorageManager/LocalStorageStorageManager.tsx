@@ -12,6 +12,7 @@ interface Props {
 }
 
 interface State {
+    data:iStorageData
 }
 
 export default class LocalStorageStorageManager extends React.Component<Props,State> {
@@ -20,6 +21,11 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
 
     constructor(props){
         super(props)
+        this.state = {
+            data: {
+                sounds: []
+            }
+        }
     }
 
     /////////////////////////////////////////////////
@@ -28,8 +34,22 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
 
     componentDidMount () {
         this.watcher = setInterval(() => {  
-           this.compareData(this.getLocalStorage())
+            let ls = this.getLocalStorage()
+            this.setState({data: this.dataVerified(ls)})
         }, 500)
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (JSON.stringify(prevState.data) !== JSON.stringify(this.state.data)) {
+            config.debug.storage && console.log('[STORAGE] update data ', this.state.data)
+            
+            this.props.onUpdate(this.state.data)
+
+            // update the localstorage
+            each(this.state.data, (value, name) => {
+                window.localStorage.setItem(name, JSON.stringify(value))
+            })
+        }
     }
 
     componentWillUnmount () {
@@ -37,30 +57,30 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
     }
     
     public update (newData: any) {
-        this.compareData(newData)
+        this.setState({data: this.dataVerified(newData)})
     }
 
     /////////////////////////////////////////////////
     // FUNCTIONS
     /////////////////////////////////////////////////
 
-    compareData = (newData:any) => {
-        let dataString = JSON.stringify(newData)
+    // compareData = (newData:any) => {
+    //     let dataString = JSON.stringify(newData)
 
-        if (this.hist === dataString) return
+    //     if (this.hist === dataString) return
 
-        // trigger an update
-        newData = this.dataVerified(newData)
-        config.debug.storage && console.log('[STORAGE] update data ', newData)
-        this.props.onUpdate(newData)
+    //     // trigger an update
+    //     newData = this.dataVerified(newData)
+    //     config.debug.storage && console.log('[STORAGE] update data ', newData)
+    //     this.props.onUpdate(newData)
 
-        // update the localstorage
-        each(newData, (value, name) => {
-            window.localStorage.setItem(name, JSON.stringify(value))
-        })
+    //     // update the localstorage
+    //     each(newData, (value, name) => {
+    //         window.localStorage.setItem(name, JSON.stringify(value))
+    //     })
 
-        this.hist = dataString 
-    }
+    //     this.hist = dataString 
+    // }
 
     dataVerified = (newData:any):iStorageData => {
         return {

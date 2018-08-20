@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Sound, { iSound } from '../Sound/Sound';
 import LocalStorageStorageManager, { iStorageData } from '../StorageManager/LocalStorageStorageManager';
-import SoundFormCreate from '../Sound.form.create/SoundFormCreate';
 import {filter, findIndex, isNumber} from 'lodash'
 import CodeEditor from '../CodeEditor/CodeEditor';
 import config from '../../config';
@@ -26,6 +25,7 @@ export default class SoundsManager extends React.Component<{},State> {
 
     // STORAGE & SYNC
     onStorageUpdate = (data:iStorageData) => {
+        console.log('onStorageUpdate', data)
         this.setState({
             sounds:data.sounds
         })
@@ -42,8 +42,8 @@ export default class SoundsManager extends React.Component<{},State> {
 
     updateSound = (sound:iSound) => {
         let i = this.getSoundIndexFromId(sound.id)
-        if (!i) return
         let sounds = this.state.sounds
+        if (!isNumber(i)) return console.warn(`[SOUNDS CRUD] updating sound id ${sound.id} does not exists`, sounds)
         sounds[i] = sound
         config.debug.soundsCrud && console.log(`[SOUNDS CRUD] updating sound ${sounds[i].name} :`, sounds)
         this.StorageManager.update({sounds: sounds})
@@ -68,7 +68,6 @@ export default class SoundsManager extends React.Component<{},State> {
     //
     // SUPPORT FUNCTIONS
     //
-
     getSoundIndexFromId = (id:string) => {
         let sounds = this.state.sounds
         let i = findIndex(sounds, sound => sound.id === id)
@@ -101,16 +100,17 @@ export default class SoundsManager extends React.Component<{},State> {
                 <div className="sounds" >
                     <h3>sounds</h3>
                     <ul>
-                    {
-                        this.state.sounds.map((sound,i) => (
-                            <Sound 
-                                key={i} 
-                                sound={sound}
-                                onEdit={this.startSoundEdit}
-                                onDelete={this.deleteSound}
-                            />
-                        ))
-                    }
+                        {
+                            this.state.sounds.map((sound,i) => (
+                                <Sound 
+                                    key={i} 
+                                    sound={sound}
+                                    onEdit={this.startSoundEdit}
+                                    onDelete={this.deleteSound}
+                                />
+                            ))
+                        }
+                        
                     </ul>
                 </div>
 

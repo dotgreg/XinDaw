@@ -2,7 +2,6 @@ import * as React from 'react';
 import {random} from 'lodash'
 import config from '../../config';
 import { iSound } from '../Sound/Sound';
-import SoundFormCreate from '../Sound.form.create/SoundFormCreate';
 import CodeEditor from '../CodeEditor/CodeEditor';
 
 interface Props {
@@ -94,33 +93,3 @@ export default class SoundForm extends React.Component<Props,State> {
         )
     }   
 }
-
-
-
-// // other
-
-// getSoundIndexFromId = (id:string) => {
-//     let sounds = this.state.sounds
-//     let i = findIndex(sounds, sound => sound.id === id)
-//     if (!isNumber(i)) return false
-//     return i
-// }
-
-// getSoundFromId = (id:string) => {
-//     if (!this.getSoundIndexFromId(id)) return false
-//     return this.state.sounds[this.getSoundIndexFromId(id) as number]
-// }
-
-//
-// SOUND EDITION
-//
-
-// startCodeEditor = (sound:iSound) => {
-//     this.setState({editedSoundId: sound.id})
-// }
-
-// saveCode = (newCode: string) => { 
-//     let sound = this.getSoundFromId(this.state.editedSoundId as string)
-//     sound.code = newCode
-//     this.modifySound(sound as iSound)
-// }

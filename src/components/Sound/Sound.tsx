@@ -1,5 +1,6 @@
 import * as React from 'react';
 import config from '../../config';
+import { areSame } from '../../helpers/areSame';
 
 export interface iSound {
     id: string
@@ -15,7 +16,7 @@ interface Props {
 
 
 
-export default class Sound extends React.PureComponent<Props,{}> {
+export default class Sound extends React.Component<Props,{}> {
 
     soundHist:iSound
 
@@ -34,10 +35,16 @@ export default class Sound extends React.PureComponent<Props,{}> {
 
     componentDidUpdate () {
         // if code updated
+        // console.log(this.props.sound, this.soundHist, areSame(this.props.sound, this.soundHist))
+        if (areSame(this.props.sound, this.soundHist)) return
+        
+        config.debug.sound && console.log(`[SOUND] sound ${this.props.sound.name} updated`)
+        
         if (this.props.sound.code !== this.soundHist.code) {
-            this.soundHist = Object.assign({}, this.props.sound)
-            config.debug.sound && console.log(`[SOUND] sound ${this.props.sound.name} updated`)
-        }
+            config.debug.sound && console.log(`[SOUND] sound CODE ${this.props.sound.name} updated`)
+        } 
+
+        this.soundHist = Object.assign({}, this.props.sound)
     }
     
 
