@@ -1,0 +1,126 @@
+import * as React from 'react';
+import {random} from 'lodash'
+import config from '../../config';
+import { iSound } from '../Sound/Sound';
+import SoundFormCreate from '../Sound.form.create/SoundFormCreate';
+import CodeEditor from '../CodeEditor/CodeEditor';
+
+interface Props {
+    sound:iSound | undefined
+    onCreate: Function
+    onUpdate: Function
+}
+
+interface State {
+    sound: iSound
+    mode: string
+}
+
+export default class SoundForm extends React.Component<Props,State> {
+
+    constructor(props){
+        super(props)
+        this.state = {
+            sound: this.generateNewSound(),
+            mode: 'create'
+        }
+    }
+
+    /////////////////////////////////
+    // EVENTS
+    /////////////////////////////////
+
+    componentDidUpdate(prevProps) {
+        if (!this.props.sound && this.state.mode !== 'create') {
+            this.setState({
+                sound: this.generateNewSound(),
+                mode: 'create'
+            })
+        }
+
+        if (
+            this.props.sound && 
+            this.props.sound !== prevProps.sound
+        ) {
+            this.setState({
+                sound: this.props.sound,
+                mode: 'update'
+            })
+        }
+
+    }
+
+    saveForm = (newCode) => {
+        let sound = this.state.sound
+        sound.code = newCode
+
+        if (this.state.mode === 'create') this.props.onCreate(sound)
+        if (this.state.mode === 'update') this.props.onUpdate(sound)
+    }
+
+
+    /////////////////////////////////
+    // ACTIONS
+    /////////////////////////////////
+
+    // UPDATERS
+    
+    updateName = (ev:any) => {
+        let sound = this.state.sound
+        sound.name = ev.target.value
+        this.setState({sound:sound})
+    }
+
+    // CREATOR
+    generateNewSound = () => ({
+        id: random(0,1000000).toString(),
+        name: '',
+        code: `// new code here`
+    })
+
+    render() {
+        return (
+            <div>
+                <div>sound form</div>
+
+                <input type="text" value={this.state.sound.name} onChange={this.updateName}/>
+
+                <CodeEditor
+                    onSave={this.saveForm}
+                    code={this.state.sound.code}
+                />
+
+            </div>
+        )
+    }   
+}
+
+
+
+// // other
+
+// getSoundIndexFromId = (id:string) => {
+//     let sounds = this.state.sounds
+//     let i = findIndex(sounds, sound => sound.id === id)
+//     if (!isNumber(i)) return false
+//     return i
+// }
+
+// getSoundFromId = (id:string) => {
+//     if (!this.getSoundIndexFromId(id)) return false
+//     return this.state.sounds[this.getSoundIndexFromId(id) as number]
+// }
+
+//
+// SOUND EDITION
+//
+
+// startCodeEditor = (sound:iSound) => {
+//     this.setState({editedSoundId: sound.id})
+// }
+
+// saveCode = (newCode: string) => { 
+//     let sound = this.getSoundFromId(this.state.editedSoundId as string)
+//     sound.code = newCode
+//     this.modifySound(sound as iSound)
+// }
