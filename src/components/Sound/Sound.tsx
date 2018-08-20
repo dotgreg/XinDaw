@@ -1,4 +1,5 @@
 import * as React from 'react';
+import config from '../../config';
 
 export interface iSound {
     id: string
@@ -18,6 +19,16 @@ export default class Sound extends React.Component<Props,{}> {
     constructor(props){
         super(props)
     }
+
+    componentDidMount () {
+        config.debug.sound && console.log(`[SOUND] new sound ${this.props.sound.name} mounted`)
+    }
+
+    componentWillUnmount () {
+        config.debug.sound && console.log(`[SOUND] ${this.props.sound.name} will unmount`)
+    }
+
+
 
     render() {
         return (
