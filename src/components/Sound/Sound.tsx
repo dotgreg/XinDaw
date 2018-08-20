@@ -6,6 +6,7 @@ export interface iSound {
     id: string
     name: string
     code: string
+    edited: boolean
   }
 
 interface Props {

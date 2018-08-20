@@ -1,6 +1,4 @@
-import { iSound } from "../components/Sound/Sound";
-
-export const sounds:iSound[] = [
+export const sounds:any[] = [
     {
         id: 'sound1',
         name: 'sound1',

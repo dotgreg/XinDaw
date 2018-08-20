@@ -1,8 +1,7 @@
 import * as React from 'react';
-import LocalStorageStorageManager from '../StorageManager/LocalStorageStorageManager';
 import Part, { iPart } from '../Part/Part';
 import {random, filter} from 'lodash'
-import { getIndexFromId } from '../../helpers/getIndexFromId';
+import { getIndexFromId, removeItem, addItem, updateItemsToNotActive, updateItemToActive } from '../../helpers/arrayHelper';
 import config from '../../config';
 
 
@@ -35,33 +34,10 @@ export default class PartsManager extends React.Component<Props,State> {
             sounds: [],
             active: false
         }
-        let parts = this.props.parts
-        parts.push(newPart)
-        
-        this.props.onUpdate(parts)
+        this.props.onUpdate(addItem(newPart, this.props.parts))
     }
-    
-    deletePart = (partToDelete:iPart) => {
-        let parts = this.props.parts
-        parts = filter(parts, sound => sound.id !== partToDelete.id)
-        config.debug.partsCrud && console.log(`[parts CRUD] deleting sound ${partToDelete.name}`)
-        this.props.onUpdate(parts)
-    }
-    
-    selectPart = (partToSelect:iPart) => {
-        let parts = this.props.parts.map(part => {
-            if (partToSelect.id === part.id) part.active = true
-            else part.active = false
-            return part 
-        })
-        config.debug.partsCrud && console.log(`[parts CRUD] selecting sound ${partToSelect.name}`)
-        this.props.onUpdate(parts)
-    }
-
-    //
-    // SUPPORT FUNCTIONS
-    //
-    getPartIndexFromId = (id:string) => getIndexFromId(this.props.parts, id)
+    deletePart = (partToDelete:iPart) => this.props.onUpdate(removeItem(partToDelete, this.props.parts))
+    selectPart = (partToSelect:iPart) => this.props.onUpdate(updateItemToActive(partToSelect.id, updateItemsToNotActive(this.props.parts)))
 
     updateFormName = (ev) => {
         this.setState({formName: ev.target.value})

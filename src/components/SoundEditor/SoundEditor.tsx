@@ -15,7 +15,7 @@ interface State {
     mode: string
 }
 
-export default class SoundForm extends React.Component<Props,State> {
+export default class SoundEditor extends React.Component<Props,State> {
 
     constructor(props){
         super(props)
@@ -59,6 +59,25 @@ export default class SoundForm extends React.Component<Props,State> {
         this.setState({mode: 'update'})
     }
 
+    // /////////////////////////////////
+    // // ACTIONS
+    // /////////////////////////////////
+
+    // createSound = (sound:iSound) => {
+    //     let sounds = this.state.sounds
+    //     sounds.push(sound)
+    //     this.props.onUpdate(sounds)
+    // }
+
+    // updateSound = (sound:iSound) => {
+    //     let i = this.getSoundIndexFromId(sound.id)
+    //     let sounds = this.state.sounds
+    //     if (!isNumber(i)) return console.warn(`[SOUNDS CRUD] updating sound id ${sound.id} does not exists`, sounds)
+    //     sounds[i] = sound
+    //     config.debug.soundsCrud && console.log(`[SOUNDS CRUD] updating sound ${sounds[i].name} :`, sounds)
+    //     this.props.onUpdate(sounds)
+    // }
+
 
     /////////////////////////////////
     // ACTIONS
@@ -76,7 +95,8 @@ export default class SoundForm extends React.Component<Props,State> {
     generateNewSound = () => ({
         id: random(0,1000000).toString(),
         name: '',
-        code: `// new code here`
+        code: `// new code here`,
+        edited: true
     })
 
     render() {
