@@ -7,7 +7,7 @@ import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import { getEditedItem, updateItemsToNotEdited, updateItemToEdited, addItem, updateItemInArray, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart} from './helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart} from './helpers/arrayHelper';
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
@@ -36,17 +36,21 @@ class App extends React.Component<{}, State> {
     this.setState({parts: parts})
   }
 
+
+
   onSoundEdit = (sound:iSound) => {
-    this.setState({sounds: updateItemToEdited(sound.id, updateItemsToNotEdited(this.state.sounds))})
+    this.setState({sounds: arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.state.sounds))})
   }
 
   createSound = (sound: iSound) => {
-    this.setState({sounds: addItem(sound, this.state.sounds)})
+    this.setState({sounds: arrayWithItem(sound, this.state.sounds)})
   }
 
   updateSound = (sound: iSound) => {
-    this.setState({sounds: updateItemInArray(sound, this.state.sounds)})
+    this.setState({sounds: arrayWithUpdatedItem(sound, this.state.sounds)})
   }
+
+
 
   addSoundToCurrentPart = (sound: iSound) => {
     // @ts-ignore

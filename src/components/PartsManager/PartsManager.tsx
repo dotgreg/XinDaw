@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Part, { iPart } from '../Part/Part';
 import {random, filter} from 'lodash'
-import { getIndexFromId, removeItem, addItem, updateItemsToNotActive, updateItemToActive } from '../../helpers/arrayHelper';
+import { getIndexFromId, arrayWithoutItem, arrayWithItem, arrayWithItemsToNotActive, arrayWithItemToActive } from '../../helpers/arrayHelper';
 import config from '../../config';
 
 
@@ -34,10 +34,10 @@ export default class PartsManager extends React.Component<Props,State> {
             sounds: [],
             active: false
         }
-        this.props.onUpdate(addItem(newPart, this.props.parts))
+        this.props.onUpdate(arrayWithItem(newPart, this.props.parts))
     }
-    deletePart = (partToDelete:iPart) => this.props.onUpdate(removeItem(partToDelete, this.props.parts))
-    selectPart = (partToSelect:iPart) => this.props.onUpdate(updateItemToActive(partToSelect.id, updateItemsToNotActive(this.props.parts)))
+    deletePart = (partToDelete:iPart) => this.props.onUpdate(arrayWithoutItem(partToDelete, this.props.parts))
+    selectPart = (partToSelect:iPart) => this.props.onUpdate(arrayWithItemToActive(partToSelect.id, arrayWithItemsToNotActive(this.props.parts)))
 
     updateFormName = (ev) => {
         this.setState({formName: ev.target.value})

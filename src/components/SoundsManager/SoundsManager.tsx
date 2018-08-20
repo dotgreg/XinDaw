@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Sound, { iSound } from '../Sound/Sound';
-import { removeItem, updateItemToEdited, updateItemsToNotEdited } from '../../helpers/arrayHelper';
+import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited } from '../../helpers/arrayHelper';
 
 interface Props {
     sounds: iSound[]
@@ -14,9 +14,9 @@ interface State {
 
 export default class SoundsManager extends React.Component<Props,State> {
 
-    deleteSound = (soundToDelete:iSound) => this.props.onUpdate(removeItem(soundToDelete, this.props.sounds))
-    editSound = (sound:iSound) => this.props.onUpdate(updateItemToEdited(sound.id, updateItemsToNotEdited(this.props.sounds)))
-    startNewSoundEdit = () => this.props.onUpdate(updateItemsToNotEdited(this.props.sounds))
+    deleteSound = (soundToDelete:iSound) => this.props.onUpdate(arrayWithoutItem(soundToDelete, this.props.sounds))
+    editSound = (sound:iSound) => this.props.onUpdate(arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.props.sounds)))
+    startNewSoundEdit = () => this.props.onUpdate(arrayWithItemsToNotEdited(this.props.sounds))
 
     render() {
         return (

@@ -1,8 +1,12 @@
 import {findIndex, isNumber, curry, filter, each} from 'lodash'
 
-//
+//////////////////////////////////////////////
 // GETTERS
-//
+//////////////////////////////////////////////
+
+/////////////
+// prop => index
+/////////////
 
 const getIndexFromProp = curry((prop:string, value:any, arr:any[]) => {
     let i = findIndex(arr, item => item[prop] === value)
@@ -11,7 +15,9 @@ const getIndexFromProp = curry((prop:string, value:any, arr:any[]) => {
 })
 export const getIndexFromId = getIndexFromProp('id')
 
-
+/////////////
+// prop => item
+/////////////
 const getItemFromProp = curry((prop:string, value:any, arr:any[]) => {
     let res = filter(arr, item => item[prop] === value)
     if (res[0]) return res[0]
@@ -22,6 +28,10 @@ export const getItemFromId = getItemFromProp('id')
 export const getEditedItem = getItemFromProp('edited', true)
 export const getActiveItem = getItemFromProp('active', true)
 
+/////////////
+// ids => objs
+/////////////
+
 const getObjsFromIdsInArr = curry((ids:string[], arr:any[]): any[] => {
     if (!ids) return []
     return ids.map(id => getItemFromId(id, arr))
@@ -29,61 +39,73 @@ const getObjsFromIdsInArr = curry((ids:string[], arr:any[]): any[] => {
 export const getSoundsFromIds = getObjsFromIdsInArr()
 
 
-//
+//////////////////////////////////////////////
 // MUTATORS
-//
+//////////////////////////////////////////////
 
-// update
-export const updateItemInArray = curry((item:any, arr:any[]) => {
+/////////////
+// update item & item prop
+/////////////
+
+export const arrayWithUpdatedItem = curry((item:any, arr:any[]) => {
     let index = getIndexFromId(item.id, arr)
     if (isNumber(index)) arr[index] = item
     return arr
 })
 
-const updateItemPropInArray = curry((prop:string, value:any, id:string, arr:any[]) => {
+const arrayWithUpdatedItemProp = curry((prop:string, value:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
     if (isNumber(index)) arr[index][prop] = value
     return arr
 })
-export const updateItemToEdited = updateItemPropInArray('edited', true)
-export const updateItemToActive = updateItemPropInArray('active', true)
+export const arrayWithItemToEdited = arrayWithUpdatedItemProp('edited', true)
+export const arrayWithItemToActive = arrayWithUpdatedItemProp('active', true)
 
-// all
-export const updateItemsPropInArray = curry((prop:string, value:any, arr:any[]) => {
+/////////////
+// update all
+/////////////
+export const arrayWithUpdatedItemsProp = curry((prop:string, value:any, arr:any[]) => {
     return arr.map(item => {
         item[prop] = value
         return item
     })
 })
-export const updateItemsToNotEdited = updateItemsPropInArray('edited', false)
-export const updateItemsToNotActive = updateItemsPropInArray('active', false)
+export const arrayWithItemsToNotEdited = arrayWithUpdatedItemsProp('edited', false)
+export const arrayWithItemsToNotActive = arrayWithUpdatedItemsProp('active', false)
 
-
-// add
-export const addItem = curry((item:any, arr:any[]) => {
+/////////////
+// arr > add
+/////////////
+export const arrayWithItem = curry((item:any, arr:any[]) => {
     arr.push(item)
     return arr
 })
 
-// delete
-export const removeItem = curry((itemToDelete:any, arr:any[]) => {
+/////////////
+// arr > remove
+/////////////
+export const arrayWithoutItem = curry((itemToDelete:any, arr:any[]) => {
     arr = filter(arr, item => item.id !== itemToDelete.id)
     return arr
 })
 
-
-// arr prop add
-const addItemArrPropInArray = curry((prop:string, itemToAdd:any, id:string, arr:any[]) => {
+/////////////
+// item > arr > add
+/////////////
+const arrayWithItemArrPropInArray = curry((prop:string, itemToAdd:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
     if (isNumber(index)) arr[index][prop].push(itemToAdd)
     return arr
 })
-export const addSoundToPart = addItemArrPropInArray('sounds')
+export const addSoundToPart = arrayWithItemArrPropInArray('sounds')
 
-const removeItemArrPropInArray = curry((prop:string, itemToRemove:any, id:string, arr:any[]) => {
+/////////////
+// item > arr > remove
+/////////////
+const arrayWithoutItemArrPropInArray = curry((prop:string, itemToRemove:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
     if (isNumber(index)) arr[index][prop] = filter(arr[index][prop], item => item !== itemToRemove)
     return arr
 })
-export const removeSoundToPart = removeItemArrPropInArray('sounds')
+export const removeSoundToPart = arrayWithoutItemArrPropInArray('sounds')
 
