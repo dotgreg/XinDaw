@@ -55,6 +55,8 @@ export default class SoundForm extends React.Component<Props,State> {
 
         if (this.state.mode === 'create') this.props.onCreate(sound)
         if (this.state.mode === 'update') this.props.onUpdate(sound)
+
+        this.setState({mode: 'update'})
     }
 
 

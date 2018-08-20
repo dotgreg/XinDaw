@@ -5,8 +5,10 @@ import {random, filter} from 'lodash'
 import { getIndexFromId } from '../../helpers/getIndexFromId';
 import config from '../../config';
 
+
 interface Props {
     parts: iPart[],
+    onUpdate: Function
 }
 
 interface State {
@@ -36,16 +38,16 @@ export default class PartsManager extends React.Component<Props,State> {
         }
         let parts = this.state.parts
         parts.push(newPart)
-        //@ts-ignore
-        this.props.store.update('parts', parts)
+        
+        this.props.onUpdate(parts)
     }
     
     deletePart = (partToDelete:iPart) => {
         let parts = this.state.parts
         parts = filter(parts, sound => sound.id !== partToDelete.id)
         config.debug.partsCrud && console.log(`[parts CRUD] deleting sound ${partToDelete.name}`)
-        //@ts-ignore
-        this.props.store.update('parts', parts)
+        
+        this.props.onUpdate(parts)
     }
 
     //

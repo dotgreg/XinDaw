@@ -16,6 +16,7 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,
     "noUnusedLocals": false
   },
   "exclude": [

@@ -11,41 +11,41 @@ import Sound, { iSound } from './components/Sound/Sound';
 import SoundsManager from './components/SoundsManager/SoundsManager';
 import LocalStorageStorageManager, { iStorageData } from './components/StorageManager/LocalStorageStorageManager';
 import PartsManager from './components/PartsManager/PartsManager';
+import { iPart } from './components/Part/Part';
 
+import LocalStorageMixin from 'react-localstorage'
+import reactMixin  from 'react-mixin'
 
 interface State {
-  data: iStorageData,
+  sounds: iSound[],
+  parts: iPart[]
 }
 
+@reactMixin.decorate(LocalStorageMixin)
 class App extends React.Component<{}, State> {
 
   constructor(props) {
     super(props)
     this.state = {
-      data: {
-        sounds: [],
-        parts: []
-      }
+      sounds: [],
+      parts: []
     }
   }
 
-  onStorageUpdate = (data:iStorageData) => {
-      console.log('onStorageUpdate', data)
-      this.setState({ data: data })
+  updateSounds = (sounds:iSound[]) => {
+    this.setState({sounds: sounds})
   }
-
+ 
+  updateParts = (parts:iPart[]) => {
+    this.setState({parts: parts})
+  }
+ 
   public render() {
     return (
       <div className="App"> 
-        <LocalStorageStorageManager onUpdate={this.onStorageUpdate}>
-          
-          <SoundsManager sounds={this.state.data.sounds} />
+        <SoundsManager sounds={this.state.sounds} onUpdate={this.updateSounds}/>
 
-          <PartsManager parts={this.state.data.parts} />
-
-        </LocalStorageStorageManager>
-        
-
+        <PartsManager parts={this.state.parts} onUpdate={this.updateParts} />
       </div>
     );
   } 

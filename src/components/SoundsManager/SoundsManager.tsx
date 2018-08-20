@@ -1,15 +1,13 @@
 import * as React from 'react';
 import Sound, { iSound } from '../Sound/Sound';
-import LocalStorageStorageManager, { iStorageData } from '../StorageManager/LocalStorageStorageManager';
-import {filter, findIndex, isNumber} from 'lodash'
-import CodeEditor from '../CodeEditor/CodeEditor';
+import {filter, isNumber} from 'lodash'
 import config from '../../config';
 import SoundForm from '../Sound.form/SoundForm';
 import { getIndexFromId } from '../../helpers/getIndexFromId';
 
 interface Props {
     sounds: iSound[]
-    store?: LocalStorageStorageManager
+    onUpdate: Function
 }
 
 interface State {
@@ -35,17 +33,13 @@ export default class SoundsManager extends React.Component<Props,State> {
         }
     }
     
-
     //
     // SOUND CRUD
     //
     createSound = (sound:iSound) => {
         let sounds = this.state.sounds
         sounds.push(sound)
-        console.log(this.props)
-
-        // @ts-ignore
-        this.props.store.update('sounds', sounds)
+        this.props.onUpdate(sounds)
     }
 
     updateSound = (sound:iSound) => {
@@ -54,16 +48,14 @@ export default class SoundsManager extends React.Component<Props,State> {
         if (!isNumber(i)) return console.warn(`[SOUNDS CRUD] updating sound id ${sound.id} does not exists`, sounds)
         sounds[i] = sound
         config.debug.soundsCrud && console.log(`[SOUNDS CRUD] updating sound ${sounds[i].name} :`, sounds)
-        // @ts-ignore
-        this.props.store.update('sounds', sounds)
+        this.props.onUpdate(sounds)
     }
     
     deleteSound = (soundToDelete:iSound) => {
         let sounds = this.state.sounds
         sounds = filter(sounds, sound => sound.id !== soundToDelete.id)
         config.debug.soundsCrud && console.log(`[SOUNDS CRUD] deleting sound ${soundToDelete.name}`)
-        // @ts-ignore
-        this.props.store.update('sounds', sounds)
+        this.props.onUpdate(sounds)
     }
 
 
