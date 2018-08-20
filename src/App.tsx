@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './App.css';
 import TestSwitchTone from './components/TestSwitchTone';
 import TestSyncLocalStorage from './components/TestSyncLocalStorage';
 import LocalStorageWatcher from './components/LocalStorageWatcher';
@@ -9,12 +8,13 @@ import TestSwitch from './components/testSwitch';
 import TestWebMidi from './components/TestWebMidi';
 import Editor from './components/Editor/Editor';
 import { sounds } from './datas/sounds';
+import Sound, { iSound } from './components/Sound/Sound';
+import SoundsManager from './components/SoundsManager/SoundsManager';
+
 
 interface State {
   data: any,
-  sound: {
-    code: string
-  }
+  sounds: iSound[]
 }
 
 class App extends React.Component<{}, State> {
@@ -22,7 +22,7 @@ class App extends React.Component<{}, State> {
     super(props)
     this.state = {
       data: {},
-      sound: sounds.sound2
+      sounds: sounds
     }
   }
 
@@ -47,17 +47,26 @@ class App extends React.Component<{}, State> {
   public render() {
     return (
       <div className="App">
-        <TestSyncLocalStorage />
-        <button onClick={this.increment}>increment</button>
-        <div>{this.state.data.counter}</div>
-        <LocalStorageWatcher onUpdate={this.onLocalStorageUpdate} />
-        {/* <TestToneOutput /> */}
-        <TestWebMidi />
-        <Editor sound={this.state.sound}/>
-        {/* <TestAudioHtmlOutput /> */}
+        <SoundsManager />
       </div>
     );
   } 
 }
 
 export default App;
+
+// {
+//   this.state.sounds.map(sound => (
+//     <Sound sound={sound}/>
+//   ))
+// }
+
+
+// <TestSyncLocalStorage />
+// <button onClick={this.increment}>increment</button>
+// <div>{this.state.data.counter}</div>
+// <LocalStorageWatcher onUpdate={this.onLocalStorageUpdate} />
+// {/* <TestToneOutput /> */}
+// <TestWebMidi />
+// <Editor code={this.state.sounds[0].code}/>
+// {/* <TestAudioHtmlOutput /> */}

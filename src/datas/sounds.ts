@@ -1,5 +1,9 @@
-export const sounds = {
-    sound1: {
+import { iSound } from "../components/Sound/Sound";
+
+export const sounds:iSound[] = [
+    {
+        id: 'sound1',
+        name: 'sound1',
         code:`
             let freeverb = new Tone.Freeverb().toMaster();
             freeverb.dampening.value = 1986;
@@ -13,7 +17,9 @@ export const sounds = {
             return { t: 'event', c: c}
         `
     },
-    sound2: {
+    {
+        id: 'sound2',
+        name: 'sound2',
         code: `
             //let freeverb = new Tone.Freeverb().toMaster();
             //freeverb.dampening.value = 1000;
@@ -63,4 +69,4 @@ export const sounds = {
             }
         `
     }
-}
+]

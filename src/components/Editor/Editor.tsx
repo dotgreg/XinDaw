@@ -16,7 +16,7 @@ require('codemirror/mode/javascript/javascript.js');
 // import 'codemirror/mode/javascript/javascript.js'
 
 interface Props {
-  sound: any
+  code: string
 }
 interface State {
   // sound: any
@@ -29,9 +29,6 @@ export default class Editor extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.props.sound) {
-      console.log(this.props)
-    }
 
     // console.log(this.refs['editor'])
 
@@ -49,8 +46,6 @@ export default class Editor extends React.Component<Props, State> {
   }
 
 	render() {
-    if (!this.props.sound) return false
-
     let options = {
       // keyMap: "sublime",
       mode: "javascript",
@@ -70,7 +65,7 @@ export default class Editor extends React.Component<Props, State> {
       <div className="component-editor">
         <CodeMirror
           ref="editor"
-          value={this.props.sound.code}
+          value={this.props.code}
           options={options} />
       </div>
     )
