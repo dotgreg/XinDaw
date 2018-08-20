@@ -1,9 +1,9 @@
 const config = {
     debug: {
-        storage: true,
-        soundsCrud: true,
+        storage: false,
+        soundsCrud: false,
         sound: true,
-        codeEditor: true
+        codeEditor: false
     },
 }
 

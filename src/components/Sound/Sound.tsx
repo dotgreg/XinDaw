@@ -15,7 +15,9 @@ interface Props {
 
 
 
-export default class Sound extends React.Component<Props,{}> {
+export default class Sound extends React.PureComponent<Props,{}> {
+
+    soundHist:iSound
 
     constructor(props){
         super(props)
@@ -23,13 +25,21 @@ export default class Sound extends React.Component<Props,{}> {
 
     componentDidMount () {
         config.debug.sound && console.log(`[SOUND] new sound ${this.props.sound.name} mounted`)
+        this.soundHist = Object.assign({}, this.props.sound)
     }
 
     componentWillUnmount () {
         config.debug.sound && console.log(`[SOUND] ${this.props.sound.name} will unmount`)
     }
 
-
+    componentDidUpdate () {
+        // if code updated
+        if (this.props.sound.code !== this.soundHist.code) {
+            this.soundHist = Object.assign({}, this.props.sound)
+            config.debug.sound && console.log(`[SOUND] sound ${this.props.sound.name} updated`)
+        }
+    }
+    
 
     render() {
         return (

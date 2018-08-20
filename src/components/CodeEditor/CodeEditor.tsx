@@ -20,6 +20,8 @@ export default class CodeEditor extends React.Component<Props, {}> {
 	render() {
     config.debug.codeEditor && console.log('[CODEEDITOR] Render with code : ', this.props.code)
 
+    this.code = this.props.code
+
     let options = {
       // keyMap: "sublime",
       mode: "javascript",
