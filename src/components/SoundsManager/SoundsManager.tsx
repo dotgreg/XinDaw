@@ -2,6 +2,7 @@ import * as React from 'react';
 import Sound, { iSound } from '../Sound/Sound';
 import LocalStorageStorageManager, { iStorageData } from '../StorageManager/LocalStorageStorageManager';
 import SoundFormCreate from '../Sound.form.create/SoundFormCreate';
+import {filter} from 'lodash'
 
 interface State {
     sounds: iSound[]
@@ -32,6 +33,12 @@ export default class SoundsManager extends React.Component<{},State> {
         this.StorageManager.update({sounds: sounds})
     }
 
+    deleteSound = (soundToDelete:iSound) => {
+        let sounds = this.state.sounds
+        sounds = filter(sounds, sound => sound.id !== soundToDelete.id)
+        this.StorageManager.update({sounds: sounds})
+    }
+
 
 
     render() {
@@ -59,7 +66,11 @@ export default class SoundsManager extends React.Component<{},State> {
                     <ul>
                     {
                         this.state.sounds.map((sound,i) => (
-                            <Sound key={i} sound={sound}/>
+                            <Sound 
+                                key={i} 
+                                sound={sound}
+                                onDelete={this.deleteSound}
+                            />
                         ))
                     }
                     </ul>

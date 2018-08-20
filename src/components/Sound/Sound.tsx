@@ -7,7 +7,8 @@ export interface iSound {
   }
 
 interface Props {
-    sound: iSound
+    sound: iSound,
+    onDelete: Function
 }
 
 
@@ -20,7 +21,10 @@ export default class Sound extends React.Component<Props,{}> {
 
     render() {
         return (
-            <div>sound {this.props.sound.name}</div>
+            <div>
+                sound {this.props.sound.name} 
+                <button onClick={() => {this.props.onDelete(this.props.sound)}}>X</button>
+            </div>
         )
     }   
 }
