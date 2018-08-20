@@ -16,7 +16,7 @@ class TestWebMidi extends React.Component<{},State> {
 
     logText = (string:string) => {
         let newList = this.state.logList
-        newList.push(string)
+        newList.unshift(string)
         this.setState({logList: newList})
     }
 

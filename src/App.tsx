@@ -7,16 +7,22 @@ import TestToneOutput from './components/TestToneOutput';
 import TestAudioHtmlOutput from './components/TestAudioHtmlOutput';
 import TestSwitch from './components/testSwitch';
 import TestWebMidi from './components/TestWebMidi';
+import Editor from './components/Editor/Editor';
+import { sounds } from './datas/sounds';
 
 interface State {
-  data: any
+  data: any,
+  sound: {
+    code: string
+  }
 }
 
 class App extends React.Component<{}, State> {
   constructor(props) {
     super(props)
     this.state = {
-      data: {}
+      data: {},
+      sound: sounds.sound2
     }
   }
 
@@ -45,8 +51,9 @@ class App extends React.Component<{}, State> {
         <button onClick={this.increment}>increment</button>
         <div>{this.state.data.counter}</div>
         <LocalStorageWatcher onUpdate={this.onLocalStorageUpdate} />
-        <TestToneOutput />
+        {/* <TestToneOutput /> */}
         <TestWebMidi />
+        <Editor sound={this.state.sound}/>
         {/* <TestAudioHtmlOutput /> */}
       </div>
     );
