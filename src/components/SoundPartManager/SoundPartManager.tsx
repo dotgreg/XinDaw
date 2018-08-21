@@ -28,6 +28,7 @@ export default class SoundPartManager extends React.Component<Props,State> {
                                 <Sound 
                                     key={i} 
                                     sound={sound}
+                                    playable={true}
                                     onEdit={this.props.onSoundEdit}
                                     onDelete={this.props.onRemoveCurrentPart}
                                 />

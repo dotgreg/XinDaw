@@ -44,6 +44,7 @@ export default class PartsManager extends React.Component<Props,State> {
     }
 
     render() {
+        let parts = this.props.parts || []
         return (
             <div className="sounds" >
                 <h3>Parts Manager</h3>
@@ -58,7 +59,7 @@ export default class PartsManager extends React.Component<Props,State> {
                     <h3>parts</h3>
                     <ul>
                         {
-                            this.props.parts.map((part,i) => (
+                            parts.map((part,i) => (
                                 <Part 
                                     key={i} 
                                     part={part}

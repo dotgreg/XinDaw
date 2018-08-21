@@ -13,6 +13,7 @@ interface Props {
     sound: iSound,
     onDelete: Function
     onEdit:Function
+    playable?:Boolean
     onAddCurrentPart?: Function
 }
 
@@ -24,6 +25,9 @@ export default class Sound extends React.Component<Props,{}> {
 
     constructor(props){
         super(props)
+        this.state = {
+            toneState: 'stopped'
+        }
     }
 
     componentDidMount () {
@@ -48,17 +52,38 @@ export default class Sound extends React.Component<Props,{}> {
 
         this.soundHist = Object.assign({}, this.props.sound)
     }
+
+    //
+    // TONE RELATED CODE
+    //
+
+    play = () => {
+        this.setState({toneState: 'playing'})
+    }
+    pause = () => {
+        this.setState({toneState: 'paused'})
+    }
+    togglePlay = () => {
+        console.log(this.state)
+        // this.state.toneState === 'paused' ? this.play() : this.pause()
+    }
+    stop = () => {
+        this.setState({toneState: 'stopped'})
+    }
     
 
     render() {
         return (
             <div>
                 <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
+                {this.props.onAddCurrentPart && (<button onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}>P</button>)} 
                 {
-                    this.props.onAddCurrentPart && (
-                        <button onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}>P</button>
+                    this.props.playable && (
+                        <button onClick={() => {this.togglePlay()}}>
+                        
+                        </button>
                     )
-                }
+                } 
                 <button onClick={() => {this.props.onDelete(this.props.sound)}}>X</button>
             </div>
         )

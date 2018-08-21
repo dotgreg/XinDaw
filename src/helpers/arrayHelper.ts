@@ -1,4 +1,4 @@
-import {findIndex, isNumber, curry, filter, each} from 'lodash'
+import {findIndex, isNumber, curry, filter, each, isArray} from 'lodash'
 
 //////////////////////////////////////////////
 // GETTERS
@@ -77,6 +77,7 @@ export const arrayWithItemsToNotActive = arrayWithUpdatedItemsProp('active', fal
 // arr > add
 /////////////
 export const arrayWithItem = curry((item:any, arr:any[]) => {
+    if (!isArray(arr)) arr = []
     arr.push(item)
     return arr
 })
@@ -94,6 +95,7 @@ export const arrayWithoutItem = curry((itemToDelete:any, arr:any[]) => {
 /////////////
 const arrayWithItemArrPropInArray = curry((prop:string, itemToAdd:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
+    if (!isNumber(index) || !arr || !arr[index as number] || !arr[index as number][prop]) return arr
     if (isNumber(index)) arr[index][prop].push(itemToAdd)
     return arr
 })
