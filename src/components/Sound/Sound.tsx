@@ -17,9 +17,13 @@ interface Props {
     onAddCurrentPart?: Function
 }
 
+interface State {
+    toneState: string
+}
 
 
-export default class Sound extends React.Component<Props,{}> {
+
+export default class Sound extends React.Component<Props,State> {
 
     soundHist:iSound
 
@@ -64,8 +68,7 @@ export default class Sound extends React.Component<Props,{}> {
         this.setState({toneState: 'paused'})
     }
     togglePlay = () => {
-        console.log(this.state)
-        // this.state.toneState === 'paused' ? this.play() : this.pause()
+        this.state.toneState === 'paused' ? this.play() : this.pause()
     }
     stop = () => {
         this.setState({toneState: 'stopped'})
@@ -80,7 +83,7 @@ export default class Sound extends React.Component<Props,{}> {
                 {
                     this.props.playable && (
                         <button onClick={() => {this.togglePlay()}}>
-                        
+                            {this.state.toneState === 'playing' ? '||' : '>'}
                         </button>
                     )
                 } 
