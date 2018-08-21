@@ -3,6 +3,7 @@ const config = {
         soundsCrud: false,
         sound: true,
         codeEditor: false,
+        codeEval: true,
         partsCrud: false
     },
 }

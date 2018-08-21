@@ -1,6 +1,8 @@
 import * as React from 'react';
 import config from '../../config';
 import { areSame } from '../../helpers/areSame';
+import { prepareCode } from '../../managers/code/prepareCode';
+import { evalCode } from '../../managers/code/evalCode';
 
 export interface iSound {
     id: string
@@ -63,6 +65,12 @@ export default class Sound extends React.Component<Props,State> {
 
     play = () => {
         this.setState({toneState: 'playing'})
+
+        let code2 = prepareCode(this.props.sound.code)
+        console.log(code2)
+        let code3 = evalCode(code2)
+        console.log(code3)
+        // console.log(222, prepareCode(this.props.sound.code))
     }
     pause = () => {
         this.setState({toneState: 'paused'})

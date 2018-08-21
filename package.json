@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@types/codemirror": "0.0.59",
+    "@types/esprima": "^4.0.2",
     "@types/lodash": "^4.14.116",
     "codemirror": "^5.39.2",
+    "esprima": "^4.0.0",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.10",
     "react": "^16.4.2",

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Tone from 'tone'
 import * as _ from 'lodash'
-import { getUserMedia } from '../helpers/getUserMedia';
+import { getUserMedia } from '../../helpers/getUserMedia';
 
 class TestAudioHtmlOutput extends React.Component {
     componentDidMount() {
