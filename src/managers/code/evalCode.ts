@@ -8,6 +8,7 @@ export let evalCode = (code) => {
         let result =  eval(`(function self(){${code}}())`);
         let error = `EDITOR RESULT ERROR => the code should contain one c(code) var`
         
+        // consol.log()
         if(!result || typeof result !== 'object') return {status: 'err', body: error}
         if(!result.c) return {status: 'err', body: error}
         if(!result.e) return {status: 'err', body: error}
@@ -17,9 +18,10 @@ export let evalCode = (code) => {
         }
         config.debug.codeEval && console.log('[CODEEVAL] eval => success :', {result:result})
         return {status: 'ok', body: result}
-
+        
     } catch (e) {
         let error = `EDITOR SYNTAX ERROR => ${e.message}`
+        console.warn('[CODEEVAL] eval => fail :', {result:e})
         return {status: 'err', body: error}
     }
 }

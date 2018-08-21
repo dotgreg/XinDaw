@@ -11,6 +11,8 @@ import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayW
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
+import Tone from 'tone';
+
 interface State {
   sounds: iSound[],
   parts: iPart[],
@@ -25,6 +27,15 @@ class App extends React.Component<{}, State> {
       sounds: [],
       parts: [],
     }
+
+    let tone = new Tone()
+    Tone.Transport.start('+0.1')
+    Tone.Transport.loopEnd = '2m'
+    Tone.Transport.loop = true
+    // @ts-ignore
+    window.Tone = Tone
+
+    Tone.context.latencyHint = "interactive"
   }
 
   updateSounds = (sounds:iSound[]) => {

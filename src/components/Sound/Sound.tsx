@@ -3,6 +3,8 @@ import config from '../../config';
 import { areSame } from '../../helpers/areSame';
 import { prepareCode } from '../../managers/code/prepareCode';
 import { evalCode } from '../../managers/code/evalCode';
+import { startSound } from '../../managers/tone/startSound';
+import { stopSound } from '../../managers/tone/stopSound';
 
 export interface iSound {
     id: string
@@ -21,6 +23,7 @@ interface Props {
 
 interface State {
     toneState: string
+    tone: any
 }
 
 
@@ -32,7 +35,8 @@ export default class Sound extends React.Component<Props,State> {
     constructor(props){
         super(props)
         this.state = {
-            toneState: 'stopped'
+            toneState: 'stopped',
+            tone: {}
         }
     }
 
@@ -43,6 +47,7 @@ export default class Sound extends React.Component<Props,State> {
 
     componentWillUnmount () {
         config.debug.sound && console.log(`[SOUND] ${this.props.sound.name} will unmount`)
+        this.stop()
     }
 
     componentDidUpdate () {
@@ -65,11 +70,22 @@ export default class Sound extends React.Component<Props,State> {
 
     play = () => {
         this.setState({toneState: 'playing'})
-
+        console.log(111)
+        
         let code2 = prepareCode(this.props.sound.code)
-        console.log(code2)
-        let code3 = evalCode(code2)
-        console.log(code3)
+        let result = evalCode(code2)
+        
+        console.log(result)
+        if (result.status === 'err') return result
+        console.log(222)
+
+        let result2 = {tone: result.body.c, elementsToDispose: result.body.e, options: result.body.o}
+
+        this.setState({tone: result2.tone})
+        console.log(333, result2.tone)
+        startSound(result2.tone)
+
+        return 
         // console.log(222, prepareCode(this.props.sound.code))
     }
     pause = () => {
@@ -79,7 +95,9 @@ export default class Sound extends React.Component<Props,State> {
         this.state.toneState === 'paused' ? this.play() : this.pause()
     }
     stop = () => {
+        if (this.state.toneState === 'stopped') return
         this.setState({toneState: 'stopped'})
+        stopSound(this.state.tone)
     }
     
 
