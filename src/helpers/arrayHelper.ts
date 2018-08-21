@@ -1,4 +1,4 @@
-import {findIndex, isNumber, curry, filter, each, isArray} from 'lodash'
+import {findIndex, isNumber, curry, filter, each, isArray, uniq} from 'lodash'
 
 //////////////////////////////////////////////
 // GETTERS
@@ -93,21 +93,22 @@ export const arrayWithoutItem = curry((itemToDelete:any, arr:any[]) => {
 /////////////
 // item > arr > add
 /////////////
-const arrayWithItemArrPropInArray = curry((prop:string, itemToAdd:any, id:string, arr:any[]) => {
+const arrayWithPropArrayItem = curry((prop:string, itemToAdd:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
     if (!isNumber(index) || !arr || !arr[index as number] || !arr[index as number][prop]) return arr
     if (isNumber(index)) arr[index][prop].push(itemToAdd)
+    arr[index][prop] = uniq(arr[index][prop])
     return arr
 })
-export const addSoundToPart = arrayWithItemArrPropInArray('sounds')
+export const addSoundToPart = arrayWithPropArrayItem('sounds')
 
 /////////////
 // item > arr > remove
 /////////////
-const arrayWithoutItemArrPropInArray = curry((prop:string, itemToRemove:any, id:string, arr:any[]) => {
+const arrayWithoutPropArrayItem = curry((prop:string, itemToRemove:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
     if (isNumber(index)) arr[index][prop] = filter(arr[index][prop], item => item !== itemToRemove)
     return arr
 })
-export const removeSoundToPart = arrayWithoutItemArrPropInArray('sounds')
+export const removeSoundToPart = arrayWithoutPropArrayItem('sounds')
 

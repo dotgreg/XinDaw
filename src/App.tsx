@@ -53,7 +53,6 @@ class App extends React.Component<{}, State> {
 
 
   addSoundToCurrentPart = (sound: iSound) => {
-    console.log(sound, sound.id, getActiveItem(this.state.parts).id, this.state.parts)
     // @ts-ignore
     this.setState({parts: addSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
   }
