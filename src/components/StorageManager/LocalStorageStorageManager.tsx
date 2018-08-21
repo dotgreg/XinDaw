@@ -45,7 +45,6 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
 
     componentDidUpdate(prevProps, prevState) {
         if (JSON.stringify(prevState.data) !== JSON.stringify(this.state.data)) {
-            config.debug.storage && console.log('[STORAGE] update data ', this.state.data)
             
             this.props.onUpdate(this.state.data)
 
@@ -64,7 +63,6 @@ export default class LocalStorageStorageManager extends React.Component<Props,St
         let data = this.state.data
         data[prop] = newData
         data = this.dataVerified(data)
-        config.debug.storage && console.log(`[STORAGE] update triggered for ${prop}`, newData, data)
         this.setState({data: data})
     }
 

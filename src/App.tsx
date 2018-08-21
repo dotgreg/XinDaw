@@ -32,7 +32,6 @@ class App extends React.Component<{}, State> {
   }
   
   updateParts = (parts:iPart[]) => {
-    console.log('updateParts',parts)
     this.setState({parts: parts})
   }
 
