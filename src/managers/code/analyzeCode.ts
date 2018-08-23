@@ -42,6 +42,7 @@ export const analyzeCode = (code:string) => {
                         let res:iControlVar = {
                             id: stringToId(getEsprimaElementValue(item3.elements[0])), 
                             name: getEsprimaElementValue(item3.elements[0]), 
+                            target: getEsprimaElementValue(item3.elements[1]), 
                             value: getEsprimaElementValue(item3.elements[2]) || 0, 
                             min: getEsprimaElementValue(item3.elements[3]), 
                             max: getEsprimaElementValue(item3.elements[4]),

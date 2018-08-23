@@ -2,9 +2,11 @@ import { prepareCode } from "../managers/code/prepareCode";
 import { evalCode } from "../managers/code/evalCode";
 import config from "../config";
 import Tone from 'tone'
+import {each} from 'lodash'
+import { iControlVar } from "../components/Controls/Controls";
 
 interface optionsSoundTone {
-    vars: any[]
+    vars: iControlVar[]
 }
 
 export class SoundTone {
@@ -13,8 +15,8 @@ export class SoundTone {
 
     private tone:any
     private elementsToDispose:any[]
-    private options:optionsSoundTone
-
+    
+    public options:optionsSoundTone
     public type:string
 
     constructor(code:string){
@@ -52,6 +54,18 @@ export class SoundTone {
     destroy() {
         this.type === 'loop' && Tone.Transport.scheduleOnce(t => { this.tone.stop().dispose() }, 1)
         this.type === 'transport-event' && Tone.Transport.clear(this.tone)
+    }
+
+    updateControls(controlVars:iControlVar[]) {
+        if (!this.options || !this.options.vars) return
+        each(controlVars, varControl => {
+            each(this.options.vars, varTone => {
+                if (varControl.id === varTone.id) {
+                    // console.log(`controlvar modif sound ${varTone.name} to ${varControl.value}`)
+                    varTone.target.value = varControl.value
+                }
+            })
+        })
     }
 
     //

@@ -70,10 +70,7 @@ class App extends React.Component<{}, State> {
   }
   
   updateSoundControls = (soundControls:iSoundControls) => {
-    // this.setState({controls:[]})
-    // console.log('update', soundControls, arrayWithUpdatedItemFromId(soundControls, this.state.controls))
     this.setState({controls: arrayWithUpdatedItemFromId(soundControls, this.state.controls)})
-    // this.setState({controls: arrayWithUpdatedItemFromId(soundControls, this.state.controls)})
   }
 
   public render() {

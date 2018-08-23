@@ -3,6 +3,7 @@ import { iPart } from '../Part/Part';
 import Sound, { iSound } from '../Sound/Sound';
 import { filter } from 'lodash'
 import { iSoundControls } from '../Controls/Controls';
+import { getItemFromId } from '../../helpers/arrayHelper';
 
 interface Props {
     part: iPart[]
@@ -30,6 +31,7 @@ export default class SoundPartManager extends React.Component<Props,State> {
                                 <Sound 
                                     key={i} 
                                     sound={sound}
+                                    controls={getItemFromId(sound.id,this.props.controls).controls}
                                     playable={true}
                                     onEdit={this.props.onTriggerSoundEdit}
                                     onDelete={this.props.onRemoveSound}

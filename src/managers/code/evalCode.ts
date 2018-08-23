@@ -1,5 +1,7 @@
-import { filter } from 'lodash'
+import { filter, each } from 'lodash'
 import config from '../../config';
+import { iControlVar } from '../../components/Controls/Controls';
+import { stringToId } from '../../helpers/stringHelper';
 
 export let evalCode = (code) => {
     try {
@@ -14,6 +16,20 @@ export let evalCode = (code) => {
         if(result.o && result.o.vars) {
             let error = {status: 'err', body: 'EDITOR RESULT ERROR => each result.o.vars structure should be [NAMEVAR, VAR, MINVAL, MAXVAL]'}
             if (filter(result.o.vars, v => v instanceof Array).length !== result.o.vars.length) return error
+            let newVars:iControlVar[] = []
+            each(result.o.vars, variable => {
+                let newVar:iControlVar = {
+                    id: stringToId(variable[0]), 
+                    name: variable[0], 
+                    target: variable[1], 
+                    value: variable[2] || 0, 
+                    min: variable[3], 
+                    max: variable[4],
+                    step: variable[5] || 1,
+                }
+                newVars.push(newVar)
+            })
+            result.o.vars = newVars
         }
         config.debug.codeEval && console.log('[CODEEVAL] eval => success :', {result:result})
         return {status: 'ok', body: result}

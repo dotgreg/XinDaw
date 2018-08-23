@@ -13,8 +13,8 @@ export interface iSound {
 
 interface Props {
     sound: iSound,
-    control?:iControlVar[]
     onDelete: Function
+    controls?:iControlVar[]
     onEdit:Function
     playable?:Boolean
     onAddCurrentPart?: Function
@@ -28,7 +28,13 @@ interface State {
 
 export default class Sound extends React.Component<Props,State> {
 
-    soundHist:iSound
+    hist:{
+        sound: iSound | undefined
+        controls: iControlVar[]
+    } = {
+        sound: undefined,
+        controls: []
+    }
     soundTone:SoundTone
 
     constructor(props){
@@ -40,7 +46,7 @@ export default class Sound extends React.Component<Props,State> {
 
     componentDidMount () {
         config.debug.sound && console.log(`[SOUND] new sound ${this.props.sound.name} mounted`)
-        this.soundHist = Object.assign({}, this.props.sound)
+        this.hist.sound = Object.assign({}, this.props.sound)
 
         this.soundTone = new SoundTone(this.props.sound.code)
     }
@@ -51,19 +57,30 @@ export default class Sound extends React.Component<Props,State> {
     }
 
     componentDidUpdate () {
-        // if code updated
-        if (areSame(this.props.sound, this.soundHist)) return
-        
-        config.debug.sound && console.log(`[SOUND] sound ${this.props.sound.name} updated`)
-        
-        if (this.props.sound.code !== this.soundHist.code) {
-            config.debug.sound && console.log(`[SOUND] sound CODE ${this.props.sound.name} updated`)
+        // if controls updated
+        if (!areSame(this.props.controls, this.hist.controls)) {
+            
+            this.soundTone.updateControls(this.props.controls || [])
 
-            this.soundTone.destroy()
-            this.soundTone = new SoundTone(this.props.sound.code)
-        } 
+            this.hist.controls = Object.assign({}, this.props.controls)
+        }
 
-        this.soundHist = Object.assign({}, this.props.sound)
+
+        if (!areSame(this.props.sound, this.hist.sound)) {
+            config.debug.sound && console.log(`[SOUND] sound ${this.props.sound.name} updated`)
+            
+    
+            // if code updated
+            if (this.props.sound.code !== (this.hist.sound as iSound).code) {
+                config.debug.sound && console.log(`[SOUND] sound CODE ${this.props.sound.name} updated`)
+    
+                this.soundTone.destroy()
+                this.soundTone = new SoundTone(this.props.sound.code)
+            } 
+    
+            this.hist.sound = Object.assign({}, this.props.sound)
+        }
+        
     }
 
     //

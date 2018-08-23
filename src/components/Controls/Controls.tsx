@@ -14,6 +14,7 @@ export interface iSoundControls {
 export interface iControlVar {
     id: string
     name: string
+    target: any
     value: number
     min: number
     max: number
