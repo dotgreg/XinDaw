@@ -4,7 +4,8 @@ const config = {
         sound: true,
         codeEditor: false,
         codeEval: true,
-        partsCrud: false
+        partsCrud: false,
+        soundTone: true
     },
 }
 

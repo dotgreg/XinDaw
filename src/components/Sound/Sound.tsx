@@ -5,6 +5,7 @@ import { prepareCode } from '../../managers/code/prepareCode';
 import { evalCode } from '../../managers/code/evalCode';
 import { startSound } from '../../managers/tone/startSound';
 import { stopSound } from '../../managers/tone/stopSound';
+import { SoundTone } from '../../Objects/SoundTone';
 
 export interface iSound {
     id: string
@@ -22,8 +23,7 @@ interface Props {
 }
 
 interface State {
-    toneState: string
-    tone: any
+    playStatus: string
 }
 
 
@@ -31,18 +31,20 @@ interface State {
 export default class Sound extends React.Component<Props,State> {
 
     soundHist:iSound
+    soundTone:SoundTone
 
     constructor(props){
         super(props)
         this.state = {
-            toneState: 'stopped',
-            tone: {}
+            playStatus: 'stopped',
         }
     }
 
     componentDidMount () {
         config.debug.sound && console.log(`[SOUND] new sound ${this.props.sound.name} mounted`)
         this.soundHist = Object.assign({}, this.props.sound)
+
+        this.soundTone = new SoundTone(this.props.sound.code)
     }
 
     componentWillUnmount () {
@@ -59,6 +61,9 @@ export default class Sound extends React.Component<Props,State> {
         
         if (this.props.sound.code !== this.soundHist.code) {
             config.debug.sound && console.log(`[SOUND] sound CODE ${this.props.sound.name} updated`)
+
+            this.soundTone.destroy()
+            this.soundTone = new SoundTone(this.props.sound.code)
         } 
 
         this.soundHist = Object.assign({}, this.props.sound)
@@ -67,37 +72,20 @@ export default class Sound extends React.Component<Props,State> {
     //
     // TONE RELATED CODE
     //
-
     play = () => {
-        this.setState({toneState: 'playing'})
-        console.log(111)
-        
-        let code2 = prepareCode(this.props.sound.code)
-        let result = evalCode(code2)
-        
-        console.log(result)
-        if (result.status === 'err') return result
-        console.log(222)
-
-        let result2 = {tone: result.body.c, elementsToDispose: result.body.e, options: result.body.o}
-
-        this.setState({tone: result2.tone})
-        console.log(333, result2.tone)
-        startSound(result2.tone)
-
-        return 
-        // console.log(222, prepareCode(this.props.sound.code))
+        this.soundTone.play()
+        this.setState({playStatus: 'playing'})
     }
     pause = () => {
-        this.setState({toneState: 'paused'})
+        this.soundTone.pause()
+        this.setState({playStatus: 'paused'})
     }
     togglePlay = () => {
-        this.state.toneState === 'paused' ? this.play() : this.pause()
+        this.state.playStatus === 'paused' ? this.play() : this.pause()
     }
     stop = () => {
-        if (this.state.toneState === 'stopped') return
-        this.setState({toneState: 'stopped'})
-        stopSound(this.state.tone)
+        this.soundTone.destroy()
+        this.setState({playStatus: 'stopped'})
     }
     
 
@@ -109,7 +97,7 @@ export default class Sound extends React.Component<Props,State> {
                 {
                     this.props.playable && (
                         <button onClick={() => {this.togglePlay()}}>
-                            {this.state.toneState === 'playing' ? '||' : '>'}
+                            {this.state.playStatus === 'playing' ? '||' : '>'}
                         </button>
                     )
                 } 
