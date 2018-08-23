@@ -59,9 +59,6 @@ export class SoundTone {
     // 
 
     getToneType(tone:any) {
-        // ("" + obj.constructor)
-        console.log(tone && tone.interval)
-        
         if (typeof tone === 'number') return 'transport-event'
         else if (tone && tone.interval) return 'loop'
         return 'unknown'

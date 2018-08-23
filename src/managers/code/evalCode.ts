@@ -2,7 +2,6 @@ import { filter } from 'lodash'
 import config from '../../config';
 
 export let evalCode = (code) => {
-
     try {
         config.debug.codeEval && console.log('[CODEEVAL] eval => start :', {code:code})
         let result =  eval(`(function self(){${code}}())`);

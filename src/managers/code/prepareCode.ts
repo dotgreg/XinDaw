@@ -7,7 +7,7 @@ import config from '../../config';
 // return {c: c, o: false, e: [c]} in end of code
 // where e is all variables to be able to be disposed
 
-export let prepareCode = (code:any) => {
+export let prepareCode = (code:string) => {
     let result
 
     try {
@@ -42,3 +42,4 @@ export let prepareCode = (code:any) => {
     config.debug.codeEval && console.log('[CODEEVAL] prepare => success :', {res})
     return res
 }
+

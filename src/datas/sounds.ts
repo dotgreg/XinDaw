@@ -16,6 +16,39 @@ export const sounds:any[] = [
         `
     },
     {
+        id: 'sound3',
+        name: 'sound3',
+        code:`
+            var vol = new Tone.Volume(10).toMaster();
+            let scale = ["B3", "C#4", "D#4", "F#4", "G#4"]
+            var synth = new Tone.FMSynth().chain(vol);
+            var c = new Tone.Pattern(function(time, note){
+            console.log(note, '222');
+            synth.triggerAttackRelease(note, '4n', time)
+            }, scale, "upDown");
+            c.interval = "8n";
+        `
+    },
+    {
+        id: 'sound4',
+        name: 'sound4',
+        code:`
+            var vol = new Tone.Volume(10).toMaster();
+            let scale = ["B3", "C#4", "D#4", "F#4", "G#4"]
+            var synth = new Tone.FMSynth().chain(vol);
+            var c = new Tone.Pattern(function(time, note){
+            console.log(note, '222');
+            synth.triggerAttackRelease(note, '4n', time)
+            }, scale, "upDown");
+            c.interval = "8n";
+            var o = {
+                vars: [
+                    ['vol',vol.volume, -100, 100]
+                ]
+            }
+        `
+    },
+    {
         id: 'sound2',
         name: 'sound2',
         code: `

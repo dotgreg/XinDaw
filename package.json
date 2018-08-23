@@ -16,7 +16,8 @@
     "react-localstorage": "^1.0.0",
     "react-mixin": "^4.0.0",
     "react-scripts-ts": "2.17.0",
-    "tone": "^0.12.80"
+    "tone": "^0.12.80",
+    "verbal-expressions": "^0.3.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",

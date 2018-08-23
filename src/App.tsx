@@ -13,6 +13,7 @@ import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 import Tone from 'tone';
 import { startToneApp } from './managers/tone/startToneApp';
+import Controls, { iSoundControls } from './components/Controls/Controls';
 
 interface State {
   sounds: iSound[],
@@ -66,6 +67,10 @@ class App extends React.Component<{}, State> {
     this.setState({parts: removeSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
   }
 
+  updateSoundControls = (soundControls:iSoundControls) => {
+    console.log(soundControls)
+  }
+
   public render() {
     return (
       <div className="App"> 
@@ -79,6 +84,11 @@ class App extends React.Component<{}, State> {
           sound={getEditedItem(this.state.sounds)}
           onCreate={this.createSound}
           onUpdate={this.updateSound}
+        />
+
+        <Controls 
+          sound={getEditedItem(this.state.sounds)}
+          onUpdate={this.updateSoundControls}
         />
 
         <PartsManager 
