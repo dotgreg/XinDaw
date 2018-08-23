@@ -7,19 +7,18 @@ import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart} from './helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds} from './helpers/arrayHelper';
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 import { startToneApp } from './managers/tone/startToneApp';
-import Controls, { iControlVar } from './components/Controls/Controls';
+import Controls, { iSoundControls } from './components/Controls/Controls';
+
 
 interface State {
   sounds: iSound[],
   parts: iPart[],
-  controls: {
-    [key:string]: iControlVar[]
-  },
+  controls: iSoundControls[],
 }
 
 @reactMixin.decorate(LocalStorageMixin)
@@ -30,7 +29,7 @@ class App extends React.Component<{}, State> {
     this.state = {
       sounds: [],
       parts: [],
-      controls: {}
+      controls: []
     }
 
     startToneApp()
@@ -46,7 +45,7 @@ class App extends React.Component<{}, State> {
 
 
 
-  onSoundEdit = (sound:iSound) => {
+  triggerSoundEdit = (sound:iSound) => {
     this.setState({sounds: arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.state.sounds))})
   }
 
@@ -70,10 +69,11 @@ class App extends React.Component<{}, State> {
     this.setState({parts: removeSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
   }
   
-  updateSoundControls = (soundId: string, controlsVars:iControlVar[]) => {
-    let controls = this.state.controls
-    controls[soundId] = controlsVars
-    this.setState({controls: controls})
+  updateSoundControls = (soundControls:iSoundControls) => {
+    // this.setState({controls:[]})
+    // console.log('update', soundControls, arrayWithUpdatedItemFromId(soundControls, this.state.controls))
+    this.setState({controls: arrayWithUpdatedItemFromId(soundControls, this.state.controls)})
+    // this.setState({controls: arrayWithUpdatedItemFromId(soundControls, this.state.controls)})
   }
 
   public render() {
@@ -107,9 +107,10 @@ class App extends React.Component<{}, State> {
           part={getActiveItem(this.state.parts).sounds} 
           // @ts-ignore
           sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
+          controls={this.state.controls}
           onUpdate={this.updateParts}
-          onSoundEdit={this.onSoundEdit}
-          onRemoveCurrentPart={this.removeSoundToCurrentPart}
+          onRemoveSound={this.removeSoundToCurrentPart}
+          onTriggerSoundEdit={this.triggerSoundEdit}
         />
 
       </div>

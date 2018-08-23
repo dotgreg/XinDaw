@@ -3,8 +3,13 @@ import config from '../../config';
 import { analyzeCode } from '../../managers/code/analyzeCode';
 import { areSame } from '../../helpers/areSame';
 import Knob from '../Knob/Knob';
-import { getItemFromName, arrayWithUpdatedItemFromId, arrayWithUpdatedControlValue } from '../../helpers/arrayHelper';
+import { arrayWithUpdatedValue } from '../../helpers/arrayHelper';
 import styled from 'styled-components';
+
+export interface iSoundControls {
+    id: string
+    controls: iControlVar[]
+}
 
 export interface iControlVar {
     id: string
@@ -48,8 +53,9 @@ export default class Controls extends React.Component<Props,State> {
     }
 
     changeKnobValue = (id:string, value:number) => {
-        this.setState({controlVars: arrayWithUpdatedControlValue(value, id, this.state.controlVars)})
-        this.props.onUpdate(this.props.soundId, this.state.controlVars)
+        this.setState({controlVars: arrayWithUpdatedValue(value, id, this.state.controlVars)})
+        let res:iSoundControls = {id: this.props.soundId, controls: this.state.controlVars}
+        this.props.onUpdate(res)
     }
     
     render() {

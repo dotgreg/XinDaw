@@ -38,6 +38,7 @@ const getObjsFromIdsInArr = curry((ids:string[], arr:any[]): any[] => {
     return ids.map(id => getItemFromId(id, arr))
 })
 export const getSoundsFromIds = getObjsFromIdsInArr()
+export const getControlsFromIds = getObjsFromIdsInArr()
 
 
 //////////////////////////////////////////////
@@ -50,7 +51,9 @@ export const getSoundsFromIds = getObjsFromIdsInArr()
 
 export const arrayWithUpdatedItemFromProp = curry((prop:string, item:any, arr:any[]) => {
     let index = getIndexFromId(item.id, arr)
-    if (isNumber(index)) arr[index] = item
+    if (!isNumber(index)) return arr
+    if (index === -1) arr.push(item)
+    arr[index] = item
     return arr
 })
 
@@ -64,7 +67,7 @@ const arrayWithUpdatedItemPropFromId = curry((prop:string, value:any, id:string,
 })
 export const arrayWithItemToEdited = arrayWithUpdatedItemPropFromId('edited', true)
 export const arrayWithItemToActive = arrayWithUpdatedItemPropFromId('active', true)
-export const arrayWithUpdatedControlValue = arrayWithUpdatedItemPropFromId('value')
+export const arrayWithUpdatedValue = arrayWithUpdatedItemPropFromId('value')
 
 /////////////
 // update all

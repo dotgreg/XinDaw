@@ -2,6 +2,7 @@ import * as React from 'react';
 import config from '../../config';
 import { areSame } from '../../helpers/areSame';
 import { SoundTone } from '../../Objects/SoundTone';
+import { iControlVar } from '../Controls/Controls';
 
 export interface iSound {
     id: string
@@ -12,6 +13,7 @@ export interface iSound {
 
 interface Props {
     sound: iSound,
+    control?:iControlVar[]
     onDelete: Function
     onEdit:Function
     playable?:Boolean

@@ -2,13 +2,15 @@ import * as React from 'react';
 import { iPart } from '../Part/Part';
 import Sound, { iSound } from '../Sound/Sound';
 import { filter } from 'lodash'
+import { iSoundControls } from '../Controls/Controls';
 
 interface Props {
-    part: iPart[],
+    part: iPart[]
     sounds: iSound[]
+    controls: iSoundControls[]
     onUpdate: Function
-    onSoundEdit: Function
-    onRemoveCurrentPart: Function
+    onTriggerSoundEdit: Function
+    onRemoveSound: Function
 }
 
 interface State {
@@ -29,8 +31,8 @@ export default class SoundPartManager extends React.Component<Props,State> {
                                     key={i} 
                                     sound={sound}
                                     playable={true}
-                                    onEdit={this.props.onSoundEdit}
-                                    onDelete={this.props.onRemoveCurrentPart}
+                                    onEdit={this.props.onTriggerSoundEdit}
+                                    onDelete={this.props.onRemoveSound}
                                 />
                             ))
                         }
