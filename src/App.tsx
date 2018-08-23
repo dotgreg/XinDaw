@@ -13,7 +13,7 @@ import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 import { startToneApp } from './managers/tone/startToneApp';
 import Controls, { iSoundControls } from './components/Controls/Controls';
-import MidiWatcher from './components/MidiWatcher/MidiWatcher';
+import MidiWatcher, { iMidiEvent } from './components/MidiWatcher/MidiWatcher';
 
 
 interface State {
@@ -75,7 +75,7 @@ class App extends React.Component<{}, State> {
   }
 
 
-  onMidiUpdate = (midiEvent:any) => {
+  onMidiUpdate = (midiEvent:iMidiEvent) => {
     console.log(midiEvent)
   }
 
