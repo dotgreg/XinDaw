@@ -7,19 +7,29 @@ import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds} from './helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds, arrayWithUpdatedItemFromProp} from './helpers/arrayHelper';
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 import { startToneApp } from './managers/tone/startToneApp';
 import Controls, { iSoundControls } from './components/Controls/Controls';
 import MidiWatcher, { iMidiEvent } from './components/MidiWatcher/MidiWatcher';
+import SettingsManager, { iSettingsItem } from './components/SettingsManager/SettingsManager';
 
+import {each, filter} from 'lodash'
+
+interface iComponentEvent {
+  id: string
+  value: number
+  action: string
+}
 
 interface State {
   sounds: iSound[],
   parts: iPart[],
   controls: iSoundControls[],
+  settings: iSettingsItem[],
+  events: iComponentEvent[]
 }
 
 @reactMixin.decorate(LocalStorageMixin)
@@ -30,7 +40,9 @@ class App extends React.Component<{}, State> {
     this.state = {
       sounds: [],
       parts: [],
-      controls: []
+      controls: [],
+      settings: [],
+      events: []
     }
 
     startToneApp()
@@ -76,7 +88,29 @@ class App extends React.Component<{}, State> {
 
 
   onMidiUpdate = (midiEvent:iMidiEvent) => {
-    console.log(midiEvent)
+    this.triggerEvent(midiEvent)
+  }
+
+  triggerEvent = (event: iMidiEvent) => {
+    let res = filter(this.state.settings, config => {
+      return (config.type === 'event' && config.value === event.id)
+    })
+    if (!res[0]) return
+
+    let eventName = res[0].eventName
+    let componentId = eventName.split('.')[0]
+    let action = eventName.split('.')[1]
+    let value = event.value
+
+    let resEvent:iComponentEvent = {id: componentId, action, value}
+    console.log(resEvent);
+    
+
+    this.setState({events: arrayWithUpdatedItemFromId(resEvent, this.state.events)})
+  }
+
+  onSettingsUpdate = (settings:iSettingsItem[]) => {
+    this.setState({settings: settings})
   }
 
   public render() {
@@ -95,6 +129,8 @@ class App extends React.Component<{}, State> {
         />
 
         <MidiWatcher onUpdate={this.onMidiUpdate}/>
+
+        <SettingsManager onUpdate={this.onSettingsUpdate}/>
 
         <Controls 
           // sound={getEditedItem(this.state.sounds)}
