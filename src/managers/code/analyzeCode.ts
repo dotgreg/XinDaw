@@ -1,39 +1,35 @@
 import * as esprima from 'esprima'
 import config from '../../config';
 import {each, has} from 'lodash'
-// import VerEx from 'verbal-expressions';
+import { iControlVar } from '../../components/Controls/Controls';
+import { stringToId } from '../../helpers/stringHelper';
 
 export const analyzeCode = (code:string) => {
-    let result
-
-    try {
-        result = esprima.parseModule(code)
-    } catch (e) {
-        return console.warn('[CODE ANALYZE] prepare => PrepareCode Error :', e)
-    }
-
-    // find vars
-    // let reg = //ig
-
-    // remove spaces
-    // let codeWithoutSpaces = code.replace(/( |\n)/g, '')
-    // console.log(codeWithoutSpaces)
-
-    //
-    //
-    //
-    type controlType = [any, any, any, any]
-
+    
     let analysis = {
-        controls: <controlType[]>[]
+        controls: <iControlVar[]>[]
     }
-    each(result.body, item => {
+    
+    let esprimaResults
+    try {
+        esprimaResults = esprima.parseModule(code)
+    } catch (e) {
+        console.warn('[CODE ANALYZE] prepare => PrepareCode Error :', e)
+        return analysis
+    }
+
+
+    each(esprimaResults.body, item => {
         if (!has(item, 'declarations.0')) return
         let varInfo = item.declarations[0]
+
+
+        // OPTIONS 
         if (varInfo.id.name === 'o' || varInfo.id.name === 'options') {
             // we have object 'options'
 
 
+            // OPTIONS > VARS 
             each(varInfo.init.properties, item2 => {
                 if (item2.key.name === 'vars') {
                     // we have object 'vars'
@@ -43,12 +39,14 @@ export const analyzeCode = (code:string) => {
                     each(item2.value.elements, item3 => {
                         
                         // for each array element
-                        let res:controlType = [
-                            getEsprimaElementValue(item3.elements[0]), 
-                            getEsprimaElementValue(item3.elements[2]), 
-                            getEsprimaElementValue(item3.elements[3]),
-                            getEsprimaElementValue(item3.elements[4]) || 1,
-                        ]
+                        let res:iControlVar = {
+                            id: stringToId(getEsprimaElementValue(item3.elements[0])), 
+                            name: getEsprimaElementValue(item3.elements[0]), 
+                            value: getEsprimaElementValue(item3.elements[2]) || 0, 
+                            min: getEsprimaElementValue(item3.elements[3]), 
+                            max: getEsprimaElementValue(item3.elements[4]),
+                            step: getEsprimaElementValue(item3.elements[5]) || 1,
+                        }
                         analysis.controls.push(res)
                         
                     })
@@ -61,12 +59,12 @@ export const analyzeCode = (code:string) => {
         
     })
 
-
-    console.log(analysis)
+    config.debug.codeAnalyze && console.log('[CODE ANALYZE] results ', {analysis, code:{code}})
+    return analysis
 
 }
 
-export const getEsprimaElementValue = (el:any) => {
+const getEsprimaElementValue = (el:any) => {
     if (!el) return undefined
 
     // most of the types
@@ -77,25 +75,3 @@ export const getEsprimaElementValue = (el:any) => {
 }
 
 
-
-
-    // const tester = VerEx()
-    //     .startOfLine()
-    //     .then('http')
-    //     .maybe('s')
-    //     .then('://')
-    //     .maybe('www.')
-    //     .anythingBut(' ')
-    //     .endOfLine();
-
-    // // Create an example URL
-    // const testMe = 'https://www.google.com';
-
-    // // Use RegExp object's native test() function
-    // if (tester.test(testMe)) {
-    
-    
-        // config.debug.codeAnalyze && console.log('[CODE ANALYZE] start :', {code, result})
-
-        // //https://regex101.com/r/Dkw8wp/1
-    

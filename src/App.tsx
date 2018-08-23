@@ -7,7 +7,7 @@ import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart} from './helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart} from './helpers/arrayHelper';
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
@@ -52,7 +52,7 @@ class App extends React.Component<{}, State> {
   }
 
   updateSound = (sound: iSound) => {
-    this.setState({sounds: arrayWithUpdatedItem(sound, this.state.sounds)})
+    this.setState({sounds: arrayWithUpdatedItemFromId(sound, this.state.sounds)})
   }
 
 
@@ -87,7 +87,9 @@ class App extends React.Component<{}, State> {
         />
 
         <Controls 
-          sound={getEditedItem(this.state.sounds)}
+          // sound={getEditedItem(this.state.sounds)}
+          code={getEditedItem(this.state.sounds).code}
+          soundId={getEditedItem(this.state.sounds).id}
           onUpdate={this.updateSoundControls}
         />
 

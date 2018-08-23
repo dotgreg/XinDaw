@@ -18,13 +18,14 @@ export const getIndexFromId = getIndexFromProp('id')
 /////////////
 // prop => item
 /////////////
-const getItemFromProp = curry((prop:string, value:any, arr:any[]) => {
+export const getItemFromProp = curry((prop:string, value:any, arr:any[]) => {
     let res = filter(arr, item => item[prop] === value)
     if (res[0]) return res[0]
     else return false
 })
 
 export const getItemFromId = getItemFromProp('id')
+export const getItemFromName = getItemFromProp('name')
 export const getEditedItem = getItemFromProp('edited', true)
 export const getActiveItem = getItemFromProp('active', true)
 
@@ -47,19 +48,23 @@ export const getSoundsFromIds = getObjsFromIdsInArr()
 // update item & item prop
 /////////////
 
-export const arrayWithUpdatedItem = curry((item:any, arr:any[]) => {
+export const arrayWithUpdatedItemFromProp = curry((prop:string, item:any, arr:any[]) => {
     let index = getIndexFromId(item.id, arr)
     if (isNumber(index)) arr[index] = item
     return arr
 })
 
-const arrayWithUpdatedItemProp = curry((prop:string, value:any, id:string, arr:any[]) => {
+export const arrayWithUpdatedItemFromId = arrayWithUpdatedItemFromProp('id')
+
+const arrayWithUpdatedItemPropFromId = curry((prop:string, value:any, id:string, arr:any[]) => {
     let index = getIndexFromId(id, arr)
+    if (!prop || !value || !id) return arr
     if (isNumber(index)) arr[index][prop] = value
     return arr
 })
-export const arrayWithItemToEdited = arrayWithUpdatedItemProp('edited', true)
-export const arrayWithItemToActive = arrayWithUpdatedItemProp('active', true)
+export const arrayWithItemToEdited = arrayWithUpdatedItemPropFromId('edited', true)
+export const arrayWithItemToActive = arrayWithUpdatedItemPropFromId('active', true)
+export const arrayWithUpdatedControlValue = arrayWithUpdatedItemPropFromId('value')
 
 /////////////
 // update all
