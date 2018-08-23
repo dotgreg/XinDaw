@@ -12,6 +12,7 @@ import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 import Tone from 'tone';
+import { startToneApp } from './managers/tone/startToneApp';
 
 interface State {
   sounds: iSound[],
@@ -28,14 +29,7 @@ class App extends React.Component<{}, State> {
       parts: [],
     }
 
-    let tone = new Tone()
-    Tone.Transport.start('+0.1')
-    Tone.Transport.loopEnd = '2m'
-    Tone.Transport.loop = true
-    // @ts-ignore
-    window.Tone = Tone
-
-    Tone.context.latencyHint = "interactive"
+    startToneApp()
   }
 
   updateSounds = (sounds:iSound[]) => {

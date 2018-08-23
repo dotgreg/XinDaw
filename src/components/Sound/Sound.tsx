@@ -1,10 +1,6 @@
 import * as React from 'react';
 import config from '../../config';
 import { areSame } from '../../helpers/areSame';
-import { prepareCode } from '../../managers/code/prepareCode';
-import { evalCode } from '../../managers/code/evalCode';
-import { startSound } from '../../managers/tone/startSound';
-import { stopSound } from '../../managers/tone/stopSound';
 import { SoundTone } from '../../Objects/SoundTone';
 
 export interface iSound {
@@ -54,7 +50,6 @@ export default class Sound extends React.Component<Props,State> {
 
     componentDidUpdate () {
         // if code updated
-        // console.log(this.props.sound, this.soundHist, areSame(this.props.sound, this.soundHist))
         if (areSame(this.props.sound, this.soundHist)) return
         
         config.debug.sound && console.log(`[SOUND] sound ${this.props.sound.name} updated`)

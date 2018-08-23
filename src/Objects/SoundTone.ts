@@ -22,7 +22,7 @@ export class SoundTone {
         this.createTone(this.code)
         this.type = this.getToneType(this.tone)
 
-        config.debug.soundTone && console.log('[SOUNDTONE] soundTone initialized', {type:this.type, code:this.code})
+        config.debug.soundTone && console.log('[SOUNDTONE] soundTone initialized', {type:this.type, code:JSON.stringify(this.code)})
     }
 
     createTone(code:string) {
@@ -44,7 +44,7 @@ export class SoundTone {
     play() {
         this.type === 'loop' && Tone.Transport.scheduleOnce(t => this.tone.start(0), 1)
     }
-
+    
     pause() {
 
     }
@@ -59,8 +59,11 @@ export class SoundTone {
     // 
 
     getToneType(tone:any) {
+        // ("" + obj.constructor)
+        console.log(tone && tone.interval)
+        
         if (typeof tone === 'number') return 'transport-event'
-        else if (typeof tone === 'object') return 'loop'
+        else if (tone && tone.interval) return 'loop'
         return 'unknown'
     }
 }
