@@ -27,6 +27,8 @@ interface State {
 
 export default class Knob extends React.Component<Props, State> {
 
+  currentPercentage:number = 0
+
   constructor(props){
     super(props)
 
@@ -47,9 +49,12 @@ export default class Knob extends React.Component<Props, State> {
     this.updateCurrentPercentage()
   }
 
-
-  componentWillUpdate (nextProps, nextState) {
-    nextState.variable = nextProps.variable
+  componentDidUpdate (prevProps) {
+    // from hardware
+    if (prevProps.val !== this.props.val) {
+      this.setState({val: this.props.val})
+      this.updateCurrentPercentage()
+    }
   }
 
   //
@@ -89,7 +94,7 @@ export default class Knob extends React.Component<Props, State> {
     let currentRelativePosition = this.state.val - this.props.min
     let currentPercentage = currentRelativePosition / aPercent
 
-    this.setState({currentPercentage: currentPercentage})
+    this.currentPercentage = currentPercentage
   }
 
   //
@@ -97,11 +102,12 @@ export default class Knob extends React.Component<Props, State> {
   //
 
   changeValue = () => {
-    this.updateCurrentPercentage()
     this.props.onValueChange(this.props.id, this.state.val)
+    this.updateCurrentPercentage()
   }
 
 	render() {
+    console.log(this.currentPercentage)
 		return (
       <div className="component-knob">
         <Hammer
@@ -111,7 +117,7 @@ export default class Knob extends React.Component<Props, State> {
           options={this.state.hammerOptions}>
           <div>
             <div className="name"> {this.props.name} </div>
-            <div className="knob" style={{transform: `rotate(${(this.state.currentPercentage * 3.60)}deg)`}}>
+            <div className="knob" style={{transform: `rotate(${(this.currentPercentage * 3.60)}deg)`}}>
             </div>
             <input
               className="number"
@@ -120,7 +126,7 @@ export default class Knob extends React.Component<Props, State> {
               max={this.props.max}
               step={this.props.step}
               ref="input"
-              defaultValue={round(this.state.val, this.state.precision).toString()}
+              value={round(this.state.val, this.state.precision)}
               onChange={this.modifyValueByInput} />
           </div>
         </Hammer>

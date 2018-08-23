@@ -7,7 +7,7 @@ import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds, arrayWithUpdatedItemFromProp} from './helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds, arrayWithUpdatedItemFromProp, getItemFromId} from './helpers/arrayHelper';
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
@@ -18,7 +18,7 @@ import SettingsManager, { iSettingsItem } from './components/SettingsManager/Set
 
 import {each, filter} from 'lodash'
 
-interface iComponentEvent {
+export interface iComponentEvent {
   id: string
   value: number
   action: string
@@ -103,8 +103,6 @@ class App extends React.Component<{}, State> {
     let value = event.value
 
     let resEvent:iComponentEvent = {id: componentId, action, value}
-    console.log(resEvent);
-    
 
     this.setState({events: arrayWithUpdatedItemFromId(resEvent, this.state.events)})
   }
@@ -137,6 +135,7 @@ class App extends React.Component<{}, State> {
           code={getEditedItem(this.state.sounds).code}
           soundId={getEditedItem(this.state.sounds).id}
           onUpdate={this.updateSoundControls}
+          listenTo={getItemFromId('controls', this.state.events)}
         />
 
         <PartsManager 
