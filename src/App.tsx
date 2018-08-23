@@ -13,6 +13,7 @@ import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 import { startToneApp } from './managers/tone/startToneApp';
 import Controls, { iSoundControls } from './components/Controls/Controls';
+import MidiWatcher from './components/MidiWatcher/MidiWatcher';
 
 
 interface State {
@@ -73,6 +74,11 @@ class App extends React.Component<{}, State> {
     this.setState({controls: arrayWithUpdatedItemFromId(soundControls, this.state.controls)})
   }
 
+
+  onMidiUpdate = (midiEvent:any) => {
+    console.log(midiEvent)
+  }
+
   public render() {
     return (
       <div className="App"> 
@@ -87,6 +93,8 @@ class App extends React.Component<{}, State> {
           onCreate={this.createSound}
           onUpdate={this.updateSound}
         />
+
+        <MidiWatcher onUpdate={this.onMidiUpdate}/>
 
         <Controls 
           // sound={getEditedItem(this.state.sounds)}

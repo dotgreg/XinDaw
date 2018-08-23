@@ -7,7 +7,8 @@ const config = {
         codeAnalyze: true,
         partsCrud: false,
         soundTone: false,
-        controls: true
+        controls: true,
+        midiWatcher: true
     },
 }
 
