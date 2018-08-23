@@ -11,13 +11,15 @@ import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayW
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
-import Tone from 'tone';
 import { startToneApp } from './managers/tone/startToneApp';
-import Controls, { iSoundControls } from './components/Controls/Controls';
+import Controls, { iControlVar } from './components/Controls/Controls';
 
 interface State {
   sounds: iSound[],
   parts: iPart[],
+  controls: {
+    [key:string]: iControlVar[]
+  },
 }
 
 @reactMixin.decorate(LocalStorageMixin)
@@ -28,6 +30,7 @@ class App extends React.Component<{}, State> {
     this.state = {
       sounds: [],
       parts: [],
+      controls: {}
     }
 
     startToneApp()
@@ -66,9 +69,11 @@ class App extends React.Component<{}, State> {
     // @ts-ignore
     this.setState({parts: removeSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
   }
-
-  updateSoundControls = (soundControls:iSoundControls) => {
-    console.log(soundControls)
+  
+  updateSoundControls = (soundId: string, controlsVars:iControlVar[]) => {
+    let controls = this.state.controls
+    controls[soundId] = controlsVars
+    this.setState({controls: controls})
   }
 
   public render() {

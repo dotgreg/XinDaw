@@ -15,11 +15,6 @@ export interface iControlVar {
     step: number
 }
 
-export interface iSoundControls {
-    soundId: string
-    vars: iControlVar[]
-}
-
 interface Props {
     soundId: string
     code: string
@@ -54,6 +49,7 @@ export default class Controls extends React.Component<Props,State> {
 
     changeKnobValue = (id:string, value:number) => {
         this.setState({controlVars: arrayWithUpdatedControlValue(value, id, this.state.controlVars)})
+        this.props.onUpdate(this.props.soundId, this.state.controlVars)
     }
     
     render() {

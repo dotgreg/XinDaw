@@ -49,12 +49,7 @@ export default class Knob extends React.Component<Props, State> {
 
 
   componentWillUpdate (nextProps, nextState) {
-    console.log('update')
     nextState.variable = nextProps.variable
-  }
-
-  componentWillUnmount () {
-    console.log('will unmount')
   }
 
   //
