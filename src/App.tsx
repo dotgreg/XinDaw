@@ -108,6 +108,7 @@ class App extends React.Component<{}, State> {
   }
 
   onSettingsUpdate = (settings:iSettingsItem[]) => {
+    console.log(settings)
     this.setState({settings: settings})
   }
 
@@ -128,7 +129,10 @@ class App extends React.Component<{}, State> {
 
         <MidiWatcher onUpdate={this.onMidiUpdate}/>
 
-        <SettingsManager onUpdate={this.onSettingsUpdate}/>
+        <SettingsManager 
+          settings={this.state.settings}
+          onUpdate={this.onSettingsUpdate}
+        />
 
         <Controls 
           // sound={getEditedItem(this.state.sounds)}

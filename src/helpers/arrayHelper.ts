@@ -1,4 +1,4 @@
-import {findIndex, isNumber, curry, filter, each, isArray, uniq} from 'lodash'
+import {findIndex, isNumber, curry, filter, each, isArray, uniq, unionBy} from 'lodash'
 
 //////////////////////////////////////////////
 // GETTERS
@@ -50,7 +50,7 @@ export const getControlsFromIds = getObjsFromIdsInArr()
 /////////////
 
 export const arrayWithUpdatedItemFromProp = curry((prop:string, item:any, arr:any[]) => {
-    let index = getIndexFromId(item.id, arr)
+    let index = getIndexFromProp(prop, item[prop], arr)
     if (!isNumber(index)) return arr
     if (index === -1) arr.push(item)
     arr[index] = item
@@ -70,7 +70,7 @@ export const arrayWithItemToActive = arrayWithUpdatedItemPropFromId('active', tr
 export const arrayWithUpdatedValue = arrayWithUpdatedItemPropFromId('value')
 
 /////////////
-// update all
+// update a props of all items
 /////////////
 export const arrayWithUpdatedItemsProp = curry((prop:string, value:any, arr:any[]) => {
     return arr.map(item => {
@@ -80,6 +80,14 @@ export const arrayWithUpdatedItemsProp = curry((prop:string, value:any, arr:any[
 })
 export const arrayWithItemsToNotEdited = arrayWithUpdatedItemsProp('edited', false)
 export const arrayWithItemsToNotActive = arrayWithUpdatedItemsProp('active', false)
+
+/////////////
+// merge 2 arrays according to prop
+/////////////
+
+export const mergeArraysByProp = curry((prop:string, arrBase:any[], arrOverrider:any[]) => {
+    return unionBy(arrOverrider, arrBase, prop)
+})
 
 /////////////
 // arr > add
