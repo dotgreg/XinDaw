@@ -1,22 +1,19 @@
 import { css } from 'emotion'
+import { colors } from './ressources/uiKit';
 
-let v = {
-    blue: 'blue',
-    red: 'red'
-}
 
 export const color = {
-    blue: css`color: ${v.blue}`,
-    red: css`color: ${v.red}`,
+    blue: css`color: ${colors.blue}`,
+    red: css`color: ${colors.red}`,
 }
 
 export const bg = {
-    blue: css`background-color: ${v.blue}`,
-    red: css`background-color: ${v.red}`,
+    blue: css`background-color: ${colors.blue}`,
+    red: css`background-color: ${colors.red}`,
 }
 
 export const border = {
-    blue: css`border:1px ${v.blue} solid`,
-    red: css`border:1px ${v.red} solid`,
+    blue: css`border:1px ${colors.blue} solid`,
+    red: css`border:1px ${colors.red} solid`,
 }
 
