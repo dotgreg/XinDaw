@@ -7,7 +7,7 @@ import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, arrayWithUpdatedItemFromId, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds, arrayWithUpdatedItemFromProp, getItemFromId} from './helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds, updateArrayItem, getItemFromId} from './helpers/arrayHelper';
 import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
@@ -17,6 +17,7 @@ import MidiWatcher, { iMidiEvent } from './components/MidiWatcher/MidiWatcher';
 import SettingsManager, { iSettingsItem } from './components/SettingsManager/SettingsManager';
 
 import {each, filter} from 'lodash'
+import helpers from './helpers';
 
 export interface iComponentEvent {
   id: string
@@ -63,18 +64,15 @@ class App extends React.Component<{}, State> {
   }
 
   createSound = (sound: iSound) => {
-    this.setState({sounds: arrayWithItem(sound, this.state.sounds)})
+    this.setState({sounds: arrayWithItem(sound)(this.state.sounds)})
   }
 
   updateSound = (sound: iSound) => {
-    this.setState({sounds: arrayWithUpdatedItemFromId(sound, this.state.sounds)})
+    this.setState({sounds: updateIdArrayItem(sound)(this.state.sounds)})
   }
 
-
-
   addSoundToCurrentPart = (sound: iSound) => {
-    // @ts-ignore
-    this.setState({parts: addSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
+    this.setState({parts: addSoundToPart(sound.id)(getActiveItem(this.state.parts).id)(this.state.parts)  })
   }
 
   removeSoundToCurrentPart = (sound: iSound) => {
@@ -83,7 +81,7 @@ class App extends React.Component<{}, State> {
   }
   
   updateSoundControls = (soundControls:iSoundControls) => {
-    this.setState({controls: arrayWithUpdatedItemFromId(soundControls, this.state.controls)})
+    this.setState({controls: updateIdArrayItem(soundControls)(this.state.controls)})
   }
 
 
@@ -104,7 +102,7 @@ class App extends React.Component<{}, State> {
 
     let resEvent:iComponentEvent = {id: componentId, action, value}
 
-    this.setState({events: arrayWithUpdatedItemFromId(resEvent, this.state.events)})
+    this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
   }
 
   onSettingsUpdate = (settings:iSettingsItem[]) => {
@@ -119,6 +117,7 @@ class App extends React.Component<{}, State> {
           sounds={this.state.sounds} 
           onUpdate={this.updateSounds}
           onAddCurrentPart={this.addSoundToCurrentPart}
+          listenTo={getItemFromId('soundsManager', this.state.events)}
         />
 
         <SoundEditor
@@ -135,7 +134,6 @@ class App extends React.Component<{}, State> {
         />
 
         <Controls 
-          // sound={getEditedItem(this.state.sounds)}
           code={getEditedItem(this.state.sounds).code}
           soundId={getEditedItem(this.state.sounds).id}
           onUpdate={this.updateSoundControls}

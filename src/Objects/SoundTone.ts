@@ -9,6 +9,13 @@ interface optionsSoundTone {
     vars: iControlVar[]
 }
 
+/** another function  */
+export const testFunc = (fdasfdasds:string) => {
+    return fdasfdasds + 'dasaddsa'
+}
+
+
+/** SoundTone is an object belonging to Sound Component that contains and manages a Tone object  */
 export class SoundTone {
 
     private code:string

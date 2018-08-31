@@ -1,8 +1,12 @@
 import * as React from 'react';
 import config from '../../config';
 import styled from 'styled-components';
+import { SoundTone, testFunc } from '../../Objects/SoundTone';
 
 declare var navigator:any
+
+// const sound = new SoundTone(;dsadsadsa)
+
 
 export interface iMidiEvent {
     id: number

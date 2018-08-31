@@ -34,7 +34,7 @@ export default class PartsManager extends React.Component<Props,State> {
             sounds: [],
             active: false
         }
-        this.props.onUpdate(arrayWithItem(newPart, this.props.parts))
+        this.props.onUpdate(arrayWithItem(newPart)(this.props.parts))
     }
     deletePart = (partToDelete:iPart) => this.props.onUpdate(arrayWithoutItem(partToDelete, this.props.parts))
     selectPart = (partToSelect:iPart) => this.props.onUpdate(arrayWithItemToActive(partToSelect.id, arrayWithItemsToNotActive(this.props.parts)))

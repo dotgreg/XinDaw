@@ -50,10 +50,9 @@ export default class Controls extends React.Component<Props,State> {
     }
 
     componentDidUpdate = (prevProps:any) => {
-        
+
         if (!areSame(this.histListenTo, this.props.listenTo)) {
             this.histListenTo = this.props.listenTo
-            console.log(this.props.listenTo)
             let newVars = this.state.controlVars
             if (newVars && newVars[0]) newVars[0].value = this.props.listenTo.value
             this.setState({controlVars: newVars})

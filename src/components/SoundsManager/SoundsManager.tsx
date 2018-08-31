@@ -1,18 +1,37 @@
 import * as React from 'react';
 import Sound, { iSound } from '../Sound/Sound';
 import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited } from '../../helpers/arrayHelper';
+import { iComponentEvent } from '../../App';
+import { areSame } from '../../helpers/areSame';
+import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
 
 interface Props {
     sounds: iSound[]
-    onUpdate: Function,
+
+    onUpdate: Function
     onAddCurrentPart: Function
+
+    listenTo: iComponentEvent
 }
 
 interface State {
-
+    activeSound: 0
 }
 
 export default class SoundsManager extends React.Component<Props,State> {
+
+    propsListener: ComponentPropsListener
+
+    constructor(props) {
+        super(props)
+        this.propsListener = new ComponentPropsListener()
+
+        this.propsListener.onChange('sounds', () => {
+            console.log('woooop sounds changed', this.props)
+        })
+    }
+
+    componentDidUpdate = () => { this.propsListener.listen(this.props) }
 
     deleteSound = (soundToDelete:iSound) => this.props.onUpdate(arrayWithoutItem(soundToDelete, this.props.sounds))
     editSound = (sound:iSound) => this.props.onUpdate(arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.props.sounds)))

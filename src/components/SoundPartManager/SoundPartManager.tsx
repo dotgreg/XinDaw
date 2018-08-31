@@ -15,7 +15,7 @@ interface Props {
 }
 
 interface State {
-    sounds: iSound[]
+
 }
 
 export default class SoundPartManager extends React.Component<Props,State> {
@@ -30,7 +30,7 @@ export default class SoundPartManager extends React.Component<Props,State> {
                             this.props.sounds.map((sound,i) => (
                                 <Sound 
                                     key={i} 
-                                    sound={sound}
+                                    sound={sound}   
                                     controls={getItemFromId(sound.id,this.props.controls).controls}
                                     playable={true}
                                     onEdit={this.props.onTriggerSoundEdit}

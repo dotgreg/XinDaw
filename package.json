@@ -33,6 +33,7 @@
     "@types/node": "^10.7.1",
     "@types/react": "^16.4.11",
     "@types/react-dom": "^16.0.7",
+    "typedoc": "^0.12.0",
     "typescript": "^3.0.1",
     "typescript-styled-plugin": "^0.10.0"
   }

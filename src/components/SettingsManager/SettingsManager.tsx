@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { arrayWithUpdatedItemFromProp, mergeArraysByProp } from '../../helpers/arrayHelper';
+import { updateArrayItem, mergeArraysByProp } from '../../helpers/arrayHelper';
 import { areSame } from '../../helpers/areSame';
 
 export interface iSettingsItem {
@@ -69,9 +69,7 @@ export default class SettingsManager extends React.Component<Props,State> {
         // console.log(e.target.value,item)
         // @ts-ignore
         item.value = e.target.value
-        // this.setState({settings: arrayWithUpdatedItemFromProp('eventName', item, this.state.settings)})
-        // console.log(arrayWithUpdatedItemFromProp('eventName', item, this.state.settings))
-        this.props.onUpdate(arrayWithUpdatedItemFromProp('eventName', item, this.state.settings))
+        this.props.onUpdate(updateArrayItem('eventName')(item)(this.state.settings))
     }
 
     // onSave = () => {

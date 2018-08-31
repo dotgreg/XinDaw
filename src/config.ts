@@ -8,7 +8,8 @@ const config = {
         partsCrud: false,
         soundTone: false,
         controls: true,
-        midiWatcher: true
+        midiWatcher: true,
+        ComponentPropsListener: false
     },
 }
 
