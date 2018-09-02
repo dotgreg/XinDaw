@@ -107,7 +107,6 @@ export default class Knob extends React.Component<Props, State> {
   }
 
 	render() {
-    console.log(this.currentPercentage)
 		return (
       <div className={s.cx(s.css`height: 300px; width: 300px; background: ${s.colors.red};`, s.base.border.red, 'component-knob')}>
         <Hammer

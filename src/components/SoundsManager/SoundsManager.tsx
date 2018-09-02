@@ -11,7 +11,7 @@ interface Props {
     onUpdate: Function
     onAddCurrentPart: Function
 
-    listenTo: iComponentEvent
+    eventIn: iComponentEvent
 }
 
 interface State {
@@ -27,8 +27,13 @@ export default class SoundsManager extends React.Component<Props,State> {
         this.propsListener = new ComponentPropsListener()
 
         this.propsListener.onChange('sounds', () => {
-            console.log('woooop sounds changed', this.props)
+            // console.log('woooop sounds changed', this.props)
         })
+        this.propsListener.onChange('eventIn', this.onEventInChange)
+    }
+    
+    onEventInChange = () => {
+        // console.log('eventIn changed to', this.props.eventIn)
     }
 
     componentDidUpdate = () => { this.propsListener.listen(this.props) }

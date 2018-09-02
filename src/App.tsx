@@ -106,7 +106,6 @@ class App extends React.Component<{}, State> {
   }
 
   onSettingsUpdate = (settings:iSettingsItem[]) => {
-    console.log(settings)
     this.setState({settings: settings})
   }
 
@@ -117,7 +116,7 @@ class App extends React.Component<{}, State> {
           sounds={this.state.sounds} 
           onUpdate={this.updateSounds}
           onAddCurrentPart={this.addSoundToCurrentPart}
-          listenTo={getItemFromId('soundsManager', this.state.events)}
+          eventIn={getItemFromId('soundsManager', this.state.events)}
         />
 
         <SoundEditor
@@ -126,19 +125,21 @@ class App extends React.Component<{}, State> {
           onUpdate={this.updateSound}
         />
 
-        <MidiWatcher onUpdate={this.onMidiUpdate}/>
 
-        <SettingsManager 
-          settings={this.state.settings}
-          onUpdate={this.onSettingsUpdate}
-        />
 
         <Controls 
           code={getEditedItem(this.state.sounds).code}
           soundId={getEditedItem(this.state.sounds).id}
           onUpdate={this.updateSoundControls}
-          listenTo={getItemFromId('controls', this.state.events)}
+          eventIn={getItemFromId('controls', this.state.events)}
         />
+
+        <SettingsManager 
+          settings={this.state.settings}
+          onUpdate={this.onSettingsUpdate}
+        />
+        
+        <MidiWatcher onUpdate={this.onMidiUpdate}/>
 
         <PartsManager 
           parts={this.state.parts} 

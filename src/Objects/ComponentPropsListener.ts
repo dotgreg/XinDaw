@@ -1,4 +1,4 @@
-import {each} from 'lodash'
+import {each, cloneDeep} from 'lodash'
 import { areSame } from '../helpers/areSame';
 import config from '../config';
 
@@ -16,12 +16,11 @@ export class ComponentPropsListener {
     }
 
     listen(props:any) {
-        console.log('test')
         each(props, (prop, propName) => {
             if (!areSame(this.hist[propName], prop)){
                 config.debug.ComponentPropsListener && console.log(`[ComponentPropsListener] ${propName} changed, trigger callback`)
                 
-                this.hist[propName] = Object.assign({}, prop)
+                this.hist[propName] = cloneDeep(prop)
                 let callback = this.callbacks[propName]
                 
                 callback ? callback() : config.debug.ComponentPropsListener && console.warn(`[ComponentPropsListener] no callback function found for ${propName}`)

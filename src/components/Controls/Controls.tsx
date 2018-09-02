@@ -6,6 +6,7 @@ import Knob from '../Knob/Knob';
 import { arrayWithUpdatedValue } from '../../helpers/arrayHelper';
 import styled from 'styled-components';
 import { iComponentEvent } from '../../App';
+import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
 
 export interface iSoundControls {
     id: string
@@ -26,7 +27,7 @@ interface Props {
     soundId: string
     code: string
     onUpdate: Function
-    listenTo: iComponentEvent
+    eventIn: iComponentEvent
 }
 
 interface State {
@@ -34,36 +35,32 @@ interface State {
 }
 
 export default class Controls extends React.Component<Props,State> {
-    histListenTo:iComponentEvent
+    
+    propsListener: ComponentPropsListener
 
     constructor(props){
         super(props)
         this.state = {
             controlVars:[]
         }
+
+        this.propsListener = new ComponentPropsListener()
+        this.propsListener.onChange('eventIn', this.onEventInChange)
+        this.propsListener.onChange('code', this.onCodeChange)
     }
 
-    componentDidMount () {
+    componentDidUpdate = () => { this.propsListener.listen(this.props) }
+
+    onEventInChange = () => {
+        let newVars = this.state.controlVars
+        if (newVars && newVars[0]) newVars[0].value = this.props.eventIn.value
+        this.setState({controlVars: newVars})
+    }
+    onCodeChange = () => {
+        config.debug.controls && console.log(`[CONTROLS] updated with sound ${this.props.soundId}`)
+        this.setState({controlVars: analyzeCode(this.props.code).controls})
     }
 
-    componentWillUnmount () {
-    }
-
-    componentDidUpdate = (prevProps:any) => {
-
-        if (!areSame(this.histListenTo, this.props.listenTo)) {
-            this.histListenTo = this.props.listenTo
-            let newVars = this.state.controlVars
-            if (newVars && newVars[0]) newVars[0].value = this.props.listenTo.value
-            this.setState({controlVars: newVars})
-        }
-
-        if (!areSame(prevProps.code, this.props.code)) {
-            config.debug.controls && console.log(`[CONTROLS] updated with sound ${this.props.soundId}`)
-            this.setState({controlVars: analyzeCode(this.props.code).controls})
-        }
-
-    }
 
     changeKnobValue = (id:string, value:number) => {
         this.setState({controlVars: arrayWithUpdatedValue(value, id, this.state.controlVars)})
