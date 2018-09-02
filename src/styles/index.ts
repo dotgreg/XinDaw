@@ -1,14 +1,13 @@
 import * as base from './base'
 import * as effects from './effects'
-import { cx, css } from 'emotion'
+import * as sound from './sound'
 import { colors } from './ressources/uiKit';
 
 const s = {
     base,
     effects,
     colors,
-    cx: cx,
-    css: css
+    sound
 }
 
 export default s

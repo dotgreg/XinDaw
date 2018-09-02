@@ -4,6 +4,8 @@ import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited } fr
 import { iComponentEvent } from '../../App';
 import { areSame } from '../../helpers/areSame';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
+import { cx } from 'emotion';
+import s from '../../styles';
 
 interface Props {
     sounds: iSound[]
@@ -15,7 +17,7 @@ interface Props {
 }
 
 interface State {
-    activeSound: 0
+    activeSound: number
 }
 
 export default class SoundsManager extends React.Component<Props,State> {
@@ -24,6 +26,10 @@ export default class SoundsManager extends React.Component<Props,State> {
  
     constructor(props) {
         super(props)
+
+        this.state = {
+            activeSound: 0
+        }
 
         this.propsListener = new ComponentPropsListener({
             'eventIn': this.onEventInChange,
@@ -57,19 +63,23 @@ export default class SoundsManager extends React.Component<Props,State> {
                     <ul>
                         {
                             this.props.sounds.map((sound,i) => (
-                                <Sound 
+                                <li 
                                     key={i} 
-                                    sound={sound}
-                                    onEdit={this.editSound}
-                                    onDelete={this.deleteSound}
-                                    onAddCurrentPart={this.props.onAddCurrentPart}
-                                />
+                                    className={cx(
+                                        sound.edited && s.sound.active, 
+                                    )}>
+                                    <Sound 
+                                        sound={sound}
+                                        onEdit={this.editSound}
+                                        onDelete={this.deleteSound}
+                                        onAddCurrentPart={this.props.onAddCurrentPart}
+                                    />
+                                </li>
                             ))
                         }
                         
                     </ul>
                 </div>
-
             </div>
         )
     }   
