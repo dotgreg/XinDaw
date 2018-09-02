@@ -1,7 +1,5 @@
 import * as React from 'react';
 import config from '../../config';
-import styled from 'styled-components';
-import { SoundTone, testFunc } from '../../Objects/SoundTone';
 
 declare var navigator:any
 
@@ -20,6 +18,8 @@ interface Props {
 interface State {
     logList: string[]
     lastEvent: string
+    simEvent: number
+    simValue: number
 }
 
 export default class MidiWatcher extends React.Component<Props,State> {
@@ -36,9 +36,15 @@ export default class MidiWatcher extends React.Component<Props,State> {
         super(props)
         this.state = {
             logList: [],
-            lastEvent: ''
+            lastEvent: '',
+            simEvent: 58,
+            simValue: 1,
         }
     }
+
+    changeSimulatorEvent = (e) => { this.setState({simEvent: e.target.value}) }
+    changeSimulatorValue = (e) => { this.setState({simValue: e.target.value}) }
+    simulateMidi = () => { this.handleMIDIMessage({data:[0, this.state.simEvent, this.state.simValue]}) }
 
     componentDidMount() {
         console.log('[MIDI WATCHER] started')
@@ -91,22 +97,17 @@ export default class MidiWatcher extends React.Component<Props,State> {
 
     render() {
         return (
-            <StyledMidiWatcher>
+            <div>
                 <div className="logger">
                     {this.state.lastEvent}
                 </div>
-            </StyledMidiWatcher>
+                <div className="simulator">
+                    midi simulator
+                    <input type="text" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
+                    <input type="text" value={this.state.simValue} onChange={this.changeSimulatorValue} />
+                    <button onClick={this.simulateMidi}>trigger</button>
+                </div>
+            </div>
         )
     }   
 }
-
-const StyledMidiWatcher = styled.div`
-    /* position: fixed;
-    right: 0px;
-    top: 0px;
-    width: 200px;
-    height: 300px;
-    background: rgba(0,0,0,0.3);
-    color: white;
-    overflow-y: scroll; */
-`

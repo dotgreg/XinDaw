@@ -16,32 +16,21 @@ interface Props {
     eventIn: iComponentEvent
 }
 
-interface State {
-    activeSound: number
-}
-
-export default class SoundsManager extends React.Component<Props,State> {
+export default class SoundsManager extends React.Component<Props,{}> {
 
     propsListener: ComponentPropsListener
  
     constructor(props) {
         super(props)
 
-        this.state = {
-            activeSound: 0
-        }
-
         this.propsListener = new ComponentPropsListener({
-            'eventIn': this.onEventInChange,
+            'eventIn': () => {
+                console.log('eventIn changed to', this.props.eventIn)
+            },
         })
     }
-    
-    // ON PROPS CHANGE
-    onEventInChange = () => {
-        console.log('eventIn changed to', this.props.eventIn)
-    }
-
     componentDidUpdate = () => { this.propsListener.listen(this.props) }
+    
 
     deleteSound = (soundToDelete:iSound) => this.props.onUpdate(arrayWithoutItem(soundToDelete, this.props.sounds))
     editSound = (sound:iSound) => this.props.onUpdate(arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.props.sounds)))
@@ -64,7 +53,7 @@ export default class SoundsManager extends React.Component<Props,State> {
                         {
                             this.props.sounds.map((sound,i) => (
                                 <li 
-                                    key={i} 
+                                    key={i}
                                     className={cx(
                                         sound.edited && s.sound.active, 
                                     )}>
