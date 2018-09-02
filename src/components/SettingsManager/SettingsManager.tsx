@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { updateArrayItem, mergeArraysByProp } from '../../helpers/arrayHelper';
 import { areSame } from '../../helpers/areSame';
+import {each} from 'lodash'
 
 export interface iSettingsItem {
     type: string
@@ -58,7 +59,6 @@ export default class SettingsManager extends React.Component<Props,State> {
     componentDidUpdate() {
         if (!areSame(this.hist, this.props.settings)) {
             let settings = mergeArraysByProp('eventName', this.state.settings, this.props.settings)
-            // console.log(settings, this.props.settings, this.state.settings)
             this.setState({settings: settings})
             this.hist = this.props.settings
         }
@@ -68,7 +68,7 @@ export default class SettingsManager extends React.Component<Props,State> {
         // @ts-ignore
         // console.log(e.target.value,item)
         // @ts-ignore
-        item.value = e.target.value
+        item.value = parseInt(e.target.value)
         this.props.onUpdate(updateArrayItem('eventName')(item)(this.state.settings))
     }
 
