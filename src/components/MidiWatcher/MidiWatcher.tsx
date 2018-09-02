@@ -103,14 +103,20 @@ export default class MidiWatcher extends React.Component<Props,State> {
     render() {
         return (
             <div>
-                <div className="logger">
-                    {this.state.lastEvent}
-                </div>
                 <div className={cx(s.debug.fixedPopup(100))}>
-                    midi simulator
-                    <input type="number" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
-                    <input type="number" value={this.state.simValue} onChange={this.changeSimulatorValue} />
-                    <button onClick={this.simulateMidi}>trigger</button>
+                    <div>
+                        <p>midi simulator</p>
+                        <input type="number" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
+                        <input type="number" value={this.state.simValue} onChange={this.changeSimulatorValue} />
+                        <button onClick={this.simulateMidi}>trigger</button>
+                    </div>
+                    {
+                        this.state.lastEvent && 
+                        <div>
+                            <p>logger</p>
+                            {this.state.lastEvent}
+                        </div>
+                    }
                 </div>
             </div>
         )

@@ -67,12 +67,11 @@ export default class SettingsManager extends React.Component<Props,State> {
         this.props.onUpdate(updateArrayItem('eventName')(item)(this.state.settings))
     }
 
-
     render() {
         return (
            <div>
                <h3 onClick={()=>{this.setState({opened: !this.state.opened})}}>settings</h3>
-               <div className={cx(s.base.show(this.state.opened))}>
+               <div className={cx(s.show(this.state.opened))}>
                    {
                        this.state.settings.map((item, index) => (
                            <div key={index}>

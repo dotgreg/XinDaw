@@ -109,13 +109,13 @@ export default class Knob extends React.Component<Props, State> {
 
 	render() {
 		return (
-      <div className={cx(css`height: 300px; width: 300px; background: ${s.colors.red};`, s.base.border.red, 'component-knob')}>
+      <div className={cx(css`height: 300px; width: 300px; background: ${s.colors.red};`, s.border.red, 'component-knob')}>
         <Hammer
           onPan={this.handlePan}
           onPanStart={this.handlePanStart}
           direction="DIRECTION_VERTICAL"
           options={this.state.hammerOptions}>
-          <div className={cx(s.effects.bgGlow, s.base.border.red)}>
+          <div className={cx(s.effects.bgGlow, s.border.red)}>
             <div className="name"> {this.props.name} </div>
             <div className="knob" style={{transform: `rotate(${(this.currentPercentage * 3.60)}deg)`}}>
             </div>

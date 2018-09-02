@@ -5,7 +5,7 @@ import * as debug from './debug'
 import { colors } from './ressources/uiKit';
 
 const s = {
-    base,
+    ...base,
     effects,
     colors,
     sound,

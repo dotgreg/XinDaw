@@ -8,6 +8,11 @@ export const fixedPopup = (width:any = 100) => {
         width: ${width}px;
         background: rgba(0,0,0,0.2);
         padding: 10px;
+        p {
+            margin: 0px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
         input {
             width: 100%;
         }

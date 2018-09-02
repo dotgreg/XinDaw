@@ -31,6 +31,7 @@ export default class SoundsManager extends React.Component<Props,{}> {
                 let editedIndex = getEditedIndex(this.props.sounds)
                 if (event.action === 'list.up') this.editSound(this.props.sounds[editedIndex - 1]) 
                 if (event.action === 'list.down') this.editSound(this.props.sounds[editedIndex + 1]) 
+                if (event.action === 'list.addToPart') this.props.onAddCurrentPart(this.props.sounds[editedIndex]) 
             },
         })
     }
