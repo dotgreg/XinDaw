@@ -16,11 +16,12 @@ export class ComponentPropsListener {
     }
 
     listen(props:any) {
+        console.log('test')
         each(props, (prop, propName) => {
             if (!areSame(this.hist[propName], prop)){
                 config.debug.ComponentPropsListener && console.log(`[ComponentPropsListener] ${propName} changed, trigger callback`)
                 
-                this.hist[propName] = prop
+                this.hist[propName] = Object.assign({}, prop)
                 let callback = this.callbacks[propName]
                 
                 callback ? callback() : config.debug.ComponentPropsListener && console.warn(`[ComponentPropsListener] no callback function found for ${propName}`)

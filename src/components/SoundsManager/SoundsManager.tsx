@@ -21,7 +21,7 @@ interface State {
 export default class SoundsManager extends React.Component<Props,State> {
 
     propsListener: ComponentPropsListener
-
+ 
     constructor(props) {
         super(props)
         this.propsListener = new ComponentPropsListener()

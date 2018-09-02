@@ -4,15 +4,7 @@ import { clamp, round, throttle } from 'lodash';
 import { iControlVar } from '../Controls/Controls';
 import s from '../../styles';
 
-
 require('./knob.css')
-
-
-export const aFunctionTest = (multiplicator) => {
-  return 312 * multiplicator
-}
-
-
 
 interface Props {
   id:string
