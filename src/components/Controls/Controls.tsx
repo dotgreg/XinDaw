@@ -45,8 +45,8 @@ export default class Controls extends React.Component<Props,State> {
         }
 
         this.propsListener = new ComponentPropsListener()
-        this.propsListener.onChange('eventIn', this.onEventInChange)
-        this.propsListener.onChange('code', this.onCodeChange)
+        this.propsListener.add('eventIn', this.onEventInChange)
+        this.propsListener.add('code', this.onCodeChange)
     }
 
     componentDidUpdate = () => { this.propsListener.listen(this.props) }

@@ -24,16 +24,15 @@ export default class SoundsManager extends React.Component<Props,State> {
  
     constructor(props) {
         super(props)
-        this.propsListener = new ComponentPropsListener()
 
-        this.propsListener.onChange('sounds', () => {
-            // console.log('woooop sounds changed', this.props)
+        this.propsListener = new ComponentPropsListener({
+            'eventIn': this.onEventInChange,
         })
-        this.propsListener.onChange('eventIn', this.onEventInChange)
     }
     
+    // ON PROPS CHANGE
     onEventInChange = () => {
-        // console.log('eventIn changed to', this.props.eventIn)
+        console.log('eventIn changed to', this.props.eventIn)
     }
 
     componentDidUpdate = () => { this.propsListener.listen(this.props) }

@@ -6,12 +6,18 @@ export class ComponentPropsListener {
     private hist: {[key:string]:any}
     private callbacks: {[key:string]:Function}
 
-    constructor(){
+    constructor(listeners?:{[prop:string]:Function}){
         this.hist = {}
         this.callbacks = {}
+
+        if (listeners) {
+            each(listeners, (callback, propName) => {
+                this.add(propName, callback)
+            })
+        }
     }
 
-    onChange(propName:string, callback:Function) {
+    add(propName:string, callback:Function) {
         this.callbacks[propName] = callback
     }
 
