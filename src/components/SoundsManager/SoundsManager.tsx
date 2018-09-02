@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Sound, { iSound } from '../Sound/Sound';
-import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited } from '../../helpers/arrayHelper';
+import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited, getEditedItem, getEditedIndex } from '../../helpers/arrayHelper';
 import { iComponentEvent } from '../../App';
 import { areSame } from '../../helpers/areSame';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from '../../styles';
+import config from '../../config';
 
 interface Props {
     sounds: iSound[]
@@ -25,7 +26,11 @@ export default class SoundsManager extends React.Component<Props,{}> {
 
         this.propsListener = new ComponentPropsListener({
             'eventIn': () => {
-                console.log('eventIn changed to', this.props.eventIn)
+                let event = this.props.eventIn
+                config.debug.soundsManager && console.log('[SOUNDSMANAGER] eventIn changed to', event)
+                let editedIndex = getEditedIndex(this.props.sounds)
+                if (event.action === 'list.up') this.editSound(this.props.sounds[editedIndex - 1]) 
+                if (event.action === 'list.down') this.editSound(this.props.sounds[editedIndex + 1]) 
             },
         })
     }
@@ -33,7 +38,7 @@ export default class SoundsManager extends React.Component<Props,{}> {
     
 
     deleteSound = (soundToDelete:iSound) => this.props.onUpdate(arrayWithoutItem(soundToDelete, this.props.sounds))
-    editSound = (sound:iSound) => this.props.onUpdate(arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.props.sounds)))
+    editSound = (sound:iSound) => sound && this.props.onUpdate(arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.props.sounds)))
     startNewSoundEdit = () => this.props.onUpdate(arrayWithItemsToNotEdited(this.props.sounds))
 
     render() {

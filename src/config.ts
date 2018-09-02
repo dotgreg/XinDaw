@@ -9,7 +9,8 @@ const config = {
         soundTone: false,
         controls: true,
         midiWatcher: true,
-        ComponentPropsListener: false
+        ComponentPropsListener: false,
+        soundsManager: true
     },
 }
 

@@ -8,12 +8,14 @@ import {findIndex, isNumber, curry, filter, each, isArray, uniq, unionBy} from '
 // prop => index
 /////////////
 
-const getIndexFromProp = curry((prop:string, value:any, arr:any[]) => {
+const getIndexFromProp = curry((prop:string, value:any, arr:any[]):number => {
     let i = findIndex(arr, item => item[prop] === value)
-    if (!isNumber(i)) return console.warn(`getIndexFromProp no index found prop:${prop} value: ${value}`)
+    if (!isNumber(i)) return -1; 
+    // console.warn(`getIndexFromProp no index found prop:${prop} value: ${value}`)
     return i
 })
 export const getIndexFromId = getIndexFromProp('id')
+export const getEditedIndex = getIndexFromProp('edited', true)
 
 /////////////
 // prop => item
