@@ -20,10 +20,8 @@ interface Props {
 export default class SoundsManager extends React.Component<Props,{}> {
 
     propsListener: ComponentPropsListener
- 
     constructor(props) {
         super(props)
-
         this.propsListener = new ComponentPropsListener({
             'eventIn': () => {
                 let event = this.props.eventIn
@@ -58,11 +56,7 @@ export default class SoundsManager extends React.Component<Props,{}> {
                     <ul>
                         {
                             this.props.sounds.map((sound,i) => (
-                                <li 
-                                    key={i}
-                                    className={cx(
-                                        sound.edited && s.sound.active, 
-                                    )}>
+                                <li key={i} className={cx( sound.edited && s.sound.active)}>
                                     <Sound 
                                         sound={sound}
                                         onEdit={this.editSound}

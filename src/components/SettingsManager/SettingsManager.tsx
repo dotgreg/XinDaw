@@ -43,17 +43,18 @@ export default class SettingsManager extends React.Component<Props,State> {
                 {type: 'event', value:58, eventName: 'soundsManager.list.down'},
                 {type: 'event', value:60, eventName: 'soundsManager.list.addToPart'},
 
-                {type: 'event', value:61, eventName: 'PartSoundsManager.list.up'},
-                {type: 'event', value:62, eventName: 'PartSoundsManager.list.down'},
-                {type: 'event', value:63, eventName: 'PartSoundsManager.sound.pause'},
-                {type: 'event', value:64, eventName: 'PartSoundsManager.sound.delete'},
-                {type: 'event', value:65, eventName: 'PartSoundsManager.sound.play'},
+                {type: 'event', value:61, eventName: 'SoundPartManager.list.up'},
+                {type: 'event', value:62, eventName: 'SoundPartManager.list.down'},
+                {type: 'event', value:63, eventName: 'SoundPartManager.sound.pause'},
+                {type: 'event', value:64, eventName: 'SoundPartManager.sound.delete'},
+                {type: 'event', value:65, eventName: 'SoundPartManager.sound.play'},
             ],
             opened: false
         }
 
         this.propsListener = new ComponentPropsListener({
             'settings': () => {
+                // let settings = this.state.settings // to reinit settings
                 let settings = mergeArraysByProp('eventName', this.state.settings, this.props.settings)
                 this.setState({settings: settings})
             },

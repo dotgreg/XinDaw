@@ -60,7 +60,7 @@ class App extends React.Component<{}, State> {
 
 
   triggerSoundEdit = (sound:iSound) => {
-    this.setState({sounds: arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.state.sounds))})
+    sound && this.setState({sounds: arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.state.sounds))})
   }
 
   createSound = (sound: iSound) => {
@@ -101,6 +101,7 @@ class App extends React.Component<{}, State> {
     let value = event.value
 
     let resEvent:iComponentEvent = {id: componentId, action, value}
+    console.log(resEvent)
 
     this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
   }
@@ -112,28 +113,55 @@ class App extends React.Component<{}, State> {
   public render() {
     return (
       <div className="App"> 
+
+        {/* CURRENT SOUNDS */}
+        <PartsManager 
+          parts={this.state.parts} 
+          onUpdate={this.updateParts} 
+          />
+
+        <SoundPartManager
+          part={getActiveItem(this.state.parts).sounds} 
+          // @ts-ignore
+          sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
+          controls={this.state.controls}
+
+          onUpdate={this.updateParts}
+          onRemoveSound={this.removeSoundToCurrentPart}
+          onTriggerSoundEdit={this.triggerSoundEdit}
+
+          eventIn={getItemFromId('SoundPartManager', this.state.events)}
+          />
+
+
+
+        {/* ALL SOUNDS LIBRARY*/}
         <SoundsManager 
           sounds={this.state.sounds} 
+
           onUpdate={this.updateSounds}
           onAddCurrentPart={this.addSoundToCurrentPart}
-          eventIn={getItemFromId('soundsManager', this.state.events)}
-        />
 
+          eventIn={getItemFromId('soundsManager', this.state.events)}
+          />
+
+
+        {/* CURRENT SOUND WORKSTATION*/}
         <SoundEditor
           sound={getEditedItem(this.state.sounds)}
           onCreate={this.createSound}
           onUpdate={this.updateSound}
-        />
-
-
+          />
 
         <Controls 
           code={getEditedItem(this.state.sounds).code}
           soundId={getEditedItem(this.state.sounds).id}
           onUpdate={this.updateSoundControls}
-          eventIn={getItemFromId('controls', this.state.events)}
-        />
 
+          eventIn={getItemFromId('controls', this.state.events)}
+          />
+
+        {/* SETTINGS*/}
         <SettingsManager 
           settings={this.state.settings}
           onUpdate={this.onSettingsUpdate}
@@ -141,20 +169,6 @@ class App extends React.Component<{}, State> {
         
         <MidiWatcher onUpdate={this.onMidiUpdate}/>
 
-        <PartsManager 
-          parts={this.state.parts} 
-          onUpdate={this.updateParts} 
-        />
-
-        <SoundPartManager
-          part={getActiveItem(this.state.parts).sounds} 
-          // @ts-ignore
-          sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
-          controls={this.state.controls}
-          onUpdate={this.updateParts}
-          onRemoveSound={this.removeSoundToCurrentPart}
-          onTriggerSoundEdit={this.triggerSoundEdit}
-        />
 
       </div>
     );

@@ -3,9 +3,7 @@ import Hammer from 'react-hammerjs';
 import { clamp, round, throttle } from 'lodash';
 import { iControlVar } from '../Controls/Controls';
 import s from '../../styles';
-import { cx, css } from 'emotion';
-
-require('./knob.css')
+import styled from 'react-emotion'
 
 interface Props {
   id:string
@@ -109,13 +107,13 @@ export default class Knob extends React.Component<Props, State> {
 
 	render() {
 		return (
-      <div className={cx(css`height: 300px; width: 300px; background: ${s.colors.red};`, s.border.red, 'component-knob')}>
+      <StyledKnob>
         <Hammer
           onPan={this.handlePan}
           onPanStart={this.handlePanStart}
           direction="DIRECTION_VERTICAL"
           options={this.state.hammerOptions}>
-          <div className={cx(s.effects.bgGlow, s.border.red)}>
+          <div>
             <div className="name"> {this.props.name} </div>
             <div className="knob" style={{transform: `rotate(${(this.currentPercentage * 3.60)}deg)`}}>
             </div>
@@ -130,7 +128,36 @@ export default class Knob extends React.Component<Props, State> {
               onChange={this.modifyValueByInput} />
           </div>
         </Hammer>
-      </div>
+      </StyledKnob>
     )
   }
 }
+
+let StyledKnob = styled('div')`
+    width: 50px;
+    float: left;
+    padding: 5px;
+    font-size: 12px;
+
+  .name {
+    text-align: center;
+    margin-bottom: 3px;
+  }
+
+  .knob {
+    margin: 0 auto 3px auto;
+    width: 30px;
+    height: 30px;
+    background-image: url(${require('./assets/knob.png')});
+    background-size: contain;
+    background-repeat: none;
+  }
+
+  input.number {
+    border: none;
+    background: none;
+    text-align: center;
+    width: 60px;
+    font-size: 12px;
+  }
+`
