@@ -1,6 +1,9 @@
 import { css } from 'emotion'
 import { colors } from './ressources/uiKit';
 
+export const show = (visible:boolean) => css`
+    display: ${visible ? 'block' : 'none'};
+`
 
 export const color = {
     blue: css`color: ${colors.blue}`,

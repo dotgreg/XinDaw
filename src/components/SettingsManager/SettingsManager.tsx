@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { updateArrayItem, mergeArraysByProp } from '../../helpers/arrayHelper';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
+import { cx } from 'emotion';
+import s from '../../styles';
 
 export interface iSettingsItem {
     type: string
@@ -14,7 +16,8 @@ interface Props {
 }
 
 interface State {
-    settings: iSettingsItem[]
+    settings: iSettingsItem[],
+    opened: boolean
 }
 
 export default class SettingsManager extends React.Component<Props,State> {
@@ -45,7 +48,8 @@ export default class SettingsManager extends React.Component<Props,State> {
                 {type: 'event', value:63, eventName: 'PartSoundsManager.sound.pause'},
                 {type: 'event', value:64, eventName: 'PartSoundsManager.sound.delete'},
                 {type: 'event', value:65, eventName: 'PartSoundsManager.sound.play'},
-            ]
+            ],
+            opened: false
         }
 
         this.propsListener = new ComponentPropsListener({
@@ -67,8 +71,8 @@ export default class SettingsManager extends React.Component<Props,State> {
     render() {
         return (
            <div>
-               <h3>settings</h3>
-               <div>
+               <h3 onClick={()=>{this.setState({opened: !this.state.opened})}}>settings</h3>
+               <div className={cx(s.base.show(this.state.opened))}>
                    {
                        this.state.settings.map((item, index) => (
                            <div key={index}>
