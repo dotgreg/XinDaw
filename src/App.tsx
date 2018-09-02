@@ -97,7 +97,7 @@ class App extends React.Component<{}, State> {
 
     let eventName = res[0].eventName
     let componentId = eventName.split('.')[0]
-    let action = eventName.split('.')[1]
+    let action = eventName.replace(componentId+'.','')
     let value = event.value
 
     let resEvent:iComponentEvent = {id: componentId, action, value}

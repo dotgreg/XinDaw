@@ -4,7 +4,6 @@ import { analyzeCode } from '../../managers/code/analyzeCode';
 import { areSame } from '../../helpers/areSame';
 import Knob from '../Knob/Knob';
 import { arrayWithUpdatedValue } from '../../helpers/arrayHelper';
-import styled from 'styled-components';
 import { iComponentEvent } from '../../App';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
 
@@ -70,7 +69,7 @@ export default class Controls extends React.Component<Props,State> {
     
     render() {
         return (
-            <StyledControls>
+            <div>
                 {
                     this.state.controlVars.map( (control,index) => (
                         <div key={index}>
@@ -87,10 +86,7 @@ export default class Controls extends React.Component<Props,State> {
                     ))
                 }
                 <div style={{clear: 'both'}}></div>
-            </StyledControls>
+            </div>
         )
     }   
 }
-
-const StyledControls = styled.div`
-`

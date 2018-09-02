@@ -1,5 +1,7 @@
 import * as React from 'react';
 import config from '../../config';
+import { cx, css } from 'emotion';
+import s from '../../styles';
 
 declare var navigator:any
 
@@ -101,7 +103,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
                 <div className="logger">
                     {this.state.lastEvent}
                 </div>
-                <div className="simulator">
+                <div className={cx(s.debug.fixedPopup)}>
                     midi simulator
                     <input type="text" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
                     <input type="text" value={this.state.simValue} onChange={this.changeSimulatorValue} />
