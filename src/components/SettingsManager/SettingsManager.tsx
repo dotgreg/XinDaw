@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { updateArrayItem, mergeArraysByProp } from '../../helpers/arrayHelper';
-import { areSame } from '../../helpers/areSame';
-import {each} from 'lodash'
+import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
 
 export interface iSettingsItem {
     type: string
@@ -20,7 +19,7 @@ interface State {
 
 export default class SettingsManager extends React.Component<Props,State> {
 
-    hist:iSettingsItem[]
+    propsListener: ComponentPropsListener
 
     constructor(props) {
         super(props)
@@ -48,32 +47,22 @@ export default class SettingsManager extends React.Component<Props,State> {
                 {type: 'event', value:65, eventName: 'PartSoundsManager.sound.play'},
             ]
         }
-    }
 
-    // this.props.onUpdate(settings)
-    
-    componentDidMount() {
-        // during bootstraping only, get settings val from storage
+        this.propsListener = new ComponentPropsListener({
+            'settings': () => {
+                let settings = mergeArraysByProp('eventName', this.state.settings, this.props.settings)
+                this.setState({settings: settings})
+            },
+        })
     }
     
-    componentDidUpdate() {
-        if (!areSame(this.hist, this.props.settings)) {
-            let settings = mergeArraysByProp('eventName', this.state.settings, this.props.settings)
-            this.setState({settings: settings})
-            this.hist = this.props.settings
-        }
-    }
+    componentDidUpdate = () => { this.propsListener.listen(this.props) }
 
-    changeItem = (e:React.ChangeEvent, item:iSettingsItem) => {
-        // @ts-ignore
-        // console.log(e.target.value,item)
-        // @ts-ignore
+    changeItem = (e:any, item:iSettingsItem) => {
         item.value = parseInt(e.target.value)
         this.props.onUpdate(updateArrayItem('eventName')(item)(this.state.settings))
     }
 
-    // onSave = () => {
-    // }
 
     render() {
         return (
