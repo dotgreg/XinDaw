@@ -46,7 +46,10 @@ export default class MidiWatcher extends React.Component<Props,State> {
 
     changeSimulatorEvent = (e) => { this.setState({simEvent: e.target.value}) }
     changeSimulatorValue = (e) => { this.setState({simValue: e.target.value}) }
-    simulateMidi = () => { this.handleMIDIMessage({data:[0, this.state.simEvent, this.state.simValue]}) }
+    simulateMidi = () => { 
+        this.setState({simValue: this.state.simValue + 1})
+        this.handleMIDIMessage({data:[0, this.state.simEvent, this.state.simValue]}) 
+    }
 
     componentDidMount() {
         console.log('[MIDI WATCHER] started')
@@ -103,7 +106,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
                 <div className="logger">
                     {this.state.lastEvent}
                 </div>
-                <div className={cx(s.debug.fixedPopup)}>
+                <div className={cx(s.debug.fixedPopup(100))}>
                     midi simulator
                     <input type="text" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
                     <input type="text" value={this.state.simValue} onChange={this.changeSimulatorValue} />
