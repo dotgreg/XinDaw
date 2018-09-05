@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { iPart } from '../Part/Part';
-import Sound, { iSound } from '../Sound/Sound';
-import { filter } from 'lodash'
+import Sound from '../Sound/Sound';
 import { iSoundControls } from '../Controls/Controls';
 import { getItemFromId, getEditedIndex } from '../../helpers/arrayHelper';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
-import { config } from 'shelljs';
 import { iComponentEvent } from '../../App';
 import { cx } from 'emotion';
 import s from '../../styles';
+import { iSound } from '../../managers/types/sound.type';
 
 interface Props {
     part: iPart[]

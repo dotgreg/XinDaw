@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { iSound } from './components/Sound/Sound';
 import SoundsManager from './components/SoundsManager/SoundsManager';
 import PartsManager from './components/PartsManager/PartsManager';
 import { iPart } from './components/Part/Part';
@@ -18,6 +17,8 @@ import SettingsManager, { iSettingsItem } from './components/SettingsManager/Set
 
 import {each, filter} from 'lodash'
 import helpers from './helpers';
+import { iSound, tSound } from './managers/types/sound.type';
+import { checkType } from './managers/types/typeCheck';
 
 export interface iComponentEvent {
   id: string
@@ -47,6 +48,9 @@ class App extends React.Component<{}, State> {
     }
 
     startToneApp()
+
+    // @ts-ignore
+    this.createSound({test:'nonfdsofdas'})
   }
 
   updateSounds = (sounds:iSound[]) => {
@@ -60,22 +64,27 @@ class App extends React.Component<{}, State> {
 
 
   triggerSoundEdit = (sound:iSound) => {
+    if(!checkType(tSound)(sound)) return
     sound && this.setState({sounds: arrayWithItemToEdited(sound.id, arrayWithItemsToNotEdited(this.state.sounds))})
   }
-
+  
   createSound = (sound: iSound) => {
+    if(!checkType(tSound)(sound)) return
     this.setState({sounds: arrayWithItem(sound)(this.state.sounds)})
   }
-
+  
   updateSound = (sound: iSound) => {
+    if(!checkType(tSound)(sound)) return
     this.setState({sounds: updateIdArrayItem(sound)(this.state.sounds)})
   }
-
+  
   addSoundToCurrentPart = (sound: iSound) => {
+    if(!checkType(tSound)(sound)) return
     this.setState({parts: addSoundToPart(sound.id)(getActiveItem(this.state.parts).id)(this.state.parts)  })
   }
-
+  
   removeSoundToCurrentPart = (sound: iSound) => {
+    if(!checkType(tSound)(sound)) return
     // @ts-ignore
     this.setState({parts: removeSoundToPart(sound.id, getActiveItem(this.state.parts).id, this.state.parts)})
   }
@@ -83,7 +92,7 @@ class App extends React.Component<{}, State> {
   updateSoundControls = (soundControls:iSoundControls) => {
     this.setState({controls: updateIdArrayItem(soundControls)(this.state.controls)})
   }
-
+  
 
   onMidiUpdate = (midiEvent:iMidiEvent) => {
     this.triggerEvent(midiEvent)

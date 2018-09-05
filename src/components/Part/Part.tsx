@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Sound, { iSound } from '../Sound/Sound';
 
 import './part.css'
 

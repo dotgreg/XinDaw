@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Hammer from 'react-hammerjs';
 import { clamp, round, throttle } from 'lodash';
-import { iControlVar } from '../Controls/Controls';
-import s from '../../styles';
 import styled from 'react-emotion'
 
 interface Props {

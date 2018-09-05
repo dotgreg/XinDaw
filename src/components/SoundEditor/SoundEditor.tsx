@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {random} from 'lodash'
-import config from '../../config';
-import { iSound } from '../Sound/Sound';
 import CodeEditor from '../CodeEditor/CodeEditor';
+import { iSound } from '../../managers/types/sound.type';
 
 interface Props {
     sound:iSound | undefined

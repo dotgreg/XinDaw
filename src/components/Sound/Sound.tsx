@@ -3,13 +3,7 @@ import config from '../../config';
 import { areSame } from '../../helpers/areSame';
 import { SoundTone } from '../../Objects/SoundTone';
 import { iControlVar } from '../Controls/Controls';
-
-export interface iSound {
-    id: string
-    name: string
-    code: string
-    edited: boolean
-  }
+import { iSound } from '../../managers/types/sound.type';
 
 interface Props {
     sound: iSound,
