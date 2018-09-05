@@ -1,26 +1,11 @@
 import * as React from 'react';
 import config from '../../config';
 import { analyzeCode } from '../../managers/code/analyzeCode';
-import { areSame } from '../../helpers/areSame';
 import Knob from '../Knob/Knob';
 import { arrayWithUpdatedValue } from '../../helpers/arrayHelper';
-import { iComponentEvent } from '../../App';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
-
-export interface iSoundControls {
-    id: string
-    controls: iControlVar[]
-}
-
-export interface iControlVar {
-    id: string
-    name: string
-    target: any
-    value: number
-    min: number
-    max: number
-    step: number
-}
+import { iControlVar, iSoundControls } from '../../managers/types/control.type';
+import { iComponentEvent } from '../../managers/types/componentEvent.type';
 
 interface Props {
     soundId: string

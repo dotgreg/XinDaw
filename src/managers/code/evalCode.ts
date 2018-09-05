@@ -1,7 +1,7 @@
 import { filter, each } from 'lodash'
 import config from '../../config';
-import { iControlVar } from '../../components/Controls/Controls';
 import { stringToId } from '../../helpers/stringHelper';
+import { iControlVar } from '../types/control.type';
 
 export let evalCode = (code) => {
     try {

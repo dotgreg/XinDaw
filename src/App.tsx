@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import SoundsManager from './components/SoundsManager/SoundsManager';
 import PartsManager from './components/PartsManager/PartsManager';
-import { iPart } from './components/Part/Part';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
@@ -11,20 +10,19 @@ import SoundEditor from './components/SoundEditor/SoundEditor';
 import SoundPartManager from './components/SoundPartManager/SoundPartManager';
 
 import { startToneApp } from './managers/tone/startToneApp';
-import Controls, { iSoundControls } from './components/Controls/Controls';
+import Controls from './components/Controls/Controls';
 import MidiWatcher, { iMidiEvent } from './components/MidiWatcher/MidiWatcher';
-import SettingsManager, { iSettingsItem } from './components/SettingsManager/SettingsManager';
+import SettingsManager from './components/SettingsManager/SettingsManager';
 
-import {each, filter} from 'lodash'
-import helpers from './helpers';
+import {filter} from 'lodash'
 import { iSound, tSound } from './managers/types/sound.type';
-import { checkType } from './managers/types/typeCheck';
+import { checkType, t } from './managers/types/typeCheck';
+import { iPart, tPart } from './managers/types/part.type';
+import { iSoundControls } from './managers/types/control.type';
+import { iSettingsItem } from './managers/types/settings.type';
+import { iComponentEvent } from './managers/types/componentEvent.type';
 
-export interface iComponentEvent {
-  id: string
-  value: number
-  action: string
-}
+
 
 interface State {
   sounds: iSound[],
@@ -54,10 +52,12 @@ class App extends React.Component<{}, State> {
   }
 
   updateSounds = (sounds:iSound[]) => {
+    if(!checkType(t.array(tSound))(sounds)) return
     this.setState({sounds: sounds})
   }
   
   updateParts = (parts:iPart[]) => {
+    if(!checkType(t.array(tPart))(parts)) return
     this.setState({parts: parts})
   }
 

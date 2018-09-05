@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Part, { iPart } from '../Part/Part';
-import {random, filter} from 'lodash'
-import { getIndexFromId, arrayWithoutItem, arrayWithItem, arrayWithItemsToNotActive, arrayWithItemToActive } from '../../helpers/arrayHelper';
-import config from '../../config';
+import Part from '../Part/Part';
+import {random} from 'lodash'
+import { arrayWithoutItem, arrayWithItem, arrayWithItemsToNotActive, arrayWithItemToActive } from '../../helpers/arrayHelper';
+import { iPart } from '../../managers/types/part.type';
 
 
 interface Props {

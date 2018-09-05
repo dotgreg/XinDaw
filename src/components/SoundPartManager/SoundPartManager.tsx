@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { iPart } from '../Part/Part';
 import Sound from '../Sound/Sound';
-import { iSoundControls } from '../Controls/Controls';
 import { getItemFromId, getEditedIndex } from '../../helpers/arrayHelper';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
-import { iComponentEvent } from '../../App';
 import { cx } from 'emotion';
 import s from '../../styles';
 import { iSound } from '../../managers/types/sound.type';
+import { iPart } from '../../managers/types/part.type';
+import { iSoundControls } from '../../managers/types/control.type';
+import { iComponentEvent } from '../../managers/types/componentEvent.type';
 
 interface Props {
     part: iPart[]

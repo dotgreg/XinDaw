@@ -3,15 +3,10 @@ import { evalCode } from "../managers/code/evalCode";
 import config from "../config";
 import Tone from 'tone'
 import {each} from 'lodash'
-import { iControlVar } from "../components/Controls/Controls";
+import { iControlVar } from "../managers/types/control.type";
 
 interface optionsSoundTone {
-    vars: iControlVar[]
-}
-
-/** another function  */
-export const testFunc = (fdasfdasds:string) => {
-    return fdasfdasds + 'dasaddsa'
+    vars: iControlVar[] 
 }
 
 

@@ -1,13 +1,12 @@
 import * as React from 'react';
 import Sound from '../Sound/Sound';
 import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited, getEditedItem, getEditedIndex } from '../../helpers/arrayHelper';
-import { iComponentEvent } from '../../App';
-import { areSame } from '../../helpers/areSame';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from '../../styles';
 import config from '../../config';
 import { iSound } from '../../managers/types/sound.type';
+import { iComponentEvent } from '../../managers/types/componentEvent.type';
 
 interface Props {
     sounds: iSound[]

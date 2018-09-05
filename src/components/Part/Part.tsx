@@ -1,13 +1,7 @@
 import * as React from 'react';
 
 import './part.css'
-
-export interface iPart {
-    id: string
-    name: string
-    sounds: string[]
-    active: boolean
-}
+import { iPart } from '../../managers/types/part.type';
 
 interface Props {
     part: iPart

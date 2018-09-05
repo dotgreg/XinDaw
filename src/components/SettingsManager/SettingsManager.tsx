@@ -3,12 +3,8 @@ import { updateArrayItem, mergeArraysByProp } from '../../helpers/arrayHelper';
 import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from '../../styles';
+import { iSettingsItem } from '../../managers/types/settings.type';
 
-export interface iSettingsItem {
-    type: string
-    value: number
-    eventName: string
-}
 
 interface Props {
     onUpdate: Function
