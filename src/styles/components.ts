@@ -11,9 +11,10 @@ export const Panel = styled('div')`
 
 export const BlockTitle = styled('h3')`
     ${fontFamily};
-    font-size: 16px;
+    font-size: ${(props:any) => props.s ? props.s : 16}px;
+    text-transform: uppercase;
+    font-weight: bold;
     margin: 30px 0px 20px 0px;
-    text-transform: capitalize;
 `
 
 export const Li = styled('li')`

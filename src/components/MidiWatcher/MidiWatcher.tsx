@@ -1,8 +1,8 @@
 import * as React from 'react';
 import config from 'src/config';
-import { cx, css } from 'emotion';
+import { cx } from 'emotion';
 import s from 'src/styles';
-import { Input, Button } from 'src/styles/components';
+import { Input, Button, BlockTitle } from 'src/styles/components';
 
 declare var navigator:any
 
@@ -106,7 +106,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
             <div>
                 <div className={cx(s.debug.fixedPopup(100))}>
                     <div>
-                        <p>midi simulator</p>
+                        <BlockTitle s={12}>midi simulator</BlockTitle>
                         <Input type="number" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
                         <Input type="number" value={this.state.simValue} onChange={this.changeSimulatorValue} />
                         <Button onClick={this.simulateMidi}>trigger</Button>
@@ -114,7 +114,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
                     {
                         this.state.lastEvent && 
                         <div>
-                            <p>logger</p>
+                            <BlockTitle>logger</BlockTitle>
                             {this.state.lastEvent}
                         </div>
                     }
