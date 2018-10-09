@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getItemFromId, getEditedIndex } from 'src/helpers/arrayHelper';
-import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
+import { ComponentPropsListener } from 'src/objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from 'src/styles';
 import { iSound } from 'src/managers/types/sound.type';

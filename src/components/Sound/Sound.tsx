@@ -1,7 +1,7 @@
 import * as React from 'react';
 import config from 'src/config';
 import { areSame } from 'src/helpers/areSame';
-import { SoundTone } from 'src/Objects/SoundTone';
+import { SoundTone } from 'src/objects/SoundTone';
 import { iSound } from 'src/managers/types/sound.type';
 import { iControlVar } from 'src/managers/types/control.type';
 import { Button } from 'src/styles/components';
