@@ -1,6 +1,6 @@
 import {each, cloneDeep} from 'lodash'
-import { areSame } from '../helpers/areSame';
-import config from '../config';
+import { areSame } from 'src/helpers/areSame';
+import config from 'src/config';
 
 export class ComponentPropsListener {
     private hist: {[key:string]:any}

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Sound from '../Sound/Sound';
-import { getItemFromId, getEditedIndex } from '../../helpers/arrayHelper';
-import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
+import { getItemFromId, getEditedIndex } from 'src/helpers/arrayHelper';
+import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { cx } from 'emotion';
-import s from '../../styles';
-import { iSound } from '../../managers/types/sound.type';
-import { iPart } from '../../managers/types/part.type';
-import { iSoundControls } from '../../managers/types/control.type';
-import { iComponentEvent } from '../../managers/types/componentEvent.type';
+import s from 'src/styles';
+import { iSound } from 'src/managers/types/sound.type';
+import { iPart } from 'src/managers/types/part.type';
+import { iSoundControls } from 'src/managers/types/control.type';
+import { iComponentEvent } from 'src/managers/types/componentEvent.type';
+import Sound from 'src/components/Sound/Sound';
 
 interface Props {
     part: iPart[]
@@ -53,7 +53,7 @@ export default class SoundPartManager extends React.Component<Props,State> {
                         {
                             this.props.sounds.map((sound,i) => (
                                 <li key={i} className={cx( sound.edited && s.sound.active)}>
-                                    <Sound 
+                                    <Sound
                                         ref={`sound-${i}`}
                                         sound={sound}   
                                         controls={getItemFromId(sound.id,this.props.controls).controls}

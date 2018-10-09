@@ -1,9 +1,9 @@
 import * as React from 'react';
-import config from '../../config';
-import { areSame } from '../../helpers/areSame';
-import { SoundTone } from '../../Objects/SoundTone';
-import { iSound } from '../../managers/types/sound.type';
-import { iControlVar } from '../../managers/types/control.type';
+import config from 'src/config';
+import { areSame } from 'src/helpers/areSame';
+import { SoundTone } from 'src/Objects/SoundTone';
+import { iSound } from 'src/managers/types/sound.type';
+import { iControlVar } from 'src/managers/types/control.type';
 
 interface Props {
     sound: iSound,

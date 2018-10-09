@@ -1,6 +1,6 @@
 import * as esprima from 'esprima'
 import { filter } from 'lodash'
-import config from '../../config';
+import config from 'src/config';
 
 
 // adds a

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import config from '../../config';
-import { analyzeCode } from '../../managers/code/analyzeCode';
-import Knob from '../Knob/Knob';
-import { arrayWithUpdatedValue } from '../../helpers/arrayHelper';
-import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
-import { iControlVar, iSoundControls } from '../../managers/types/control.type';
-import { iComponentEvent } from '../../managers/types/componentEvent.type';
+import config from 'src/config';
+import { analyzeCode } from 'src/managers/code/analyzeCode';
+import { arrayWithUpdatedValue } from 'src/helpers/arrayHelper';
+import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
+import { iControlVar, iSoundControls } from 'src/managers/types/control.type';
+import { iComponentEvent } from 'src/managers/types/componentEvent.type';
+import Knob from 'src/components/Knob/Knob';
 
 interface Props {
     soundId: string

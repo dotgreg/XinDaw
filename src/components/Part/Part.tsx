@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import './part.css'
-import { iPart } from '../../managers/types/part.type';
+import { iPart } from 'src/managers/types/part.type';
 
 interface Props {
     part: iPart

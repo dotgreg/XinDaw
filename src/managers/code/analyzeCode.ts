@@ -1,8 +1,8 @@
 import * as esprima from 'esprima'
-import config from '../../config';
+import config from 'src/config';
 import {each, has} from 'lodash'
-import { stringToId } from '../../helpers/stringHelper';
-import { iControlVar } from '../types/control.type';
+import { stringToId } from 'src/helpers/stringHelper';
+import { iControlVar } from 'src/managers/types/control.type';
 
 export const analyzeCode = (code:string) => {
     

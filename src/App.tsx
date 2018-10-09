@@ -1,26 +1,26 @@
 import * as React from 'react';
 
-import SoundsManager from './components/SoundsManager/SoundsManager';
-import PartsManager from './components/PartsManager/PartsManager';
+import SoundsManager from 'src/components/SoundsManager/SoundsManager';
+import PartsManager from 'src/components/PartsManager/PartsManager';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
 import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds, updateArrayItem, getItemFromId} from './helpers/arrayHelper';
-import SoundEditor from './components/SoundEditor/SoundEditor';
-import SoundPartManager from './components/SoundPartManager/SoundPartManager';
+import SoundPartManager from 'src/components/SoundPartManager/SoundPartManager';
 
-import { startToneApp } from './managers/tone/startToneApp';
-import Controls from './components/Controls/Controls';
-import MidiWatcher, { iMidiEvent } from './components/MidiWatcher/MidiWatcher';
-import SettingsManager from './components/SettingsManager/SettingsManager';
+import { startToneApp } from 'src/managers/tone/startToneApp';
+import Controls from 'src/components/Controls/Controls';
+import MidiWatcher, { iMidiEvent } from 'src/components/MidiWatcher/MidiWatcher';
+import SettingsManager from 'src/components/SettingsManager/SettingsManager';
 
 import {filter} from 'lodash'
-import { iSound, tSound } from './managers/types/sound.type';
-import { checkType, t } from './managers/types/typeCheck';
-import { iPart, tPart } from './managers/types/part.type';
-import { iSoundControls } from './managers/types/control.type';
-import { iSettingsItem } from './managers/types/settings.type';
-import { iComponentEvent } from './managers/types/componentEvent.type';
+import { iSound, tSound } from 'src/managers/types/sound.type';
+import { checkType, t } from 'src/managers/types/typeCheck';
+import { iPart, tPart } from 'src/managers/types/part.type';
+import { iSoundControls } from 'src/managers/types/control.type';
+import { iSettingsItem } from 'src/managers/types/settings.type';
+import { iComponentEvent } from 'src/managers/types/componentEvent.type';
+import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 
 
 

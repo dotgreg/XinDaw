@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {isArray, each} from 'lodash'
-import { areSame } from '../../helpers/areSame';
-import { iSound } from '../../managers/types/sound.type';
-import { iPart } from '../../managers/types/part.type';
+import { areSame } from 'src/helpers/areSame';
+import { iSound } from 'src/managers/types/sound.type';
+import { iPart } from 'src/managers/types/part.type';
 
 export interface iStorageData {
     sounds: iSound[]

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { updateArrayItem, mergeArraysByProp } from '../../helpers/arrayHelper';
-import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
+import { updateArrayItem, mergeArraysByProp } from 'src/helpers/arrayHelper';
+import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { cx } from 'emotion';
-import s from '../../styles';
-import { iSettingsItem } from '../../managers/types/settings.type';
+import s from 'src/styles';
+import { iSettingsItem } from 'src/managers/types/settings.type';
 
 
 interface Props {

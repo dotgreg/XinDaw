@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
-import config from '../../config';
+import config from 'src/config';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/monokai.css');

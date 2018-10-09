@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Sound from '../Sound/Sound';
-import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited, getEditedItem, getEditedIndex } from '../../helpers/arrayHelper';
-import { ComponentPropsListener } from '../../Objects/ComponentPropsListener';
+import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited, getEditedItem, getEditedIndex } from 'src/helpers/arrayHelper';
+import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { cx } from 'emotion';
-import s from '../../styles';
-import config from '../../config';
-import { iSound } from '../../managers/types/sound.type';
-import { iComponentEvent } from '../../managers/types/componentEvent.type';
+import s from 'src/styles';
+import config from 'src/config';
+import { iSound } from 'src/managers/types/sound.type';
+import { iComponentEvent } from 'src/managers/types/componentEvent.type';
+import Sound from 'src/components/Sound/Sound';
 
 
 
@@ -59,7 +59,7 @@ export default class SoundsManager extends React.Component<Props,{}> {
                         {
                             this.props.sounds.map((sound,i) => (
                                 <li key={i} className={cx( sound.edited && s.sound.active)}>
-                                    <Sound 
+                                    <Sound
                                         sound={sound}
                                         onEdit={this.editSound}
                                         onDelete={this.deleteSound}

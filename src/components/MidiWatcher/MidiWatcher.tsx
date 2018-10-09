@@ -1,7 +1,7 @@
 import * as React from 'react';
-import config from '../../config';
+import config from 'src/config';
 import { cx, css } from 'emotion';
-import s from '../../styles';
+import s from 'src/styles';
 
 declare var navigator:any
 
