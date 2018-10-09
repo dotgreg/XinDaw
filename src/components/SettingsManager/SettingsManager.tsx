@@ -69,7 +69,7 @@ export default class SettingsManager extends React.Component<Props,State> {
         return (
            <div>
                <BlockTitle onClick={()=>{this.setState({opened: !this.state.opened})}}>settings</BlockTitle>
-               <div className={cx(s.show(this.state.opened))}>
+               <div className={cx(s.states.show(this.state.opened))}>
                    {
                        this.state.settings.map((item, index) => (
                            <div key={index}>

@@ -5,6 +5,7 @@ import { SoundTone } from 'src/objects/SoundTone';
 import { iSound } from 'src/managers/types/sound.type';
 import { iControlVar } from 'src/managers/types/control.type';
 import { Button, ButtonSmall } from 'src/styles/components';
+import s from 'src/styles';
 
 interface Props {
     sound: iSound,
@@ -18,8 +19,6 @@ interface Props {
 interface State {
     playStatus: string
 }
-
-
 
 export default class Sound extends React.Component<Props,State> {
 

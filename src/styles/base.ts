@@ -4,9 +4,9 @@ import { css } from 'emotion'
 /**
 * states
 */
-export const show = (visible:boolean) => css`
-    display: ${visible ? 'block' : 'none'};
-`
+export const states = {
+    show : (visible:boolean) => css`display: ${visible ? 'block' : 'none'};`
+}
 
 /**
 * colors
