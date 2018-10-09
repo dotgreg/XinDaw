@@ -8,6 +8,8 @@ import config from '../../config';
 import { iSound } from '../../managers/types/sound.type';
 import { iComponentEvent } from '../../managers/types/componentEvent.type';
 
+
+
 interface Props {
     sounds: iSound[]
 
