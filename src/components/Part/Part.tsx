@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import './part.css'
 import { iPart } from 'src/managers/types/part.type';
-import { Li } from 'src/styles/components';
+import { Li, Button } from 'src/styles/components';
 
 interface Props {
     part: iPart
@@ -20,7 +20,7 @@ export default class Part extends React.Component<Props,State> {
             <Li>
                 <div className={`part ${this.props.part.active && 'active'}`}>
                     <span onClick={() => {this.props.onSelect(this.props.part)}}>{this.props.part.name}</span>
-                    <button onClick={() => {this.props.onDelete(this.props.part)}}>X</button>
+                    <Button onClick={() => {this.props.onDelete(this.props.part)}}>X</Button>
                 </div>
             </Li>
         )

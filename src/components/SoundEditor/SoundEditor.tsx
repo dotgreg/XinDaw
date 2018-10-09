@@ -2,6 +2,7 @@ import * as React from 'react';
 import {random} from 'lodash'
 import { iSound } from 'src/managers/types/sound.type';
 import CodeEditor from 'src/components/CodeEditor/CodeEditor';
+import { Input } from 'src/styles/components';
 
 interface Props {
     sound:iSound | undefined
@@ -81,7 +82,7 @@ export default class SoundEditor extends React.Component<Props,State> {
     render() {
         return (
             <div>
-                <input type="text" value={this.state.sound.name} onChange={this.updateName}/>
+                <Input type="text" value={this.state.sound.name} onChange={this.updateName}/>
 
                 <CodeEditor
                     onSave={this.saveForm}

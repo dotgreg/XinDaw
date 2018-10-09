@@ -3,7 +3,7 @@ import {random} from 'lodash'
 import { arrayWithoutItem, arrayWithItem, arrayWithItemsToNotActive, arrayWithItemToActive } from 'src/helpers/arrayHelper';
 import { iPart } from 'src/managers/types/part.type';
 import Part from 'src/components/Part/Part';
-import { BlockTitle } from 'src/styles/components';
+import { BlockTitle, Input, Button } from 'src/styles/components';
 
 
 interface Props {
@@ -50,8 +50,8 @@ export default class PartsManager extends React.Component<Props,State> {
             <div className="sounds" >
                 <BlockTitle>Parts</BlockTitle>
                 <div>
-                    <input type="text" value={this.state.formName} onChange={this.updateFormName} />
-                    <button onClick={this.createPart}>+</button>
+                    <Input type="text" value={this.state.formName} onChange={this.updateFormName} />
+                    <Button onClick={this.createPart}>+</Button>
                 </div>
 
                 {/* LIST PARTS */}

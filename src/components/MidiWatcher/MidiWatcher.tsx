@@ -2,6 +2,7 @@ import * as React from 'react';
 import config from 'src/config';
 import { cx, css } from 'emotion';
 import s from 'src/styles';
+import { Input, Button } from 'src/styles/components';
 
 declare var navigator:any
 
@@ -106,9 +107,9 @@ export default class MidiWatcher extends React.Component<Props,State> {
                 <div className={cx(s.debug.fixedPopup(100))}>
                     <div>
                         <p>midi simulator</p>
-                        <input type="number" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
-                        <input type="number" value={this.state.simValue} onChange={this.changeSimulatorValue} />
-                        <button onClick={this.simulateMidi}>trigger</button>
+                        <Input type="number" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
+                        <Input type="number" value={this.state.simValue} onChange={this.changeSimulatorValue} />
+                        <Button onClick={this.simulateMidi}>trigger</Button>
                     </div>
                     {
                         this.state.lastEvent && 

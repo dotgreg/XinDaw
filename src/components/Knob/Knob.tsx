@@ -2,6 +2,7 @@ import * as React from 'react';
 import Hammer from 'react-hammerjs';
 import { clamp, round, throttle } from 'lodash';
 import styled from 'react-emotion'
+import { Input } from 'src/styles/components';
 
 interface Props {
   id:string
@@ -115,7 +116,7 @@ export default class Knob extends React.Component<Props, State> {
             <div className="name"> {this.props.name} </div>
             <div className="knob" style={{transform: `rotate(${(this.currentPercentage * 3.60)}deg)`}}>
             </div>
-            <input
+            <Input
               className="number"
               type="number"
               min={this.props.min}

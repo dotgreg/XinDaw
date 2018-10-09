@@ -7,7 +7,7 @@ import config from 'src/config';
 import { iSound } from 'src/managers/types/sound.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import Sound from 'src/components/Sound/Sound';
-import { BlockTitle, Li } from 'src/styles/components';
+import { BlockTitle, Li, Button } from 'src/styles/components';
 
 
 
@@ -50,7 +50,7 @@ export default class SoundsManager extends React.Component<Props,{}> {
 
                 {/* CRUD SOUND */}
 
-                <button onClick={this.startNewSoundEdit}> + </button>
+                <Button onClick={this.startNewSoundEdit}> + </Button>
 
                 {/* LIST SOUNDS */}
 

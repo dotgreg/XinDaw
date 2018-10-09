@@ -4,6 +4,7 @@ import { areSame } from 'src/helpers/areSame';
 import { SoundTone } from 'src/Objects/SoundTone';
 import { iSound } from 'src/managers/types/sound.type';
 import { iControlVar } from 'src/managers/types/control.type';
+import { Button } from 'src/styles/components';
 
 interface Props {
     sound: iSound,
@@ -101,15 +102,15 @@ export default class Sound extends React.Component<Props,State> {
         return (
             <div>
                 <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
-                {this.props.onAddCurrentPart && (<button onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}>P</button>)} 
+                {this.props.onAddCurrentPart && (<Button onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}>P</Button>)} 
                 {
                     this.props.playable && (
-                        <button onClick={() => {this.togglePlay()}}>
+                        <Button onClick={() => {this.togglePlay()}}>
                             {this.state.playStatus === 'playing' ? '||' : '>'}
-                        </button>
+                        </Button>
                     )
                 } 
-                <button onClick={() => {this.props.onDelete(this.props.sound)}}>X</button>
+                <Button onClick={() => {this.props.onDelete(this.props.sound)}}>X</Button>
             </div>
         )
     }   

@@ -4,7 +4,7 @@ import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from 'src/styles';
 import { iSettingsItem } from 'src/managers/types/settings.type';
-import { BlockTitle } from 'src/styles/components';
+import { BlockTitle, Input } from 'src/styles/components';
 
 
 interface Props {
@@ -74,7 +74,7 @@ export default class SettingsManager extends React.Component<Props,State> {
                        this.state.settings.map((item, index) => (
                            <div key={index}>
                                 <label>{item.eventName} - {item.type}</label> 
-                                <input type="number" value={item.value} onChange={e =>{this.changeItem(e, item)}} />
+                                <Input type="number" value={item.value} onChange={e =>{this.changeItem(e, item)}} />
                            </div>
                        ))
                    }
