@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { getItemFromId, getEditedIndex } from 'src/helpers/arrayHelper';
-import { ComponentPropsListener } from 'src/objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from 'src/styles';
 import { iSound } from 'src/managers/types/sound.type';
@@ -9,6 +8,7 @@ import { iSoundControls } from 'src/managers/types/control.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import Sound from 'src/components/Sound/Sound';
 import { BlockTitle, Li } from 'src/styles/components';
+import { ComponentPropsListener } from 'src/objects/ComponentPropsListener';
 
 interface Props {
     part: iPart[]
@@ -32,7 +32,6 @@ export default class SoundPartManager extends React.Component<Props,State> {
         this.propsListener = new ComponentPropsListener({
             'eventIn': () => {
                 let event = this.props.eventIn
-                console.log(333, event)
                 let editedIndex = getEditedIndex(this.props.sounds)
                 if (event.action === 'list.up') this.props.onTriggerSoundEdit(this.props.sounds[editedIndex - 1]) 
                 if (event.action === 'list.down') this.props.onTriggerSoundEdit(this.props.sounds[editedIndex + 1]) 

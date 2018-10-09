@@ -12,17 +12,18 @@ export class ComponentPropsListener {
     *  Adding a change listener system for components that is comparing 
     *  complex props (multi-depth objects for instance)
     * 
-    *  example :
-    *  ``` 
-    *  constructor(props) {
-            super(props)
-            this.propsListener = new ComponentPropsListener({
-                'PropName1': Function to proceed when "PropName1" is changed
-            )}
-        }
-        ...
-        componentDidUpdate = () => { this.propsListener.listen(this.props) }
-        ```
+    *  example (inside react component):
+    *  
+    ``` 
+    constructor(props) {
+        super(props)
+        this.propsListener = new ComponentPropsListener({
+            'PropName1': Function to proceed when "PropName1" is changed,
+            'PropName2': ... 
+        )}
+    }
+    componentDidUpdate = () => { this.propsListener.listen(this.props) }
+    ```        
     * 
     */
     constructor(listeners?:{[prop:string]:Function}){
