@@ -7,5 +7,8 @@ export const bgGlow = css `
     background-size: 100% 400%;
 `
 
+export const transitions = {
+    transition1: css` transition: all .3s cubic-bezier(.55,0,.1,1) `
+}   
 
 

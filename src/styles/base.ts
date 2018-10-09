@@ -1,23 +1,33 @@
 import { css } from 'emotion'
-import { colors } from './ressources/uiKit';
 
+
+/**
+* states
+*/
 export const show = (visible:boolean) => css`
     display: ${visible ? 'block' : 'none'};
 `
 
-export const color = {
-    blue: css`color: ${colors.blue}`,
-    red: css`color: ${colors.red}`,
+/**
+* colors
+*/
+export const colors = {
+    grey1: '#e8e8e8'
 }
 
-export const bg = {
-    blue: css`background-color: ${colors.blue}`,
-    red: css`background-color: ${colors.red}`,
+/**
+* fonts
+*/
+export const fonts = {
+    base: css`font-family: monospace, arial, sans-serif`
 }
 
-export const border = {
-    blue: css`border:1px ${colors.blue} solid`,
-    red: css`border:1px ${colors.red} solid`,
+/**
+* text
+*/
+export const text = {
+    active: css`
+        font-weight: bold;
+        text-decoration: underline;
+    `
 }
-
-export const fontFamily = css`font-family: monospace, arial, sans-serif`

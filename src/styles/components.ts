@@ -1,5 +1,6 @@
 import styled from "react-emotion";
-import { fontFamily } from "src/styles/base";
+import { transitions } from "src/styles/effects";
+import { fonts, colors } from "src/styles/base";
 
 export const Panel = styled('div')`
   width: ${(props:any) => props.w}%;
@@ -10,7 +11,7 @@ export const Panel = styled('div')`
 `;
 
 export const BlockTitle = styled('h3')`
-    ${fontFamily};
+    ${fonts.base};
     font-size: ${(props:any) => props.s ? props.s : 16}px;
     text-transform: uppercase;
     font-weight: bold;
@@ -18,7 +19,7 @@ export const BlockTitle = styled('h3')`
 `
 
 export const Li = styled('li')`
-    ${fontFamily};
+    ${fonts.base};
     font-size: 12px;
     margin: 0px 0px 0px 10px;
 `
@@ -36,8 +37,24 @@ export const Button = styled('button')`
   background: none;
   border: 2px inset black;
   color: black;
-  pointer: cursor;
-  transition: all .3s cubic-bezier(.55,0,.1,1);
+  cursor: pointer;
+  ${transitions.transition1};
+  &:hover {
+    background: black;
+    color: white;
+  }
+`;
+
+export const ButtonSmall = styled('button')`
+  border: none;
+  padding: 5px;
+  background: ${colors.grey1};
+  color: black;
+  cursor: pointer;
+  font-size: 10px;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  ${transitions.transition1};
   &:hover {
     background: black;
     color: white;

@@ -58,7 +58,7 @@ export default class SoundsManager extends React.Component<Props,{}> {
                     <ul>
                         {
                             this.props.sounds.map((sound,i) => (
-                                <Li key={i} className={cx( sound.edited && s.sound.active)}>
+                                <Li key={i} className={cx( sound.edited && s.text.active)}>
                                     <Sound
                                         sound={sound}
                                         onEdit={this.editSound}

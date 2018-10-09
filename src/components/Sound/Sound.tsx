@@ -4,7 +4,7 @@ import { areSame } from 'src/helpers/areSame';
 import { SoundTone } from 'src/objects/SoundTone';
 import { iSound } from 'src/managers/types/sound.type';
 import { iControlVar } from 'src/managers/types/control.type';
-import { Button } from 'src/styles/components';
+import { Button, ButtonSmall } from 'src/styles/components';
 
 interface Props {
     sound: iSound,
@@ -102,15 +102,19 @@ export default class Sound extends React.Component<Props,State> {
         return (
             <div>
                 <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
-                {this.props.onAddCurrentPart && (<Button onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}>P</Button>)} 
                 {
-                    this.props.playable && (
-                        <Button onClick={() => {this.togglePlay()}}>
-                            {this.state.playStatus === 'playing' ? '||' : '>'}
-                        </Button>
+                    this.props.onAddCurrentPart && (
+                        <ButtonSmall onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}> P </ButtonSmall>
                     )
                 } 
-                <Button onClick={() => {this.props.onDelete(this.props.sound)}}>X</Button>
+                {
+                    this.props.playable && (
+                        <ButtonSmall onClick={() => {this.togglePlay()}}>
+                            {this.state.playStatus === 'playing' ? '||' : '>'}
+                        </ButtonSmall>
+                    )
+                } 
+                <ButtonSmall onClick={() => {this.props.onDelete(this.props.sound)}}>X</ButtonSmall>
             </div>
         )
     }   
