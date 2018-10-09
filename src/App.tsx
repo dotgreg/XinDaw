@@ -21,6 +21,9 @@ import { iSoundControls } from 'src/managers/types/control.type';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
+import styled from 'react-emotion';
+import { Panel } from 'src/styles/components';
+import s from 'src/styles';
 
 
 
@@ -121,67 +124,101 @@ class App extends React.Component<{}, State> {
 
   public render() {
     return (
-      <div className="App"> 
+      <StyledApp> 
 
-        {/* CURRENT SOUNDS */}
-        <PartsManager 
-          parts={this.state.parts} 
-          onUpdate={this.updateParts} 
+        <div className="main-wrapper">
+          {/* CURRENT SOUNDS */}
+          <Panel w={25} className="left panel">
+            <PartsManager 
+              parts={this.state.parts} 
+              onUpdate={this.updateParts} 
+              />
+
+            <SoundPartManager
+              part={getActiveItem(this.state.parts).sounds} 
+              // @ts-ignore
+              sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
+              controls={this.state.controls}
+
+              onUpdate={this.updateParts}
+              onRemoveSound={this.removeSoundToCurrentPart}
+              onTriggerSoundEdit={this.triggerSoundEdit}
+
+              eventIn={getItemFromId('SoundPartManager', this.state.events)}
+              />
+          </Panel>
+
+
+
+          <Panel w={50} className="middle panel">
+            {/* CURRENT SOUND WORKSTATION*/}
+            <SoundEditor
+              sound={getEditedItem(this.state.sounds)}
+              onCreate={this.createSound}
+              onUpdate={this.updateSound}
+              />
+
+            <Controls 
+              code={getEditedItem(this.state.sounds).code}
+              soundId={getEditedItem(this.state.sounds).id}
+              onUpdate={this.updateSoundControls}
+
+              eventIn={getItemFromId('controls', this.state.events)}
+              />
+          </Panel>
+          
+          <Panel w={25} className="right panel">
+            {/* ALL SOUNDS LIBRARY*/}
+            <SoundsManager 
+              sounds={this.state.sounds} 
+
+              onUpdate={this.updateSounds}
+              onAddCurrentPart={this.addSoundToCurrentPart}
+
+              eventIn={getItemFromId('soundsManager', this.state.events)}
+              />
+          </Panel>
+
+        </div>  
+
+
+        <div className="floating panel">
+          {/* SETTINGS*/}
+          <SettingsManager 
+            settings={this.state.settings}
+            onUpdate={this.onSettingsUpdate}
           />
+          
+        </div>
 
-        <SoundPartManager
-          part={getActiveItem(this.state.parts).sounds} 
-          // @ts-ignore
-          sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
-          controls={this.state.controls}
+        <div className="hidden panel">
+          <MidiWatcher onUpdate={this.onMidiUpdate}/>
+        </div>
 
-          onUpdate={this.updateParts}
-          onRemoveSound={this.removeSoundToCurrentPart}
-          onTriggerSoundEdit={this.triggerSoundEdit}
-
-          eventIn={getItemFromId('SoundPartManager', this.state.events)}
-          />
-
-
-
-        {/* ALL SOUNDS LIBRARY*/}
-        <SoundsManager 
-          sounds={this.state.sounds} 
-
-          onUpdate={this.updateSounds}
-          onAddCurrentPart={this.addSoundToCurrentPart}
-
-          eventIn={getItemFromId('soundsManager', this.state.events)}
-          />
-
-
-        {/* CURRENT SOUND WORKSTATION*/}
-        <SoundEditor
-          sound={getEditedItem(this.state.sounds)}
-          onCreate={this.createSound}
-          onUpdate={this.updateSound}
-          />
-
-        <Controls 
-          code={getEditedItem(this.state.sounds).code}
-          soundId={getEditedItem(this.state.sounds).id}
-          onUpdate={this.updateSoundControls}
-
-          eventIn={getItemFromId('controls', this.state.events)}
-          />
-
-        {/* SETTINGS*/}
-        <SettingsManager 
-          settings={this.state.settings}
-          onUpdate={this.onSettingsUpdate}
-        />
-        
-        <MidiWatcher onUpdate={this.onMidiUpdate}/>
-
-
-      </div>
+      </StyledApp>
     );
   } 
 }
+
+
+let StyledApp = styled('div')`
+  .main-wrapper {
+    display: flex;
+
+    .panel {
+      flex: 1 1 auto;
+      &.right {
+      
+      }
+      &.middle {
+
+      }
+      &.left {
+
+      }
+    }
+  }
+`
+
 
 export default App;

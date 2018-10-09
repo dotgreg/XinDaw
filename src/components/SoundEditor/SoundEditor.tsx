@@ -81,8 +81,6 @@ export default class SoundEditor extends React.Component<Props,State> {
     render() {
         return (
             <div>
-                <div>sound form</div>
-
                 <input type="text" value={this.state.sound.name} onChange={this.updateName}/>
 
                 <CodeEditor

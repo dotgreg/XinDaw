@@ -7,6 +7,7 @@ import config from 'src/config';
 import { iSound } from 'src/managers/types/sound.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import Sound from 'src/components/Sound/Sound';
+import { BlockTitle, Li } from 'src/styles/components';
 
 
 
@@ -45,27 +46,26 @@ export default class SoundsManager extends React.Component<Props,{}> {
     render() {
         return (
             <div>
-                <div>SoundsManager</div>
+                <BlockTitle>Sounds</BlockTitle>
 
                 {/* CRUD SOUND */}
 
                 <button onClick={this.startNewSoundEdit}> + </button>
-                 
+
                 {/* LIST SOUNDS */}
 
                 <div className="sounds" >
-                    <h3>sounds</h3>
                     <ul>
                         {
                             this.props.sounds.map((sound,i) => (
-                                <li key={i} className={cx( sound.edited && s.sound.active)}>
+                                <Li key={i} className={cx( sound.edited && s.sound.active)}>
                                     <Sound
                                         sound={sound}
                                         onEdit={this.editSound}
                                         onDelete={this.deleteSound}
                                         onAddCurrentPart={this.props.onAddCurrentPart}
                                     />
-                                </li>
+                                </Li>
                             ))
                         }
                         

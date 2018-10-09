@@ -4,6 +4,7 @@ import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from 'src/styles';
 import { iSettingsItem } from 'src/managers/types/settings.type';
+import { BlockTitle } from 'src/styles/components';
 
 
 interface Props {
@@ -67,7 +68,7 @@ export default class SettingsManager extends React.Component<Props,State> {
     render() {
         return (
            <div>
-               <h3 onClick={()=>{this.setState({opened: !this.state.opened})}}>settings</h3>
+               <BlockTitle onClick={()=>{this.setState({opened: !this.state.opened})}}>settings</BlockTitle>
                <div className={cx(s.show(this.state.opened))}>
                    {
                        this.state.settings.map((item, index) => (

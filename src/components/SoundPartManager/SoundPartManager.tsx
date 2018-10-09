@@ -8,6 +8,7 @@ import { iPart } from 'src/managers/types/part.type';
 import { iSoundControls } from 'src/managers/types/control.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import Sound from 'src/components/Sound/Sound';
+import { BlockTitle, Li } from 'src/styles/components';
 
 interface Props {
     part: iPart[]
@@ -46,13 +47,12 @@ export default class SoundPartManager extends React.Component<Props,State> {
     render() {
         return (
             <div className="sounds" >
-                <h3>Part Sounds Manager</h3>
+                <BlockTitle>Current Part</BlockTitle>
                 <div className="sounds" >
-                    <h3> Sounds </h3>
                     <ul>
                         {
                             this.props.sounds.map((sound,i) => (
-                                <li key={i} className={cx( sound.edited && s.sound.active)}>
+                                <Li key={i} className={cx( sound.edited && s.sound.active)}>
                                     <Sound
                                         ref={`sound-${i}`}
                                         sound={sound}   
@@ -61,7 +61,7 @@ export default class SoundPartManager extends React.Component<Props,State> {
                                         onEdit={this.props.onTriggerSoundEdit}
                                         onDelete={this.props.onRemoveSound}
                                     />
-                                </li>
+                                </Li>
                             ))
                         }
                     </ul>

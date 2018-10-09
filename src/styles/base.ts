@@ -20,3 +20,4 @@ export const border = {
     red: css`border:1px ${colors.red} solid`,
 }
 
+export const fontFamily = css`font-family: monospace, arial, sans-serif`
