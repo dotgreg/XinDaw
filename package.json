@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "@types/codemirror": "0.0.59",
     "@types/esprima": "^4.0.2",
     "@types/lodash": "^4.14.116",
+    "@types/reach__router": "^1.0.1",
     "codemirror": "^5.39.2",
     "emotion": "^9.2.6",
     "esprima": "^4.0.0",
