@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Router as ReachRouter } from "@reach/router"
 
 import DawPage from 'src/pages/dawPage';
-import DbEditPage from 'src/pages/dbEditPage';
 import HomePage from 'src/pages/homePage';
+import DbEditPage from 'src/pages/dbEditPage/dbEditPage';
 
 class Router extends React.Component<{}, {}> {
     public render() {
