@@ -12,6 +12,7 @@ class DbInitPage extends React.Component<Props, {}> {
   constructor(props) {
     super(props)
     window.localStorage.setItem('DawPage', defaultDb)
+    window.localStorage.setItem('e', defaultDb)
     setTimeout(() => {
       this.props.history.push('/daw')
     }, 2000)
