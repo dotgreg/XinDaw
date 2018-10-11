@@ -5,7 +5,7 @@ import PartsManager from 'src/components/PartsManager/PartsManager';
 
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
-import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getControlsFromIds, updateArrayItem, getItemFromId} from 'src/helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getItemFromId} from 'src/helpers/arrayHelper';
 import SoundPartManager from 'src/components/SoundPartManager/SoundPartManager';
 
 import { startToneApp } from 'src/managers/tone/startToneApp';

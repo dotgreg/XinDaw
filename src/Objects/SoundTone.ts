@@ -46,11 +46,15 @@ export class SoundTone {
     //
 
     play() {
-        this.type === 'loop' && Tone.Transport.scheduleOnce(t => this.tone.start(0), 1)
+        this.type === 'loop' && Tone.Transport.scheduleOnce(t => {
+            this.tone.mute = false
+            this.tone.start(0)
+        }, 1)
     }
     
     pause() {
-
+        this.type === 'loop' && Tone.Transport.scheduleOnce(t => { this.tone.mute = true }, 1)
+        if(this.type === 'transport-event') this.tone.mute = true
     }
 
     destroy() {

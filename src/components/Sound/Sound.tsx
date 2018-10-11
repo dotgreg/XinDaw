@@ -34,7 +34,7 @@ export default class Sound extends React.Component<Props,State> {
     constructor(props){
         super(props)
         this.state = {
-            playStatus: 'stopped',
+            playStatus: 'paused',
         }
     }
 
@@ -81,10 +81,13 @@ export default class Sound extends React.Component<Props,State> {
     // TONE RELATED CODE
     //
     play = () => {
+        console.log('play');
         this.soundTone.play()
         this.setState({playStatus: 'playing'})
     }
     pause = () => {
+        console.log('pause');
+        
         this.soundTone.pause()
         this.setState({playStatus: 'paused'})
     }
@@ -93,7 +96,7 @@ export default class Sound extends React.Component<Props,State> {
     }
     stop = () => {
         this.soundTone.destroy()
-        this.setState({playStatus: 'stopped'})
+        this.setState({playStatus: 'paused'})
     }
     
 
