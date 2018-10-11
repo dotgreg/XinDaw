@@ -3,8 +3,8 @@ import { Router as ReachRouter } from "@reach/router"
 
 import DawPage from 'src/pages/dawPage';
 import HomePage from 'src/pages/homePage';
-import DbEditPage from 'src/pages/dbEditPage/dbEditPage';
-import InitDefaultDbPage from 'src/pages/initDefaultDbPage';
+import DbEditPage from 'src/pages/db/edit/DbEditPage';
+import DbInitPage from 'src/pages/db/init/DbInitPage';
 
 class Router extends React.Component<{}, {}> {
     public render() {
@@ -14,7 +14,7 @@ class Router extends React.Component<{}, {}> {
                 <HomePage path="/" />
                 <DawPage path="/daw" />
                 <DbEditPage path="/db" />
-                <InitDefaultDbPage path="/init" />
+                <DbInitPage path="/init" />
             </ReachRouter>
         </div>
         );

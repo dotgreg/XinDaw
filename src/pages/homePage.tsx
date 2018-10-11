@@ -13,7 +13,7 @@ class HomePage extends React.Component<Props, {}> {
             <ul>
                 <li><Link to="daw">Daw</Link></li>
                 <li><Link to="db">Edit Db</Link></li>
-                <li><Link to="init">Irrigate Db</Link></li>
+                <li><Link to="init">Init Db with examples</Link></li>
             </ul>
         </div>
     );
