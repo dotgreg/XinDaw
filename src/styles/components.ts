@@ -10,6 +10,20 @@ export const Panel = styled('div')`
   padding: 1%
 `;
 
+export const Settings = styled('div')`
+  display: ${(props:any) => props.open ? 'block' : 'none'};  
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.9);
+  top: 0px;
+  z-index: 10;
+  color: white;
+`;
+export const SettingsPanel = styled('div')`
+  width: 100%
+`;
+
 export const BlockTitle = styled('h3')`
     ${fonts.base};
     font-size: ${(props:any) => props.s ? props.s : 16}px;
@@ -27,7 +41,7 @@ export const Li = styled('li')`
 export const Input =  styled('input')`
   border: none;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(226, 226, 226, 1);
 `;
 
 export const Button = styled('button')`

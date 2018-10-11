@@ -11,7 +11,6 @@ import SoundPartManager from 'src/components/SoundPartManager/SoundPartManager';
 import { startToneApp } from 'src/managers/tone/startToneApp';
 import Controls from 'src/components/Controls/Controls';
 import MidiWatcher, { iMidiEvent } from 'src/components/MidiWatcher/MidiWatcher';
-import SettingsManager from 'src/components/SettingsManager/SettingsManager';
 
 import {filter} from 'lodash'
 import { iSound, tSound } from 'src/managers/types/sound.type';
@@ -22,7 +21,8 @@ import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 import styled from 'react-emotion';
-import { Panel } from 'src/styles/components';
+import { Panel, Settings, SettingsPanel, BlockTitle } from 'src/styles/components';
+import KeysBindingManager from 'src/components/KeysBindingManager/KeysBindingManager';
 
 
 
@@ -31,7 +31,8 @@ interface State {
   parts: iPart[],
   controls: iSoundControls[],
   settings: iSettingsItem[],
-  events: iComponentEvent[]
+  events: iComponentEvent[],
+  settingsOpened: boolean
 }
 
 interface Props {
@@ -48,7 +49,8 @@ class DawPage extends React.Component<Props, State> {
       parts: [],
       controls: [],
       settings: [],
-      events: []
+      events: [],
+      settingsOpened: false
     }
 
     startToneApp()
@@ -174,6 +176,7 @@ class DawPage extends React.Component<Props, State> {
           </Panel>
           
           <Panel w={25} className="right panel">
+          
             {/* ALL SOUNDS LIBRARY*/}
             <SoundsManager 
               sounds={this.state.sounds} 
@@ -183,19 +186,24 @@ class DawPage extends React.Component<Props, State> {
 
               eventIn={getItemFromId('soundsManager', this.state.events)}
               />
+              
+            <BlockTitle onClick={()=>{this.setState({settingsOpened: true})}}>Settings</BlockTitle> 
           </Panel>
 
         </div>  
 
 
-        <div className="floating panel">
-          {/* SETTINGS*/}
-          <SettingsManager 
-            settings={this.state.settings}
-            onUpdate={this.onSettingsUpdate}
-          />
-          
-        </div>
+        
+        <Settings open={this.state.settingsOpened}>
+          <div onClick={()=>{this.setState({settingsOpened: false})}}>X</div>
+          <SettingsPanel>
+            {/* SETTINGS*/}
+            <KeysBindingManager 
+              settings={this.state.settings}
+              onUpdate={this.onSettingsUpdate}
+            />
+          </SettingsPanel>
+        </Settings>
 
         <div className="hidden panel">
           <MidiWatcher onUpdate={this.onMidiUpdate}/>

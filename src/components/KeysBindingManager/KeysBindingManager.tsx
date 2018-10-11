@@ -5,6 +5,7 @@ import { cx } from 'emotion';
 import s from 'src/styles';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { BlockTitle, Input } from 'src/styles/components';
+import styled from 'react-emotion';
 
 
 interface Props {
@@ -17,7 +18,7 @@ interface State {
     opened: boolean
 }
 
-export default class SettingsManager extends React.Component<Props,State> {
+export default class KeysBindingManager extends React.Component<Props,State> {
 
     propsListener: ComponentPropsListener
 
@@ -67,19 +68,36 @@ export default class SettingsManager extends React.Component<Props,State> {
 
     render() {
         return (
-           <div>
-               <BlockTitle onClick={()=>{this.setState({opened: !this.state.opened})}}>settings</BlockTitle>
-               <div className={cx(s.states.show(this.state.opened))}>
+           <Styled>
+               <BlockTitle onClick={()=>{this.setState({opened: !this.state.opened})}}>Key Bindings</BlockTitle>
+               <div className={cx('config-panel',s.states.show(this.state.opened))}>
                    {
                        this.state.settings.map((item, index) => (
-                           <div key={index}>
+                           <div className="config-option" key={index}>
                                 <label>{item.eventName} - {item.type}</label> 
                                 <Input type="number" value={item.value} onChange={e =>{this.changeItem(e, item)}} />
                            </div>
                        ))
                    }
                </div>
-           </div>
+           </Styled>
         )
     }   
 }
+
+const Styled = styled('div')`
+    .config-panel {
+        height: 300px;
+        overflow-y: scroll;
+        padding: 20px;
+        background: white;
+        .config-option {
+            margin-bottom: 10px;
+            margin-left: 40px;
+            label {
+                width: 300px;
+                display: inline-block;
+            }
+        }
+    }
+`
