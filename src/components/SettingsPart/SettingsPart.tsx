@@ -16,14 +16,14 @@ class SettingsPart extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
-        open: true
+        open: false
     }
   }
 
   public render() {
     return (
         <Styled h={this.props.height}>
-            <BlockTitle onClick={()=>{this.setState({open: !this.state.open})}}> {this.props.name} </BlockTitle>
+            <BlockTitle onClick={()=>{this.setState({open: !this.state.open})}}> {this.props.name} {this.state.open ? '▼' : '►'}</BlockTitle>
             <div className={cx('config-panel',s.states.show(this.state.open))}>
                 {this.props.children}
             </div>
