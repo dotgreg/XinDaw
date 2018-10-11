@@ -4,13 +4,13 @@ const config = {
         sound: false,
         codeEditor: false,
         codeEval: false,
-        codeAnalyze: true,
+        codeAnalyze: false,
         partsCrud: false,
         soundTone: false,
-        controls: true,
-        midiWatcher: true,
+        controls: false,
+        midiWatcher: false,
         ComponentPropsListener: false,
-        soundsManager: true
+        soundsManager: false
     },
 }
 

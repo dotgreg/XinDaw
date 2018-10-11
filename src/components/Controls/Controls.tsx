@@ -33,17 +33,21 @@ export default class Controls extends React.Component<Props,State> {
         this.propsListener.add('code', this.onCodeChange)
     }
 
-    componentDidUpdate = () => { this.propsListener.listen(this.props) }
+    componentDidUpdate = () => { 
+        this.propsListener.listen(this.props) 
+    }
 
-    onEventInChange = () => {
-        let newVars = this.state.controlVars
-        if (newVars && newVars[0]) newVars[0].value = this.props.eventIn.value
-        this.setState({controlVars: newVars})
-    }
-    onCodeChange = () => {
+    updateControls = () => {
+        let controls = analyzeCode(this.props.code).controls
         config.debug.controls && console.log(`[CONTROLS] updated with sound ${this.props.soundId}`)
-        this.setState({controlVars: analyzeCode(this.props.code).controls})
+
+        if (controls && controls[0]) controls[0].value = this.props.eventIn.value
+
+        this.setState({controlVars: controls})
     }
+
+    onEventInChange = this.updateControls
+    onCodeChange = this.updateControls
 
 
     changeKnobValue = (id:string, value:number) => {

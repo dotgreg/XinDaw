@@ -86,7 +86,7 @@ export default class SoundEditor extends React.Component<Props,State> {
                 <div className="title-input">
                     <label>
                         title:
-                        <Input type="text" value={this.state.sound.name} onChange={this.updateName}/>
+                        <Input type="text" placeholder="New Sound Name" value={this.state.sound.name} onChange={this.updateName}/>
                     </label>
                 </div>
 
@@ -102,6 +102,7 @@ export default class SoundEditor extends React.Component<Props,State> {
 
 const Styled = styled('div')`
     .title-input {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
+        margin-top: 25px;
     }
 `

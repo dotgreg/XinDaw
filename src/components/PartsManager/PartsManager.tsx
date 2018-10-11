@@ -50,7 +50,7 @@ export default class PartsManager extends React.Component<Props,State> {
             <div className="sounds" >
                 <BlockTitle>Parts</BlockTitle>
                 <div>
-                    <Input type="text" value={this.state.formName} onChange={this.updateFormName} />
+                    <Input type="text" placeholder="New Part Name" value={this.state.formName} onChange={this.updateFormName} />
                     <Button onClick={this.createPart}>+</Button>
                 </div>
 
