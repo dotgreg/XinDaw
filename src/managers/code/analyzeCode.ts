@@ -50,17 +50,11 @@ export const analyzeCode = (code:string) => {
                             step: getEsprimaElementValue(item3.elements[5]) || 1,
                         }
                         analysis.controls.push(res)
-                        
                     })
-                    
                 }
             })
-
-
         }
-        
     })
-
     config.debug.codeAnalyze && console.log('[CODE ANALYZE] results ', {analysis, code:{code}})
     return analysis
 

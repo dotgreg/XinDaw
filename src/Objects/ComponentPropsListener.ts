@@ -50,7 +50,6 @@ export class ComponentPropsListener {
     */
     listen(props:any) {
         each(props, (prop, propName) => {
-            propName === 'code' && console.log(propName, prop, this.hist[propName])
             if (!areSame(this.hist[propName], prop)){
                 config.debug.ComponentPropsListener && console.log(`[ComponentPropsListener] ${propName} changed, trigger callback`)
                 

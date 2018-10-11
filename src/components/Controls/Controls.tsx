@@ -15,7 +15,8 @@ interface Props {
 }
 
 interface State {
-    controlVars: iControlVar[]
+    controlVars: iControlVar[],
+    initSoundControls: boolean
 }
 
 export default class Controls extends React.Component<Props,State> {
@@ -25,29 +26,34 @@ export default class Controls extends React.Component<Props,State> {
     constructor(props){
         super(props)
         this.state = {
-            controlVars:[]
+            controlVars:[],
+            initSoundControls: true
         }
 
         this.propsListener = new ComponentPropsListener()
-        this.propsListener.add('eventIn', this.onEventInChange)
-        this.propsListener.add('code', this.onCodeChange)
+        this.propsListener.add('eventIn', this.onEventInUpdate )
+        this.propsListener.add('code', this.onCodeUpdate)
+        this.propsListener.add('soundId', ()=>{this.setState({initSoundControls: true})})
     }
 
-    componentDidUpdate = () => { 
+    componentDidUpdate = () => {
         this.propsListener.listen(this.props) 
     }
 
-    updateControls = () => {
+    onCodeUpdate = () => {
         let controls = analyzeCode(this.props.code).controls
         config.debug.controls && console.log(`[CONTROLS] updated with sound ${this.props.soundId}`)
-
-        if (controls && controls[0]) controls[0].value = this.props.eventIn.value
-
         this.setState({controlVars: controls})
     }
-
-    onEventInChange = this.updateControls
-    onCodeChange = this.updateControls
+    
+    onEventInUpdate = () => {
+        // only updating after initSoundsControls is false
+        if (this.state.initSoundControls) return this.setState({initSoundControls: false})
+        let controls = this.state.controlVars
+        if (controls && controls[0]) controls[0].value = this.props.eventIn.value
+        console.log(2, controls);
+        this.setState({controlVars: controls})
+    }
 
 
     changeKnobValue = (id:string, value:number) => {
