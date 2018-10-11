@@ -49,8 +49,11 @@ export default class SoundsManager extends React.Component<Props,{}> {
                 <BlockTitle>Sounds</BlockTitle>
 
                 {/* CRUD SOUND */}
-
-                <Button onClick={this.startNewSoundEdit}> + </Button>
+                
+                <label>
+                    Add new Sound 
+                    <Button onClick={this.startNewSoundEdit}> + </Button>
+                </label>
 
                 {/* LIST SOUNDS */}
 

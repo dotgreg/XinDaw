@@ -5,6 +5,8 @@ import HomePage from 'src/pages/homePage';
 import DbEditPage from 'src/pages/db/edit/DbEditPage';
 import DbInitPage from 'src/pages/db/init/DbInitPage';
 import { HashRouter, Route } from 'react-router-dom';
+import { injectGlobal } from 'emotion';
+import s from 'src/styles';
 
 class AppRouter extends React.Component<{}, {}> {
     public render() {
@@ -23,7 +25,9 @@ class AppRouter extends React.Component<{}, {}> {
     } 
 }
 
-  
-  
-  export default AppRouter;
-  
+injectGlobal`
+    ${s.global}
+`
+
+
+export default AppRouter;

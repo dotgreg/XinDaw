@@ -165,6 +165,9 @@ class DawPage extends React.Component<Props, State> {
 
           <Panel w={50} className="middle panel">
             {/* CURRENT SOUND WORKSTATION*/}
+
+            <BlockTitle>Current Sound </BlockTitle>
+
             <SoundEditor
               sound={getEditedItem(this.state.sounds)}
               onCreate={this.createSound}

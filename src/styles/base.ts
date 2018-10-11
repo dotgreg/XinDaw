@@ -1,6 +1,5 @@
 import { css } from 'emotion'
 
-
 /**
 * states
 */
@@ -19,7 +18,7 @@ export const colors = {
 * fonts
 */
 export const fonts = {
-    base: css`font-family: monospace, arial, sans-serif`
+    base: css`font-family: monospace, arial, sans-serif;`
 }
 
 /**
@@ -31,3 +30,13 @@ export const text = {
         text-decoration: underline;
     `
 }
+
+/**
+* global
+*/
+
+export const global = css`
+    * {
+        ${fonts.base}
+    }
+`

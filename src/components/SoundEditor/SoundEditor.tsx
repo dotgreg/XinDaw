@@ -3,6 +3,7 @@ import {random} from 'lodash'
 import { iSound } from 'src/managers/types/sound.type';
 import CodeEditor from 'src/components/CodeEditor/CodeEditor';
 import { Input } from 'src/styles/components';
+import styled from 'react-emotion';
 
 interface Props {
     sound:iSound | undefined
@@ -81,15 +82,26 @@ export default class SoundEditor extends React.Component<Props,State> {
 
     render() {
         return (
-            <div>
-                <Input type="text" value={this.state.sound.name} onChange={this.updateName}/>
+            <Styled>
+                <div className="title-input">
+                    <label>
+                        title:
+                        <Input type="text" value={this.state.sound.name} onChange={this.updateName}/>
+                    </label>
+                </div>
 
                 <CodeEditor
                     onSave={this.saveForm}
                     code={this.state.sound.code}
                 />
 
-            </div>
+            </Styled>
         )
     }   
 }
+
+const Styled = styled('div')`
+    .title-input {
+        margin-bottom: 20px;
+    }
+`
