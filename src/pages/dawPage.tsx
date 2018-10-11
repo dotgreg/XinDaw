@@ -6,7 +6,6 @@ import PartsManager from 'src/components/PartsManager/PartsManager';
 import LocalStorageMixin from 'react-localstorage'
 import reactMixin  from 'react-mixin'
 import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getItemFromId} from 'src/helpers/arrayHelper';
-import SoundPartManager from 'src/components/SoundPartManager/SoundPartManager';
 
 import { startToneApp } from 'src/managers/tone/startToneApp';
 import Controls from 'src/components/Controls/Controls';
@@ -25,6 +24,7 @@ import { Panel, Settings, BlockTitle } from 'src/styles/components';
 import KeysBindingManager from 'src/components/KeysBindingManager/KeysBindingManager';
 import Checkbox from 'src/components/Checkbox/Checkbox';
 import SettingsPart from 'src/components/SettingsPart/SettingsPart';
+import PartSoundsManager from 'src/components/PartSoundsManager/PartSoundsManager';
 
 
 
@@ -146,7 +146,8 @@ class DawPage extends React.Component<Props, State> {
               onUpdate={this.updateParts} 
               />
 
-            <SoundPartManager
+        
+            <PartSoundsManager
               part={getActiveItem(this.state.parts).sounds} 
               // @ts-ignore
               sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
@@ -156,7 +157,7 @@ class DawPage extends React.Component<Props, State> {
               onRemoveSound={this.removeSoundToCurrentPart}
               onTriggerSoundEdit={this.triggerSoundEdit}
 
-              eventIn={getItemFromId('SoundPartManager', this.state.events)}
+              eventIn={getItemFromId('PartSoundsManager', this.state.events)}
               />
           </Panel>
 

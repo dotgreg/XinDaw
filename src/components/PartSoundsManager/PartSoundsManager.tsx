@@ -24,7 +24,7 @@ interface State {
 
 }
 
-export default class SoundPartManager extends React.Component<Props,State> {
+export default class PartSoundsManager extends React.Component<Props,State> {
 
     propsListener: ComponentPropsListener
     constructor(props) {
