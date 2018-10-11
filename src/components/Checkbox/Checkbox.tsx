@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link, navigate } from '@reach/router';
 
 interface Props {
   label?: string
