@@ -23,16 +23,18 @@ import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 import styled from 'react-emotion';
 import { Panel, Settings, SettingsPanel, BlockTitle } from 'src/styles/components';
 import KeysBindingManager from 'src/components/KeysBindingManager/KeysBindingManager';
+import Checkbox from 'src/components/Checkbox/Checkbox';
 
 
 
 interface State {
-  sounds: iSound[],
-  parts: iPart[],
-  controls: iSoundControls[],
-  settings: iSettingsItem[],
-  events: iComponentEvent[],
-  settingsOpened: boolean
+  sounds: iSound[]
+  parts: iPart[]
+  controls: iSoundControls[]
+  settings: iSettingsItem[]
+  events: iComponentEvent[]
+  settingsOpen: boolean
+  midiDebugOpen: boolean
 }
 
 interface Props {
@@ -50,7 +52,8 @@ class DawPage extends React.Component<Props, State> {
       controls: [],
       settings: [],
       events: [],
-      settingsOpened: false
+      settingsOpen: false,
+      midiDebugOpen: false,
     }
 
     startToneApp()
@@ -176,7 +179,7 @@ class DawPage extends React.Component<Props, State> {
           </Panel>
           
           <Panel w={25} className="right panel">
-          
+
             {/* ALL SOUNDS LIBRARY*/}
             <SoundsManager 
               sounds={this.state.sounds} 
@@ -187,15 +190,15 @@ class DawPage extends React.Component<Props, State> {
               eventIn={getItemFromId('soundsManager', this.state.events)}
               />
               
-            <BlockTitle onClick={()=>{this.setState({settingsOpened: true})}}>Settings</BlockTitle> 
+            <BlockTitle onClick={()=>{this.setState({settingsOpen: true})}}>Settings</BlockTitle> 
           </Panel>
 
         </div>  
 
 
         
-        <Settings open={this.state.settingsOpened}>
-          <div onClick={()=>{this.setState({settingsOpened: false})}}>X</div>
+        <Settings open={this.state.settingsOpen}>
+          <div onClick={()=>{this.setState({settingsOpen: false})}}>X</div>
           <SettingsPanel>
             {/* SETTINGS*/}
             <KeysBindingManager 
@@ -203,11 +206,13 @@ class DawPage extends React.Component<Props, State> {
               onUpdate={this.onSettingsUpdate}
             />
           </SettingsPanel>
+
+          <Checkbox label="midi watcher panel enabled" onChange={(res)=>{this.setState({midiDebugOpen: res})}} />
+
         </Settings>
 
-        <div className="hidden panel">
-          <MidiWatcher onUpdate={this.onMidiUpdate}/>
-        </div>
+
+        <MidiWatcher onUpdate={this.onMidiUpdate} debugPanel={this.state.midiDebugOpen}/>
 
       </StyledApp>
     );

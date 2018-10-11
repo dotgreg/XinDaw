@@ -17,6 +17,8 @@ export const Settings = styled('div')`
   height: 100vh;
   background: rgba(0,0,0,0.9);
   top: 0px;
+  left: 0px;
+  padding: 20px;
   z-index: 10;
   color: white;
 `;

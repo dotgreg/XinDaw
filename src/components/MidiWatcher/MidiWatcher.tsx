@@ -16,6 +16,7 @@ export interface iMidiEvent {
 
 interface Props {
     onUpdate: Function
+    debugPanel: boolean
 }
 
 interface State {
@@ -104,7 +105,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
     render() {
         return (
             <div>
-                <div className={cx(s.debug.fixedPopup(100))}>
+                <div className={cx(s.states.show(this.props.debugPanel) ,s.debug.fixedPopup(100))}>
                     <div>
                         <BlockTitle s={12}>midi simulator</BlockTitle>
                         <Input type="number" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />

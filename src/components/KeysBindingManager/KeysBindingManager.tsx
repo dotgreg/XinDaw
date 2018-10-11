@@ -87,10 +87,12 @@ export default class KeysBindingManager extends React.Component<Props,State> {
 
 const Styled = styled('div')`
     .config-panel {
-        height: 300px;
+        height: 50vh;
+        width: 50vw;
         overflow-y: scroll;
         padding: 20px;
-        background: white;
+        margin: 40px;
+        border: 1px solid rgba(255,255,255,0.3);
         .config-option {
             margin-bottom: 10px;
             margin-left: 40px;
