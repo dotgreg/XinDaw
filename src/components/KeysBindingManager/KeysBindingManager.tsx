@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { updateArrayItem, mergeArraysByProp } from 'src/helpers/arrayHelper';
 import { ComponentPropsListener } from 'src/objects/ComponentPropsListener';
-import { cx } from 'emotion';
-import s from 'src/styles';
 import { iSettingsItem } from 'src/managers/types/settings.type';
-import { BlockTitle, Input } from 'src/styles/components';
+import { Input } from 'src/styles/components';
 import styled from 'react-emotion';
 
 
@@ -15,7 +13,6 @@ interface Props {
 
 interface State {
     settings: iSettingsItem[],
-    opened: boolean
 }
 
 export default class KeysBindingManager extends React.Component<Props,State> {
@@ -47,7 +44,6 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'event', value:64, eventName: 'SoundPartManager.sound.delete'},
                 {type: 'event', value:65, eventName: 'SoundPartManager.sound.play'},
             ],
-            opened: false
         }
 
         this.propsListener = new ComponentPropsListener({
@@ -69,37 +65,18 @@ export default class KeysBindingManager extends React.Component<Props,State> {
     render() {
         return (
            <Styled>
-               <BlockTitle onClick={()=>{this.setState({opened: !this.state.opened})}}>Key Bindings</BlockTitle>
-               <div className={cx('config-panel',s.states.show(this.state.opened))}>
-                   {
-                       this.state.settings.map((item, index) => (
-                           <div className="config-option" key={index}>
-                                <label>{item.eventName} - {item.type}</label> 
-                                <Input type="number" value={item.value} onChange={e =>{this.changeItem(e, item)}} />
-                           </div>
-                       ))
-                   }
-               </div>
+               {
+                    this.state.settings.map((item, index) => (
+                        <div className="config-option" key={index}>
+                            <label>{item.eventName} - {item.type}</label> 
+                            <Input type="number" value={item.value} onChange={e =>{this.changeItem(e, item)}} />
+                        </div>
+                    ))
+                }
            </Styled>
         )
     }   
 }
 
 const Styled = styled('div')`
-    .config-panel {
-        height: 50vh;
-        width: 50vw;
-        overflow-y: scroll;
-        padding: 20px;
-        margin: 40px;
-        border: 1px solid rgba(255,255,255,0.3);
-        .config-option {
-            margin-bottom: 10px;
-            margin-left: 40px;
-            label {
-                width: 300px;
-                display: inline-block;
-            }
-        }
-    }
 `

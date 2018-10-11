@@ -21,9 +21,10 @@ import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 import styled from 'react-emotion';
-import { Panel, Settings, SettingsPanel, BlockTitle } from 'src/styles/components';
+import { Panel, Settings, BlockTitle } from 'src/styles/components';
 import KeysBindingManager from 'src/components/KeysBindingManager/KeysBindingManager';
 import Checkbox from 'src/components/Checkbox/Checkbox';
+import SettingsPart from 'src/components/SettingsPart/SettingsPart';
 
 
 
@@ -197,17 +198,22 @@ class DawPage extends React.Component<Props, State> {
 
 
         
+        {/* SETTINGS*/}
+
         <Settings open={this.state.settingsOpen}>
           <div onClick={()=>{this.setState({settingsOpen: false})}}>X</div>
-          <SettingsPanel>
-            {/* SETTINGS*/}
+          
+          <SettingsPart name="interface" height={10}>
+            <Checkbox label="midi watcher panel enabled" onChange={(res)=>{this.setState({midiDebugOpen: res})}} />
+          </SettingsPart>
+
+          <SettingsPart name="interface" height={50}>
             <KeysBindingManager 
               settings={this.state.settings}
               onUpdate={this.onSettingsUpdate}
-            />
-          </SettingsPanel>
+              />
+          </SettingsPart>
 
-          <Checkbox label="midi watcher panel enabled" onChange={(res)=>{this.setState({midiDebugOpen: res})}} />
 
         </Settings>
 
@@ -226,15 +232,6 @@ let StyledApp = styled('div')`
 
     .panel {
       flex: 1 1 auto;
-      &.right {
-      
-      }
-      &.middle {
-
-      }
-      &.left {
-
-      }
     }
   }
 `

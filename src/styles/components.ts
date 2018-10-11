@@ -22,9 +22,6 @@ export const Settings = styled('div')`
   z-index: 10;
   color: white;
 `;
-export const SettingsPanel = styled('div')`
-  width: 100%
-`;
 
 export const BlockTitle = styled('h3')`
     ${fonts.base};
