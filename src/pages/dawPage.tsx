@@ -53,8 +53,11 @@ class DawPage extends React.Component<Props, State> {
 
     startToneApp()
 
+    // if we have no sounds, import some defaults
+    // if (this.state.sounds.length === 0)
+
     // @ts-ignore
-    this.createSound({test:'nonfdsofdas'})
+    // this.createSound({test:'nonfdsofdas'})
   }
 
   updateSounds = (sounds:iSound[]) => {
