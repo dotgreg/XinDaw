@@ -92,6 +92,7 @@ export default class Sound extends React.Component<Props,State> {
         console.log('play');
         this.soundTone.play()
         this.setState({playStatus: 'playing'})
+        if (this.soundTone.type = 'event') setTimeout(() => {this.setState({playStatus: 'paused'})}, 500)
     }
     pause = () => {
         console.log('pause');

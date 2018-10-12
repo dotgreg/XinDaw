@@ -42,6 +42,7 @@ export class SoundTone {
         this.tone = codeLiveRaw.body.c, 
         this.elementsToDispose = codeLiveRaw.body.e, 
         this.options = codeLiveRaw.body.o
+
     }
 
     //
@@ -53,17 +54,17 @@ export class SoundTone {
             this.tone.mute = false
             this.tone.start(0)
         }, 1)
-        this.type === 'event' && this.tone.start(0)
+        this.type === 'event' && this.tone()
     }
     
     pause() {
         this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { this.tone.mute = true }, 1)
-        if(this.type === 'event') this.tone.mute = true
+        // if(this.type === 'event') this.tone.mute = true
     }
 
     destroy() {
         this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { this.tone.stop().dispose() }, 1)
-        this.type === 'event' && Tone.Transport.clear(this.tone)
+        // this.type === 'event' && Tone.Transport.clear(this.tone)
     }
 
     updateControls(controlVars:iControlVar[]) {

@@ -20,7 +20,7 @@ import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 import styled, { css } from 'react-emotion';
-import { Panel, Settings, BlockTitle } from 'src/styles/components';
+import { Panel, Settings, BlockTitle, Input, Li } from 'src/styles/components';
 import KeysBindingManager from 'src/components/KeysBindingManager/KeysBindingManager';
 import Checkbox from 'src/components/Checkbox/Checkbox';
 import SettingsPart from 'src/components/SettingsPart/SettingsPart';
@@ -40,6 +40,7 @@ interface State {
 
 interface Props {
   path?: string
+  history?: any
 }
 
 @reactMixin.decorate(LocalStorageMixin)
@@ -225,6 +226,15 @@ class DawPage extends React.Component<Props, State> {
               settings={this.state.settings}
               onUpdate={this.onSettingsUpdate}
               />
+          </SettingsPart>
+          
+          <SettingsPart name="Backup & Restore" h={10}>
+            {/* <textarea className={css`width: 100%; height: 300px;`}>{JSON.stringify(this.state)}</textarea> */}
+            <ul>
+              <Li> <button onClick={()=>{prompt("Exported DB", JSON.stringify(this.state));}}>export data to console</button> </Li>
+              <Li> <button onClick={()=>{this.props.history.push('/db')}}>modify db</button> </Li>
+            </ul>
+            
           </SettingsPart>
 
         </Settings>

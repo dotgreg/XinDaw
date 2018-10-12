@@ -25,7 +25,11 @@ export const analyzeCode = (code:string) => {
 
         // TYPE
         if (['c', 't', 'tone'].includes(varInfo.id.name)) {
-            let toneType = varInfo.init.callee.property.name.toLowerCase()
+            let toneType = 'unknown'
+            
+            if(has(varInfo, 'init.callee.property.name')) toneType = varInfo.init.callee.property.name.toLowerCase()
+            else if(varInfo.type = "FunctionExpression") toneType = 'event'
+
             if (['pattern', 'event'].includes(toneType)) analysis.toneType = toneType
         } 
 
