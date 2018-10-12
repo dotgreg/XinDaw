@@ -3,6 +3,7 @@ import * as React from 'react';
 interface Props {
   label?: string
   onChange?: Function
+  initVal?: boolean
 }
 
 class Checkbox extends React.Component<Props, {}> {
@@ -15,7 +16,11 @@ class Checkbox extends React.Component<Props, {}> {
     return (
         <div>
             <label>
-                <input type="checkbox" onChange={(e)=>{this.props.onChange && this.props.onChange(e.target.checked)}}/>
+                <input 
+                  type="checkbox" 
+                  onChange={(e)=>{this.props.onChange && this.props.onChange(e.target.checked)}}
+                  checked={this.props.initVal}
+                />
                 {this.props.label}
             </label>
         </div>

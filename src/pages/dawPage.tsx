@@ -208,7 +208,7 @@ class DawPage extends React.Component<Props, State> {
           <div onClick={()=>{this.setState({settingsOpen: false})}}>X</div>
           
           <SettingsPart name="Interface" height={10}>
-            <Checkbox label="midi watcher panel enabled" onChange={(res)=>{this.setState({midiDebugOpen: res})}} />
+            <Checkbox label="midi watcher panel enabled" initVal={this.state.midiDebugOpen} onChange={(res)=>{this.setState({midiDebugOpen: res})}} />
           </SettingsPart>
 
           <SettingsPart name="Key Bindings" height={50}>
