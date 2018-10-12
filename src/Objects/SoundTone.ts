@@ -4,6 +4,7 @@ import config from "../config";
 import Tone from 'tone'
 import {each} from 'lodash'
 import { iControlVar } from "../managers/types/control.type";
+import { analyzeCode } from "src/managers/code/analyzeCode";
 
 interface optionsSoundTone {
     vars: iControlVar[] 
@@ -81,8 +82,6 @@ export class SoundTone {
     // 
 
     getToneType(tone:any) {
-        if (typeof tone === 'number') return 'transport-event'
-        else if (tone && tone.interval) return 'loop'
-        return 'unknown'
+       return analyzeCode(this.code).toneType
     }
 }

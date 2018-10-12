@@ -7,7 +7,8 @@ import { iControlVar } from 'src/managers/types/control.type';
 export const analyzeCode = (code:string) => {
     
     let analysis = {
-        controls: <iControlVar[]>[]
+        controls: <iControlVar[]>[],
+        toneType: <string>'unknown'
     }
     
     let esprimaResults
@@ -18,11 +19,15 @@ export const analyzeCode = (code:string) => {
         return analysis
     }
 
-
     each(esprimaResults.body, item => {
         if (!has(item, 'declarations.0')) return
         let varInfo = item.declarations[0]
 
+        // TYPE
+        if (['c', 't', 'tone'].includes(varInfo.id.name)) {
+            let toneType = varInfo.init.callee.property.name.toLowerCase()
+            if (['pattern', 'event'].includes(toneType)) analysis.toneType = toneType
+        } 
 
         // OPTIONS 
         if (varInfo.id.name === 'o' || varInfo.id.name === 'options') {

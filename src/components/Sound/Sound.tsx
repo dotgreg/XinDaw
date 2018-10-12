@@ -19,7 +19,8 @@ interface Props {
 
 interface State {
     playStatus: string
-    error: any
+    error: string|null
+    toneType: string|null
 }
 
 export default class Sound extends React.Component<Props,State> {
@@ -37,7 +38,8 @@ export default class Sound extends React.Component<Props,State> {
         super(props)
         this.state = {
             playStatus: 'paused',
-            error: undefined
+            error: null,
+            toneType: null
         }
     }
 
@@ -46,7 +48,7 @@ export default class Sound extends React.Component<Props,State> {
         this.hist.sound = Object.assign({}, this.props.sound)
 
         this.soundTone = new SoundTone(this.props.sound.code)
-        this.setState({error: this.soundTone.error})
+        this.setState({error: this.soundTone.error, toneType: this.soundTone.type})
     }
 
     componentWillUnmount () {
@@ -74,7 +76,7 @@ export default class Sound extends React.Component<Props,State> {
     
                 this.soundTone.destroy()
                 this.soundTone = new SoundTone(this.props.sound.code)
-                this.setState({error: this.soundTone.error})
+                this.setState({error: this.soundTone.error, toneType: this.soundTone.type})
             } 
     
             this.hist.sound = Object.assign({}, this.props.sound)
@@ -109,7 +111,10 @@ export default class Sound extends React.Component<Props,State> {
         return (
             <Styled >
                 <div className={`sound-wrapper ${this.state.error ? 'has-error':'no-error'}`}>
-                    <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
+                    <span onClick={() => {this.props.onEdit(this.props.sound)}}> 
+                        [{this.state.toneType}]
+                        {this.props.sound.name} 
+                    </span>
                     {
                         this.props.onAddCurrentPart && (
                             <ButtonSmall onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}> P </ButtonSmall>
