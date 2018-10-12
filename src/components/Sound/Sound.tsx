@@ -6,7 +6,8 @@ import { iSound } from 'src/managers/types/sound.type';
 import { iControlVar } from 'src/managers/types/control.type';
 import { Button, ButtonSmall } from 'src/styles/components';
 import s from 'src/styles';
-import styled, { cx } from 'react-emotion';
+import styled, { cx, css } from 'react-emotion';
+import { toneTypeSign } from 'src/helpers/toneTypeSign';
 
 interface Props {
     sound: iSound,
@@ -48,7 +49,7 @@ export default class Sound extends React.Component<Props,State> {
         this.hist.sound = Object.assign({}, this.props.sound)
 
         this.soundTone = new SoundTone(this.props.sound.code)
-        this.setState({error: this.soundTone.error, toneType: this.soundTone.type})
+        this.setState({error: this.soundTone.error, toneType: toneTypeSign(this.soundTone.type)})
     }
 
     componentWillUnmount () {
@@ -76,7 +77,7 @@ export default class Sound extends React.Component<Props,State> {
     
                 this.soundTone.destroy()
                 this.soundTone = new SoundTone(this.props.sound.code)
-                this.setState({error: this.soundTone.error, toneType: this.soundTone.type})
+                this.setState({error: this.soundTone.error, toneType: toneTypeSign(this.soundTone.type)})
             } 
     
             this.hist.sound = Object.assign({}, this.props.sound)
@@ -112,7 +113,7 @@ export default class Sound extends React.Component<Props,State> {
             <Styled >
                 <div className={`sound-wrapper ${this.state.error ? 'has-error':'no-error'}`}>
                     <span onClick={() => {this.props.onEdit(this.props.sound)}}> 
-                        [{this.state.toneType}]
+                        <span className={css`font-weight: bold;font-size: 16px;`}> {this.state.toneType} </span> 
                         {this.props.sound.name} 
                     </span>
                     {
