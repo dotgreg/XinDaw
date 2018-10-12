@@ -112,15 +112,18 @@ export default class Sound extends React.Component<Props,State> {
         return (
             <Styled >
                 <div className={`sound-wrapper ${this.state.error ? 'has-error':'no-error'}`}>
-                    <span onClick={() => {this.props.onEdit(this.props.sound)}}> 
+
+                    <div className="label" onClick={() => {this.props.onEdit(this.props.sound)}}> 
                         <span className={css`font-weight: bold;font-size: 16px;`}> {this.state.toneType} </span> 
                         {this.props.sound.name} 
-                    </span>
+                    </div>
+
                     {
                         this.props.onAddCurrentPart && (
                             <ButtonSmall onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}> P </ButtonSmall>
                         )
                     } 
+
                     {
                         this.props.playable && (
                             <ButtonSmall onClick={() => {this.togglePlay()}}>
@@ -141,9 +144,13 @@ export default class Sound extends React.Component<Props,State> {
 const Styled = styled('div')`
     .sound-wrapper {
         position: relative;
+        display: flex;
         &.has-error {
             color: red;
             border-color: red;
+        }
+        .label {
+            flex: 1 1 auto;
         }
         .error {
             display: none;
