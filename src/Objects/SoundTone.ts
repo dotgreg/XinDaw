@@ -49,20 +49,21 @@ export class SoundTone {
     //
 
     play() {
-        this.type === 'loop' && Tone.Transport.scheduleOnce(t => {
+        this.type === 'pattern' && Tone.Transport.scheduleOnce(t => {
             this.tone.mute = false
             this.tone.start(0)
         }, 1)
+        this.type === 'event' && this.tone.start(0)
     }
     
     pause() {
-        this.type === 'loop' && Tone.Transport.scheduleOnce(t => { this.tone.mute = true }, 1)
-        if(this.type === 'transport-event') this.tone.mute = true
+        this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { this.tone.mute = true }, 1)
+        if(this.type === 'event') this.tone.mute = true
     }
 
     destroy() {
-        this.type === 'loop' && Tone.Transport.scheduleOnce(t => { this.tone.stop().dispose() }, 1)
-        this.type === 'transport-event' && Tone.Transport.clear(this.tone)
+        this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { this.tone.stop().dispose() }, 1)
+        this.type === 'event' && Tone.Transport.clear(this.tone)
     }
 
     updateControls(controlVars:iControlVar[]) {

@@ -3,6 +3,7 @@ export const toneTypeSign = (toneType:string) => {
     switch(toneType){
         case "pattern":res = '⋰';break;
         case "event":res="♫";break;
+        case "unknown":res="?";break;
     }
     return res
 }

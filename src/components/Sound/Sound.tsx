@@ -145,6 +145,7 @@ const Styled = styled('div')`
     .sound-wrapper {
         position: relative;
         display: flex;
+        cursor: pointer;
         &.has-error {
             color: red;
             border-color: red;
