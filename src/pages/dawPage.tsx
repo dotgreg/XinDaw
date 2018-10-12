@@ -19,14 +19,14 @@ import { iSoundControls } from 'src/managers/types/control.type';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import { Panel, Settings, BlockTitle } from 'src/styles/components';
 import KeysBindingManager from 'src/components/KeysBindingManager/KeysBindingManager';
 import Checkbox from 'src/components/Checkbox/Checkbox';
 import SettingsPart from 'src/components/SettingsPart/SettingsPart';
 import PartSoundsManager from 'src/components/PartSoundsManager/PartSoundsManager';
 
-
+import hotkeys from 'hotkeys-js'
 
 interface State {
   sounds: iSound[]
@@ -58,6 +58,12 @@ class DawPage extends React.Component<Props, State> {
     }
 
     startToneApp()
+
+    hotkeys('ctrl+d', (event, handler) => {
+      // Prevent the default refresh event under WINDOWS system
+      event.preventDefault() 
+      this.setState({settingsOpen: !this.state.settingsOpen})
+    });
 
     // if we have no sounds, import some defaults
     // if (this.state.sounds.length === 0)
@@ -217,6 +223,11 @@ class DawPage extends React.Component<Props, State> {
               onUpdate={this.onSettingsUpdate}
               />
           </SettingsPart>
+
+          <SettingsPart name="Documentation" height={50}>
+            <iframe src="https://tonejs.github.io/docs/" className={css`width: 100%; height: 100%; border: none; background: white;`}></iframe>
+          </SettingsPart>
+          
 
 
         </Settings>
