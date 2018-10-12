@@ -6,6 +6,7 @@ import { iSound } from 'src/managers/types/sound.type';
 import { iControlVar } from 'src/managers/types/control.type';
 import { Button, ButtonSmall } from 'src/styles/components';
 import s from 'src/styles';
+import styled, { cx } from 'react-emotion';
 
 interface Props {
     sound: iSound,
@@ -18,6 +19,7 @@ interface Props {
 
 interface State {
     playStatus: string
+    error: any
 }
 
 export default class Sound extends React.Component<Props,State> {
@@ -35,6 +37,7 @@ export default class Sound extends React.Component<Props,State> {
         super(props)
         this.state = {
             playStatus: 'paused',
+            error: undefined
         }
     }
 
@@ -43,6 +46,7 @@ export default class Sound extends React.Component<Props,State> {
         this.hist.sound = Object.assign({}, this.props.sound)
 
         this.soundTone = new SoundTone(this.props.sound.code)
+        this.setState({error: this.soundTone.error})
     }
 
     componentWillUnmount () {
@@ -70,6 +74,7 @@ export default class Sound extends React.Component<Props,State> {
     
                 this.soundTone.destroy()
                 this.soundTone = new SoundTone(this.props.sound.code)
+                this.setState({error: this.soundTone.error})
             } 
     
             this.hist.sound = Object.assign({}, this.props.sound)
@@ -102,22 +107,53 @@ export default class Sound extends React.Component<Props,State> {
 
     render() {
         return (
-            <div>
-                <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
-                {
-                    this.props.onAddCurrentPart && (
-                        <ButtonSmall onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}> P </ButtonSmall>
-                    )
-                } 
-                {
-                    this.props.playable && (
-                        <ButtonSmall onClick={() => {this.togglePlay()}}>
-                            {this.state.playStatus === 'playing' ? '||' : '>'}
-                        </ButtonSmall>
-                    )
-                } 
-                <ButtonSmall onClick={() => {this.props.onDelete(this.props.sound)}}>X</ButtonSmall>
-            </div>
+            <Styled >
+                <div className={`sound-wrapper ${this.state.error ? 'has-error':'no-error'}`}>
+                    <span onClick={() => {this.props.onEdit(this.props.sound)}}> {this.props.sound.name} </span>
+                    {
+                        this.props.onAddCurrentPart && (
+                            <ButtonSmall onClick={() => {(this.props.onAddCurrentPart as Function)(this.props.sound)}}> P </ButtonSmall>
+                        )
+                    } 
+                    {
+                        this.props.playable && (
+                            <ButtonSmall onClick={() => {this.togglePlay()}}>
+                                {this.state.playStatus === 'playing' ? '||' : '>'}
+                            </ButtonSmall>
+                        )
+                    } 
+                    {
+                        this.state.error && <div className="error">{this.state.error}</div>
+                    }
+                    <ButtonSmall onClick={() => {this.props.onDelete(this.props.sound)}}>X</ButtonSmall>
+                </div>
+            </Styled>
         )
     }   
 }
+
+const Styled = styled('div')`
+    .sound-wrapper {
+        position: relative;
+        &.has-error {
+            color: red;
+            border-color: red;
+        }
+        .error {
+            display: none;
+            position: absolute;
+            bottom: -45px;
+            z-index: 2;
+            padding: 10px;
+            width: 200px;
+            background: rgba(0,0,0,0.8);
+            font-size: 10px;
+            color: white
+        }
+        &:hover {
+            .error {
+                display: block
+            }
+        }
+    }
+`

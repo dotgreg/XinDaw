@@ -20,6 +20,7 @@ export class SoundTone {
     
     public options:optionsSoundTone
     public type:string
+    public error:null|string
 
     constructor(code:string){
         this.code = code
@@ -29,12 +30,13 @@ export class SoundTone {
         config.debug.soundTone && console.log('[SOUNDTONE] soundTone initialized', {type:this.type, code:JSON.stringify(this.code)})
     }
 
-    createTone(code:string) {
+    createTone(code:string):any {
         let codeReady = prepareCode(code)
         if (!codeReady) return
 
         let codeLiveRaw = evalCode(codeReady)
-        if (codeLiveRaw.status === 'err') return
+        if (codeLiveRaw.status === 'err') return this.error = codeLiveRaw.body
+        else this.error = null
 
         this.tone = codeLiveRaw.body.c, 
         this.elementsToDispose = codeLiveRaw.body.e, 

@@ -60,7 +60,6 @@ class DawPage extends React.Component<Props, State> {
     startToneApp()
 
     hotkeys('ctrl+d', (event, handler) => {
-      // Prevent the default refresh event under WINDOWS system
       event.preventDefault() 
       this.setState({settingsOpen: !this.state.settingsOpen})
     });
@@ -213,22 +212,20 @@ class DawPage extends React.Component<Props, State> {
         <Settings open={this.state.settingsOpen}>
           <div onClick={()=>{this.setState({settingsOpen: false})}}>X</div>
           
-          <SettingsPart name="Interface" height={10}>
+          <SettingsPart name="Documentation" h={50} w={70}>
+            <iframe src="https://tonejs.github.io/docs/r12/Event" className={css`width: 100%; height: 100%; border: none; background: white;`}></iframe>
+          </SettingsPart>
+
+          <SettingsPart name="Interface" h={10}>
             <Checkbox label="midi watcher panel enabled" initVal={this.state.midiDebugOpen} onChange={(res)=>{this.setState({midiDebugOpen: res})}} />
           </SettingsPart>
 
-          <SettingsPart name="Key Bindings" height={50}>
+          <SettingsPart name="Key Bindings" h={50}>
             <KeysBindingManager 
               settings={this.state.settings}
               onUpdate={this.onSettingsUpdate}
               />
           </SettingsPart>
-
-          <SettingsPart name="Documentation" height={50}>
-            <iframe src="https://tonejs.github.io/docs/" className={css`width: 100%; height: 100%; border: none; background: white;`}></iframe>
-          </SettingsPart>
-          
-
 
         </Settings>
 
