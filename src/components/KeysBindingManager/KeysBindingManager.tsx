@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { updateArrayItem, mergeArraysByProp } from 'src/helpers/arrayHelper';
-import { ComponentPropsListener } from 'src/objects/ComponentPropsListener';
+import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { Input } from 'src/styles/components';
 import styled from 'react-emotion';

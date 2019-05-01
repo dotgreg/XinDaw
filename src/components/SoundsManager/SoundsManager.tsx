@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { arrayWithoutItem, arrayWithItemToEdited, arrayWithItemsToNotEdited, getEditedItem, getEditedIndex } from 'src/helpers/arrayHelper';
-import { ComponentPropsListener } from 'src/objects/ComponentPropsListener';
+import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { cx } from 'emotion';
 import s from 'src/styles';
 import config from 'src/config';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import config from 'src/config';
 import { areSame } from 'src/helpers/areSame';
-import { SoundTone } from 'src/objects/SoundTone';
+import { SoundTone } from 'src/Objects/SoundTone';
 import { iSound } from 'src/managers/types/sound.type';
 import { iControlVar } from 'src/managers/types/control.type';
 import { Button, ButtonSmall } from 'src/styles/components';
@@ -45,7 +45,7 @@ export default class Sound extends React.Component<Props,State> {
     }
 
     componentDidMount () {
-        config.debug.sound && console.log(`[SOUND] new sound ${this.props.sound.name} mounted`)
+        config.debug.soundCompo && console.log(`[SOUND Comp] new sound ${this.props.sound.name} mounted`)
         this.hist.sound = Object.assign({}, this.props.sound)
 
         this.soundTone = new SoundTone(this.props.sound.code)
@@ -53,7 +53,7 @@ export default class Sound extends React.Component<Props,State> {
     }
 
     componentWillUnmount () {
-        config.debug.sound && console.log(`[SOUND] ${this.props.sound.name} will unmount`)
+        config.debug.soundCompo && console.log(`[SOUND Comp] ${this.props.sound.name} will unmount`)
         this.stop()
     }
 
@@ -68,12 +68,12 @@ export default class Sound extends React.Component<Props,State> {
 
 
         if (!areSame(this.props.sound, this.hist.sound)) {
-            config.debug.sound && console.log(`[SOUND] sound ${this.props.sound.name} updated`)
+            config.debug.soundCompo && console.log(`[SOUND Comp] sound ${this.props.sound.name} updated`)
             
     
             // if code updated
             if (this.props.sound.code !== (this.hist.sound as iSound).code) {
-                config.debug.sound && console.log(`[SOUND] sound CODE ${this.props.sound.name} updated`)
+                config.debug.soundCompo && console.log(`[SOUND Comp] sound CODE ${this.props.sound.name} updated`)
     
                 this.soundTone.destroy()
                 this.soundTone = new SoundTone(this.props.sound.code)
@@ -89,21 +89,22 @@ export default class Sound extends React.Component<Props,State> {
     // TONE RELATED CODE
     //
     play = () => {
-        console.log('play');
+        config.debug.soundCompo && console.log(`[SOUND Comp] trigger play sound ${this.soundTone.type}`);
         this.soundTone.play()
         this.setState({playStatus: 'playing'})
-        if (this.soundTone.type = 'event') setTimeout(() => {this.setState({playStatus: 'paused'})}, 500)
+        if (this.soundTone.type === 'event') setTimeout(() => {this.setState({playStatus: 'paused'})}, 500)
     }
     pause = () => {
-        console.log('pause');
-        
+        config.debug.soundCompo && console.log('[SOUND Comp] trigger pause');
         this.soundTone.pause()
         this.setState({playStatus: 'paused'})
     }
     togglePlay = () => {
+        // console.log(`togglePlay to ${}`);
         this.state.playStatus === 'paused' ? this.play() : this.pause()
     }
     stop = () => {
+        config.debug.soundCompo && console.log('[SOUND Comp] trigger stop');
         this.soundTone.destroy()
         this.setState({playStatus: 'paused'})
     }

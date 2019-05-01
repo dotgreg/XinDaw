@@ -54,7 +54,11 @@ export class SoundTone {
             this.tone.mute = false
             this.tone.start(0)
         }, 1)
-        this.type === 'event' && this.tone()
+        // console.log(this);
+        
+        // this.type === 'event' && this.tone()
+        // this.type === 'event' && this.tone.play()
+        this.type === 'event' && this.tone.start(0)
     }
     
     pause() {

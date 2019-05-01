@@ -8,7 +8,7 @@ import { iSoundControls } from 'src/managers/types/control.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import Sound from 'src/components/Sound/Sound';
 import { BlockTitle, Li } from 'src/styles/components';
-import { ComponentPropsListener } from 'src/objects/ComponentPropsListener';
+import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 
 interface Props {
     part: iPart[]
