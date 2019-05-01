@@ -46,7 +46,7 @@ export default class SoundsLibrary extends React.Component<Props,{}> {
     render() {
         return (
             <div>
-                <BlockTitle>Sounds</BlockTitle>
+                <BlockTitle>Sounds Library</BlockTitle>
 
                 {/* CRUD SOUND */}
                 

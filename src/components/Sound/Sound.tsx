@@ -78,6 +78,10 @@ export default class Sound extends React.Component<Props,State> {
                 this.soundTone.destroy()
                 this.soundTone = new SoundTone(this.props.sound.code)
                 this.setState({error: this.soundTone.error, toneType: toneTypeSign(this.soundTone.type)})
+                
+                // if playStatus was playing, start sound again
+                if (this.state.playStatus === 'playing') this.play()
+                
             } 
     
             this.hist.sound = Object.assign({}, this.props.sound)
