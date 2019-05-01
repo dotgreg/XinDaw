@@ -56,9 +56,10 @@ export class SoundTone {
         }, 1)
         console.log(this.type, this.tone);
         
-        // this.type === 'event' && this.tone()
+        // for an event, it is just a function, so just starts it
+        this.type === 'event' && this.tone()
         // this.type === 'event' && this.tone.play()
-        this.type === 'event' && this.tone.start()
+        // this.type === 'event' && this.tone.start()
     }
     
     pause() {
