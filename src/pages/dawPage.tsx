@@ -26,7 +26,7 @@ import PartSoundsManager from 'src/components/PartSoundsManager/PartSoundsManage
 import hotkeys from 'hotkeys-js'
 import SoundsLibrary from 'src/components/SoundsLibrary/SoundsLibrary';
 
-interface State {
+export interface iStateDawPage {
   sounds: iSound[]
   parts: iPart[]
   controls: iSoundControls[]
@@ -44,7 +44,7 @@ interface Props {
 
 
 // @reactMixin.decorate(LocalStorageMixin)
-class DawPage extends React.Component<Props, State> {
+class DawPage extends React.Component<Props, iStateDawPage> {
 
   constructor(props) {
     super(props)
@@ -61,7 +61,9 @@ class DawPage extends React.Component<Props, State> {
     }
 
     let persistedDb = getDB()
-    if (persistedDb) this.state = persistedDb
+    console.log(222, persistedDb && persistedDb.sounds);
+    
+    if (persistedDb && persistedDb.sounds) this.state = persistedDb
 
     startToneApp()
 
