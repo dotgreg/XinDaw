@@ -33,9 +33,9 @@ export class SoundTone {
 
     createTone(code:string):any {
         let codeReady = prepareCode(code)
-        if (!codeReady) return
+        if (codeReady.error) return this.error = codeReady.error
 
-        let codeLiveRaw = evalCode(codeReady)
+        let codeLiveRaw = evalCode(codeReady.code)
         if (codeLiveRaw.status === 'err') return this.error = codeLiveRaw.body
         else this.error = null
 
@@ -54,11 +54,11 @@ export class SoundTone {
             this.tone.mute = false
             this.tone.start(0)
         }, 1)
-        // console.log(this);
+        console.log(this.type, this.tone);
         
         // this.type === 'event' && this.tone()
         // this.type === 'event' && this.tone.play()
-        this.type === 'event' && this.tone.start(0)
+        this.type === 'event' && this.tone.start()
     }
     
     pause() {

@@ -158,7 +158,7 @@ const Styled = styled('div')`
         .error {
             display: none;
             position: absolute;
-            bottom: -45px;
+            top: 25px;
             z-index: 2;
             padding: 10px;
             width: 200px;

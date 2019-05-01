@@ -15,6 +15,8 @@ const config = {
         midiWatcher: true,
 
         ComponentPropsListener: false,
+
+        dbManager: true,
     },
 }
 

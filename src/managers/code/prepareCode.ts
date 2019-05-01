@@ -1,19 +1,26 @@
 import * as esprima from 'esprima'
 import { filter } from 'lodash'
 import config from 'src/config';
-
+import {iError} from '../types/error.type'
 
 // adds a
 // return {c: c, o: false, e: [c]} in end of code
 // where e is all variables to be able to be disposed
+interface prepareCodeAnswer {
+    status: 200|400
+    code?: string
+    error?: string
+}
 
-export let prepareCode = (code:string) => {
+export let prepareCode = (code:string):prepareCodeAnswer => {
     let result
 
     try {
         result = esprima.parseModule(code)
     } catch (e) {
-        return console.warn('[CODEEVAL] prepare => PrepareCode Error :', e)
+        let codeErrorReport = `[CODEEVAL] prepare => PrepareCode Error : ${JSON.stringify(e)}`
+        // console.warn(codeErrorReport)
+        return {status: 400, error: codeErrorReport}
     }
 
     config.debug.codeEval && console.log('[CODEEVAL] prepare => start :', {code, result})
@@ -40,6 +47,6 @@ export let prepareCode = (code:string) => {
     
     let res =  code + '\n\r' + returnStatement
     config.debug.codeEval && console.log('[CODEEVAL] prepare => success :', {res})
-    return res
+    return {status: 200, code: res}
 }
 
