@@ -1,10 +1,6 @@
 import * as React from 'react';
 
-import SoundsManager from 'src/components/SoundsManager/SoundsManager';
 import PartsManager from 'src/components/PartsManager/PartsManager';
-
-import LocalStorageMixin from 'react-localstorage'
-import reactMixin  from 'react-mixin'
 import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getItemFromId} from 'src/helpers/arrayHelper';
 
 import { startToneApp } from 'src/managers/tone/startToneApp';
@@ -28,6 +24,7 @@ import SettingsPart from 'src/components/SettingsPart/SettingsPart';
 import PartSoundsManager from 'src/components/PartSoundsManager/PartSoundsManager';
 
 import hotkeys from 'hotkeys-js'
+import SoundsLibrary from 'src/components/SoundsLibrary/SoundsLibrary';
 
 interface State {
   sounds: iSound[]
@@ -185,7 +182,7 @@ class DawPage extends React.Component<Props, State> {
 
             <BlockTitle>Current Sound </BlockTitle>
 
-            <SoundEditor
+            <SoundEditor 
               sound={getEditedItem(this.state.sounds)}
               onCreate={this.createSound}
               onUpdate={this.updateSound}
@@ -203,13 +200,13 @@ class DawPage extends React.Component<Props, State> {
           <Panel w={25} className="right panel">
 
             {/* ALL SOUNDS LIBRARY*/}
-            <SoundsManager 
+            <SoundsLibrary 
               sounds={this.state.sounds} 
 
               onUpdate={this.updateSounds}
               onAddCurrentPart={this.addSoundToCurrentPart}
 
-              eventIn={getItemFromId('soundsManager', this.state.events)}
+              eventIn={getItemFromId('SoundsLibrary', this.state.events)}
               />
               
             <BlockTitle onClick={()=>{this.setState({settingsOpen: true})}}>Settings</BlockTitle> 

@@ -3,13 +3,14 @@ const config = {
         soundsCrud: true,
         soundCompo: true,
         
+        soundEditor: true,
         codeEditor: false,
         codeEval: false,
         codeAnalyze: false,
         
         partsCrud: false,
         soundTone: false,
-        soundsManager: false,
+        SoundsLibrary: false,
         
         controls: false,
         midiWatcher: true,

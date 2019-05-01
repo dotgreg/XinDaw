@@ -20,7 +20,7 @@ interface Props {
     eventIn: iComponentEvent
 }
 
-export default class SoundsManager extends React.Component<Props,{}> {
+export default class SoundsLibrary extends React.Component<Props,{}> {
 
     propsListener: ComponentPropsListener
     constructor(props) {
@@ -28,7 +28,7 @@ export default class SoundsManager extends React.Component<Props,{}> {
         this.propsListener = new ComponentPropsListener({
             'eventIn': () => {
                 let event = this.props.eventIn
-                config.debug.soundsManager && console.log('[SOUNDSMANAGER] eventIn changed to', event)
+                config.debug.SoundsLibrary && console.log('[SoundsLibrary] eventIn changed to', event)
                 let editedIndex = getEditedIndex(this.props.sounds)
                 if (event.action === 'list.up') this.editSound(this.props.sounds[editedIndex - 1]) 
                 if (event.action === 'list.down') this.editSound(this.props.sounds[editedIndex + 1]) 

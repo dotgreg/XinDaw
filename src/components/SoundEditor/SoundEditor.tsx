@@ -4,6 +4,7 @@ import { iSound } from 'src/managers/types/sound.type';
 import CodeEditor from 'src/components/CodeEditor/CodeEditor';
 import { Input } from 'src/styles/components';
 import styled from 'react-emotion';
+import config from 'src/config';
 
 interface Props {
     sound:iSound | undefined
@@ -13,7 +14,7 @@ interface Props {
 
 interface State {
     sound: iSound
-    mode: string
+    mode: string 
 }
 
 export default class SoundEditor extends React.Component<Props,State> {
@@ -51,6 +52,9 @@ export default class SoundEditor extends React.Component<Props,State> {
     }
 
     saveForm = (newCode) => {
+
+        config.debug.soundEditor && console.log(`[SOUND EDITOR] form save on mode ${this.state.mode}`);
+        
         let sound = this.state.sound
         sound.code = newCode
 
