@@ -78,7 +78,7 @@ export default class Sound extends React.Component<Props,State> {
                 this.soundTone.destroy()
                 this.soundTone = new SoundTone(this.props.sound.code)
                 this.setState({error: this.soundTone.error, toneType: toneTypeSign(this.soundTone.type)})
-                
+
                 // if playStatus was playing, start sound again
                 if (this.state.playStatus === 'playing') this.play()
                 
@@ -96,7 +96,7 @@ export default class Sound extends React.Component<Props,State> {
         config.debug.soundCompo && console.log(`[SOUND Comp] trigger play sound ${this.soundTone.type}`);
         this.soundTone.play()
         this.setState({playStatus: 'playing'})
-        if (this.soundTone.type === 'event') setTimeout(() => {this.setState({playStatus: 'paused'})}, 500)
+        if (this.soundTone.type === 'event') setTimeout(() => {this.setState({playStatus: 'paused'})}, 200)
     }
     pause = () => {
         config.debug.soundCompo && console.log('[SOUND Comp] trigger pause');
