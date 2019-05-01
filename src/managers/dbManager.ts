@@ -1,5 +1,7 @@
 export const getDB = () => {
     let raw = localStorage.getItem('DawPage') || "";
+    console.log(raw);
+    
     let obj = JSON.parse(raw)
     console.log('getDB =>', obj);
     
