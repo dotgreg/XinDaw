@@ -18,6 +18,7 @@ import { iPart, tPart } from 'src/managers/types/part.type';
 import { iSoundControls } from 'src/managers/types/control.type';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
+import { getDB, persistDB } from 'src/managers/dbManager';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 import styled, { css } from 'react-emotion';
 import { Panel, Settings, BlockTitle, Input, Li } from 'src/styles/components';
@@ -43,11 +44,15 @@ interface Props {
   history?: any
 }
 
-@reactMixin.decorate(LocalStorageMixin)
+
+
+// @reactMixin.decorate(LocalStorageMixin)
 class DawPage extends React.Component<Props, State> {
 
   constructor(props) {
     super(props)
+    console.log('load LS at that moment');
+    
     this.state = {
       sounds: [],
       parts: [],
@@ -57,6 +62,9 @@ class DawPage extends React.Component<Props, State> {
       settingsOpen: false,
       midiDebugOpen: false,
     }
+
+    let persistedDb = getDB()
+    if (persistedDb) this.state = persistedDb
 
     startToneApp()
 
@@ -141,6 +149,9 @@ class DawPage extends React.Component<Props, State> {
   }
 
   public render() {
+    // rerender everytime this.state changes, thus persist at that moment
+    persistDB(this.state)
+
     return (
       <StyledApp> 
 
