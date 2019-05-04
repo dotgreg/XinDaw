@@ -55,25 +55,33 @@ export default class MidiWatcher extends React.Component<Props,State> {
 
     componentDidMount() {
         console.log('[MIDI WATCHER] started')
-        navigator.requestMIDIAccess().then((access:any) => {
-            let midi = access;
-            var inputs = midi.inputs;
+        navigator.requestMIDIAccess().then((midiAccess:any) => {
+            console.log("[MIDI WATCHER] Found " + midiAccess.inputs.size + " MIDI input(s)");
 
-            console.log("[MIDI WATCHER] Found " + inputs.size + " MIDI input(s)");
-
-            //connect to first device found
-            if(inputs.size > 0) {
-                var iterator = inputs.values(); // returns an iterator that loops over all inputs
-                var input = iterator.next().value; // get the first input
-                console.log("[MIDI WATCHER] Connected first input: " + input.name);
+            var iterator = midiAccess.inputs.values();
+            for (let i = 0; i < midiAccess.inputs.size; i++) {
+                let input = iterator.next().value;
+                console.log(`[MIDI WATCHER] listening events from midi input ${input.name}`)
                 input.onmidimessage = this.handleMIDIMessage;
             }
+            
+            // //connect to last device of the list
+            // if(inputs.size > 0) {
+            //     var iterator = inputs.values(); // returns an iterator that loops over all inputs
+            //     console.log(iterator);
+            //     var input = iterator.next().value; // get the first input
+            //     var input2 = iterator.next().value; // get the first input
+            //     console.log("[MIDI WATCHER] Connected first input: " + input.name, input2.name);
+            //     input.onmidimessage = this.handleMIDIMessage;
+            // }
         }, () => {
 
         } );
     }
 
     handleMIDIMessage = (event:any) => {
+        console.log('handleMIDIMessage', event);
+        
         if (event.data.length === 3) {
             // if we have a scroller, the message is the same, ie 63 for down and 65 for up, 
             // make that number varying to trigger react refresh
