@@ -12,6 +12,7 @@ declare var navigator:any
 export interface iMidiEvent {
     id: number
     value: number
+    device: number
 }
 
 interface Props {
@@ -50,7 +51,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
     changeSimulatorValue = (e) => { this.setState({simValue: parseInt(e.target.value)}) }
     simulateMidi = () => { 
         this.setState({simValue: this.state.simValue + 1})
-        this.handleMIDIMessage({data:[0, this.state.simEvent, this.state.simValue]}) 
+        this.handleMIDIMessage(-1)({data:[0, this.state.simEvent, this.state.simValue]}) 
     }
 
     componentDidMount() {
@@ -63,15 +64,15 @@ export default class MidiWatcher extends React.Component<Props,State> {
             for (let i = 0; i < midiAccess.inputs.size; i++) {
                 let input = iterator.next().value;
                 console.log(`[MIDI WATCHER] listening events from midi input ${input.name}`)
-                input.onmidimessage = this.handleMIDIMessage;
+                input.onmidimessage = this.handleMIDIMessage(i);
             }
         }, () => {
 
         } );
     }
 
-    handleMIDIMessage = (event:any) => {
-        // console.log('handleMIDIMessage', event);
+    handleMIDIMessage = (device:number) => (event:any) => {
+        console.log('handleMIDIMessage', event.data);
         
         if (event.data.length === 3) {
             // if we have a scroller, the message is the same, ie 63 for down and 65 for up, 
@@ -94,10 +95,10 @@ export default class MidiWatcher extends React.Component<Props,State> {
             
             this.lastEvent = val
 
-            let res:iMidiEvent = {id: event.data[1], value: val}
-            config.debug.midiWatcher && console.log('[MIDI WATCHER] event: ', res)
+            let res:iMidiEvent = {id: event.data[1], value: val, device: device}
+            // config.debug.midiWatcher && console.log('[MIDI WATCHER] event: ', res)
 
-            this.setState({lastEvent: `${res.id}: ${res.value}`})
+            this.setState({lastEvent: `${event.data[0]} ${event.data[1]} ${event.data[2]} on device ${res.device}`})
             
             this.props.onUpdate(res)
         }

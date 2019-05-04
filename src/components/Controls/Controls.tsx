@@ -51,7 +51,6 @@ export default class Controls extends React.Component<Props,State> {
         if (this.state.initSoundControls) return this.setState({initSoundControls: false})
         let controls = this.state.controlVars
         if (controls && controls[0]) controls[0].value = this.props.eventIn.value
-        console.log(2, controls);
         this.setState({controlVars: controls})
     }
 
