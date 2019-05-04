@@ -28,6 +28,7 @@ import SoundsLibrary from 'src/components/SoundsLibrary/SoundsLibrary';
 import config from 'src/config';
 import { consts } from 'src/constants';
 import { buildSettingsObj } from 'src/managers/settings.manager';
+import { getMidiSignalType } from 'src/managers/midi/signalType.midi';
 
 interface Props {
   path?: string
@@ -126,7 +127,8 @@ class DawPage extends React.Component<Props, iStateDawPage> {
       let action = eventName.replace(componentId+'.','')
       let value = midiSignal.value
       let state = midiSignal.state
-      let triggeredEvent:iComponentEvent = {id: componentId, action, value, state}
+      let signalType = getMidiSignalType(midiSignal)
+      let triggeredEvent:iComponentEvent = {id: componentId, action, value, state, signalType}
       
       // if the value of the event is the same than the current one registered for the action
       // ie for buttons that sends the same value all the time, like 64/65 or 127, then make it varying of 1

@@ -48,10 +48,11 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.play`},
                 {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.toggle`},
                 
-                {type: 'settings', value:0, key: `keyboard.stateCode.pushStart`},
-                {type: 'settings', value:0, key: `keyboard.stateCode.pushLeave`},
-                {type: 'settings', value:0, key: `button.stateCode.pushStart`},
-                {type: 'settings', value:0, key: `button.stateCode.pushLeave`},
+                {type: 'settings', value:145, key: `${consts.settings['keyboard.stateCode.pushDown']}`},
+                {type: 'settings', value:129, key: `${consts.settings['keyboard.stateCode.pushUp']}`},
+                {type: 'settings', value:144, key: `${consts.settings['button.stateCode.pushDown']}`},
+                {type: 'settings', value:128, key: `${consts.settings['button.stateCode.pushUp']}`},
+                {type: 'settings', value:176, key: `${consts.settings['knob.stateCode.change']}`},
             ],
         }
 
