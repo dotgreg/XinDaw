@@ -32,17 +32,40 @@ export default class PartSoundsManager extends React.Component<Props,State> {
         this.propsListener = new ComponentPropsListener({
             'eventIn': () => {
                 let event = this.props.eventIn
-                if (!event) return 
+                if (!event || !event.signalType) return 
                 let editedIndex = getEditedIndex(this.props.sounds)
                 let editedSound = this.refs[`sound-${editedIndex}`] as Sound
+                // editedSound.soundTone.type === ''
 
                 if (event.signalType.device === 'button' && event.signalType.event === 'pushDown') {
                     if (event.action === 'list.up') this.props.onTriggerSoundEdit(this.props.sounds[editedIndex - 1]) 
                     if (event.action === 'list.down') this.props.onTriggerSoundEdit(this.props.sounds[editedIndex + 1]) 
                     if (event.action === 'sound.delete' && this.props.sounds[editedIndex]) this.props.onRemoveSound(this.props.sounds[editedIndex]) 
-                    if (event.action === 'sound.play' && editedSound)  editedSound.play()
+                    if (event.action === 'sound.play' && editedSound)  editedSound.play({})
                     if (event.action === 'sound.pause' && editedSound) editedSound.pause() 
                     if (event.action === 'sound.toggle' && editedSound) editedSound.togglePlay() 
+                }
+
+                for (let i = 1; i <= 10; i++) {
+                    if (event.action === `play.sound${i}`) {
+                        // let sound = this.props.sounds[i-1]
+                        let sound = this.refs[`sound-${i-1}`] as Sound
+                        if (sound && event.signalType.device === 'button') {
+                            
+                            if (sound.soundTone.type === 'pattern' && event.signalType.event === 'pushDown') {
+                                sound.togglePlay() 
+                            }
+                            
+                            if (sound.soundTone.type === 'event' && event.signalType.event === 'pushDown') {
+                                sound.play({type: 'attack'}) 
+                            }
+                            
+                            if (sound.soundTone.type === 'event' && event.signalType.event === 'pushUp') {
+                                sound.play({type: 'release'}) 
+                            }
+
+                        }
+                    }                 
                 }
                 
             },

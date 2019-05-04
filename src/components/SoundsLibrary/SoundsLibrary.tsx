@@ -28,6 +28,7 @@ export default class SoundsLibrary extends React.Component<Props,{}> {
         this.propsListener = new ComponentPropsListener({
             'eventIn': () => {
                 let event = this.props.eventIn
+                if (!event || !event.signalType) return 
                 config.debug.SoundsLibrary && console.log('[SoundsLibrary] eventIn changed to', event)
                 let editedIndex = getEditedIndex(this.props.sounds)
                 

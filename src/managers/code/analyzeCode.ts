@@ -3,12 +3,13 @@ import config from 'src/config';
 import {each, has} from 'lodash'
 import { stringToId } from 'src/helpers/stringHelper';
 import { iControlVar } from 'src/managers/types/control.type';
+import { iToneType } from '../types/general.types';
 
 export const analyzeCode = (code:string) => {
     
     let analysis = {
         controls: <iControlVar[]>[],
-        toneType: <string>'unknown'
+        toneType: <iToneType>'unknown'
     }
     
     let esprimaResults
@@ -25,12 +26,15 @@ export const analyzeCode = (code:string) => {
 
         // TYPE
         if (['c', 't', 'tone'].includes(varInfo.id.name)) {
-            let toneType = 'unknown'
+            analysis.toneType = 'unknown'
             
-            if(has(varInfo, 'init.callee.property.name')) toneType = varInfo.init.callee.property.name.toLowerCase()
-            else if(varInfo.type = "FunctionExpression") toneType = 'event'
+            // if(has(varInfo, 'init.callee.property.name')) toneType = varInfo.init.callee.property.name.toLowerCase()
+            if(has(varInfo, 'init.callee.property.name')) analysis.toneType = 'pattern'
+            else if(varInfo.type = "FunctionExpression") analysis.toneType = 'event'
 
-            if (['pattern', 'event'].includes(toneType)) analysis.toneType = toneType
+
+            // if (['pattern', 'event'].includes(toneType)) analysis.toneType = toneType
+            // if ()
         } 
 
         // OPTIONS 

@@ -41,12 +41,23 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'event', value:65, key: `${consts.comps.soundsLibrary}.list.down`},
                 {type: 'event', value:66, key: `${consts.comps.soundsLibrary}.list.addToPart`},
 
-                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.list.up`},
-                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.list.down`},
-                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.pause`},
-                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.delete`},
-                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.play`},
-                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.toggle`},
+                {type: 'event', value:-1, key: `${consts.comps.partSoundsManager}.list.up`},
+                {type: 'event', value:-1, key: `${consts.comps.partSoundsManager}.list.down`},
+                {type: 'event', value:-1, key: `${consts.comps.partSoundsManager}.sound.pause`},
+                {type: 'event', value:-1, key: `${consts.comps.partSoundsManager}.sound.delete`},
+                {type: 'event', value:-1, key: `${consts.comps.partSoundsManager}.sound.play`},
+                {type: 'event', value:-1, key: `${consts.comps.partSoundsManager}.sound.toggle`},
+                
+                {type: 'event', value:32, key: `${consts.comps.partSoundsManager}.play.sound1`},
+                {type: 'event', value:24, key: `${consts.comps.partSoundsManager}.play.sound2`},
+                {type: 'event', value:16, key: `${consts.comps.partSoundsManager}.play.sound3`},
+                {type: 'event', value:8, key: `${consts.comps.partSoundsManager}.play.sound4`},
+                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.play.sound5`},
+                {type: 'event', value:33, key: `${consts.comps.partSoundsManager}.play.sound6`},
+                {type: 'event', value:25, key: `${consts.comps.partSoundsManager}.play.sound7`},
+                {type: 'event', value:17, key: `${consts.comps.partSoundsManager}.play.sound8`},
+                {type: 'event', value:9, key: `${consts.comps.partSoundsManager}.play.sound9`},
+                {type: 'event', value:1, key: `${consts.comps.partSoundsManager}.play.sound10`},
                 
                 {type: 'settings', value:145, key: `${consts.settings['keyboard.stateCode.pushDown']}`},
                 {type: 'settings', value:129, key: `${consts.settings['keyboard.stateCode.pushUp']}`},
@@ -65,11 +76,22 @@ export default class KeysBindingManager extends React.Component<Props,State> {
         })
     }
 
-    initializeIfNothing = () => {
+    initializeAppsSettings = () => {
+
+        // if no settings, init with the default ones
         if (typeof this.props.settings === 'undefined' || this.props.settings.length === 0) {
             console.log('[SETTING] no settings found, init with the default ones', this.state.settings);
             this.props.onUpdate(this.state.settings)
         } 
+        
+        // if (this.props.settings.length !== this.state.settings.length) {
+            // otherwise, merge existing settings with default ones to be sure to have everything
+            // let settings = mergeArraysByProp('eventName', this.props.settings, this.state.settings)
+            // console.log('[SETTING] seems some settings are missing, adding the ones missing by default values', this.props.settings, this.state.settings, settings.length);
+            // this.props.onUpdate(settings)
+            // this.setState({settings: settings})
+        // }
+        // console.log(this.props.settings.length, this.state.settings.length);
     }
     
     componentDidUpdate = () => { this.propsListener.listen(this.props) }
@@ -80,7 +102,7 @@ export default class KeysBindingManager extends React.Component<Props,State> {
     }
 
     render() {
-        this.initializeIfNothing()  
+        this.initializeAppsSettings()  
         
         return (
            <Styled>

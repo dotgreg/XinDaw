@@ -8,6 +8,7 @@ import { Button, ButtonSmall } from 'src/styles/components';
 import s from 'src/styles';
 import styled, { cx, css } from 'react-emotion';
 import { toneTypeSign } from 'src/helpers/toneTypeSign';
+import { iProcessedMidiInfos } from 'src/managers/types/general.types';
 
 interface Props {
     sound: iSound,
@@ -80,7 +81,7 @@ export default class Sound extends React.Component<Props,State> {
                 this.setState({error: this.soundTone.error, toneType: toneTypeSign(this.soundTone.type)})
 
                 // if playStatus was playing, start sound again
-                if (this.state.playStatus === 'playing') this.play()
+                if (this.state.playStatus === 'playing') this.play({})
                 
             } 
     
@@ -92,9 +93,9 @@ export default class Sound extends React.Component<Props,State> {
     //
     // TONE RELATED CODE
     //
-    play = () => {
+    play = (midiInfos:iProcessedMidiInfos) => {
         config.debug.soundCompo && console.log(`[SOUND Comp] trigger play sound ${this.soundTone.type}`);
-        this.soundTone.play()
+        this.soundTone.play(midiInfos)
         this.setState({playStatus: 'playing'})
         if (this.soundTone.type === 'event') setTimeout(() => {this.setState({playStatus: 'paused'})}, 200)
     }
@@ -105,7 +106,7 @@ export default class Sound extends React.Component<Props,State> {
     }
     togglePlay = () => {
         console.log(`togglePlay to not ${this.state.playStatus}`);
-        this.state.playStatus === 'paused' ? this.play() : this.pause()
+        this.state.playStatus === 'paused' ? this.play({}) : this.pause()
     }
     stop = () => {
         config.debug.soundCompo && console.log('[SOUND Comp] trigger stop');
