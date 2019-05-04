@@ -14,7 +14,7 @@ import { iPart, tPart } from 'src/managers/types/part.type';
 import { iSoundControls } from 'src/managers/types/control.type';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
-import { getDB, persistDB } from 'src/managers/dbManager';
+import { getDB, persistDB, generateInitialDb, iStateDawPage } from 'src/managers/dbManager';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 import styled, { css } from 'react-emotion';
 import { Panel, Settings, BlockTitle, Input, Li } from 'src/styles/components';
@@ -25,16 +25,7 @@ import PartSoundsManager from 'src/components/PartSoundsManager/PartSoundsManage
 
 import hotkeys from 'hotkeys-js'
 import SoundsLibrary from 'src/components/SoundsLibrary/SoundsLibrary';
-
-export interface iStateDawPage {
-  sounds: iSound[]
-  parts: iPart[]
-  controls: iSoundControls[]
-  settings: iSettingsItem[]
-  events: iComponentEvent[]
-  settingsOpen: boolean
-  midiDebugOpen: boolean
-}
+import config from 'src/config';
 
 interface Props {
   path?: string
@@ -50,20 +41,14 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     super(props)
     console.log('load LS at that moment');
     
-    this.state = {
-      sounds: [],
-      parts: [],
-      controls: [],
-      settings: [],
-      events: [],
-      settingsOpen: false,
-      midiDebugOpen: false,
-    }
+    this.state = generateInitialDb()
 
     let persistedDb = getDB()
-    console.log(222, persistedDb && persistedDb.sounds);
     
-    if (persistedDb && persistedDb.sounds) this.state = persistedDb
+    if (persistedDb && persistedDb.sounds) {
+      config.debug.dbManager && console.log('[DB] db found, loading it', persistedDb);
+      this.state = persistedDb
+    }
 
     startToneApp()
 
@@ -138,8 +123,9 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     let value = event.value
 
     let resEvent:iComponentEvent = {id: componentId, action, value}
-    console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)}`)
+    console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)}`, this.state.events)
 
+    
     this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
   }
 
