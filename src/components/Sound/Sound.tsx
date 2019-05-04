@@ -9,6 +9,7 @@ import s from 'src/styles';
 import styled, { cx, css } from 'react-emotion';
 import { toneTypeSign } from 'src/helpers/toneTypeSign';
 import { iProcessedMidiInfos } from 'src/managers/types/general.types';
+import {debounce} from 'lodash'
 
 interface Props {
     sound: iSound,
@@ -35,6 +36,7 @@ export default class Sound extends React.Component<Props,State> {
         controls: []
     }
     soundTone:SoundTone
+    inAnAttack: boolean = false
 
     constructor(props){
         super(props)
@@ -93,23 +95,59 @@ export default class Sound extends React.Component<Props,State> {
     //
     // TONE RELATED CODE
     //
+    debouncedRelease = debounce((midiInfos:iProcessedMidiInfos) => {
+        console.log('release debounced');
+        this.inAnAttack = false
+        // midiInfos.type = 'release'
+        // this.processPlaying(midiInfos)
+    },300)
+
     play = (midiInfos:iProcessedMidiInfos) => {
-        config.debug.soundCompo && console.log(`[SOUND Comp] trigger play sound ${this.soundTone.type}`);
+        if (this.soundTone.type === 'event') {
+            // if play is a general one or a release one
+
+            if (!midiInfos.type ) {
+                this.processPlaying(midiInfos)
+                setTimeout(() => {this.setState({playStatus: 'paused'})}, 200)
+
+            } else if (midiInfos.type === 'attack') {
+
+                this.processPlaying(midiInfos)
+                this.inAnAttack = true
+                this.debouncedRelease(midiInfos)
+                
+
+            } else if (midiInfos.type === 'release') {
+                
+                if (this.inAnAttack) {
+                    setTimeout(() => {
+                        if (!this.inAnAttack) {
+                            this.processPlaying(midiInfos)
+                            this.setState({playStatus: 'paused'})
+                        }
+                    }, 300)
+                } else {
+                    this.processPlaying(midiInfos)
+                    setTimeout(() => {
+                        this.setState({playStatus: 'paused'})
+                    }, 200)
+                }
+            }
+
+        } else {
+            this.processPlaying(midiInfos)
+        }
+    }
+    processPlaying(midiInfos:iProcessedMidiInfos) {
         try {
             this.soundTone.play(midiInfos)
         } catch (error) {
             alert(`[CODE ERROR] : ${error.message}`)
         }
+        config.debug.soundCompo && console.log(`[SOUND Comp] trigger play sound ${this.soundTone.type}`);
         this.setState({playStatus: 'playing'})
-
-
-        if (this.soundTone.type === 'event') {
-            // if play is a general one or a release one, put it on pause after some time
-            if (!midiInfos.type || midiInfos.type === 'release') {
-                setTimeout(() => {this.setState({playStatus: 'paused'})}, 200)
-            }
-        }
     }
+
     pause = () => {
         config.debug.soundCompo && console.log('[SOUND Comp] trigger pause');
         this.soundTone.pause()

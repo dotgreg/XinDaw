@@ -29,6 +29,7 @@ interface State {
 export default class PartSoundsManager extends React.Component<Props,State> {
 
     propsListener: ComponentPropsListener
+    
     constructor(props) {
         super(props)
         this.propsListener = new ComponentPropsListener({
@@ -71,8 +72,16 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                     }                 
                 }
 
-                if (event.signalType.device === 'keyboard' ) {
+                if (event.signalType.device === 'keyboard' && editedSound) {
+                    let note = idKeyToNote(event.raw.id)
                     console.log('keyboard event yay', event, idKeyToNote(event.raw.id));
+                    if (event.signalType.event === 'pushDown') {
+                        editedSound.play({type: 'attack', note: note, power: event.raw.value}) 
+                    }
+                    
+                    if (event.signalType.event === 'pushUp') {
+                        editedSound.play({type: 'release', note: note, power: event.raw.value }) 
+                    }
                     
                 }
                 
