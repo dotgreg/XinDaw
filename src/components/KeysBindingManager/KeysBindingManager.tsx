@@ -22,6 +22,8 @@ export default class KeysBindingManager extends React.Component<Props,State> {
 
     constructor(props) {
         super(props)
+        console.log(consts.comps.soundsLibrary);
+        
         this.state = {
             settings: [
                 {type: 'event', value:48, key: 'controls.knob1'},
@@ -45,6 +47,11 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.delete`},
                 {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.play`},
                 {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.toggle`},
+                
+                {type: 'settings', value:0, key: `keyboard.stateCode.pushStart`},
+                {type: 'settings', value:0, key: `keyboard.stateCode.pushLeave`},
+                {type: 'settings', value:0, key: `button.stateCode.pushStart`},
+                {type: 'settings', value:0, key: `button.stateCode.pushLeave`},
             ],
         }
 
@@ -72,7 +79,7 @@ export default class KeysBindingManager extends React.Component<Props,State> {
     }
 
     render() {
-        this.initializeIfNothing()
+        this.initializeIfNothing()  
         
         return (
            <Styled>

@@ -34,6 +34,9 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                 let event = this.props.eventIn
                 let editedIndex = getEditedIndex(this.props.sounds)
                 let editedSound = this.refs[`sound-${editedIndex}`] as Sound
+
+                
+
                 if (event.action === 'list.up') this.props.onTriggerSoundEdit(this.props.sounds[editedIndex - 1]) 
                 if (event.action === 'list.down') this.props.onTriggerSoundEdit(this.props.sounds[editedIndex + 1]) 
                 if (event.action === 'sound.delete' && this.props.sounds[editedIndex]) this.props.onRemoveSound(this.props.sounds[editedIndex]) 

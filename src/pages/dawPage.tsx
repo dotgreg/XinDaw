@@ -14,7 +14,7 @@ import { iPart, tPart } from 'src/managers/types/part.type';
 import { iSoundControls } from 'src/managers/types/control.type';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
-import { getDB, persistDB, generateInitialDb, iStateDawPage } from 'src/managers/dbManager';
+import { getDB, persistDB, generateInitialDb, iStateDawPage } from 'src/managers/db.manager';
 import SoundEditor from 'src/components/SoundEditor/SoundEditor';
 import styled, { css } from 'react-emotion';
 import { Panel, Settings, BlockTitle, Input, Li } from 'src/styles/components';
@@ -27,6 +27,7 @@ import hotkeys from 'hotkeys-js'
 import SoundsLibrary from 'src/components/SoundsLibrary/SoundsLibrary';
 import config from 'src/config';
 import { consts } from 'src/constants';
+import { buildSettingsObj } from 'src/managers/settings.manager';
 
 interface Props {
   path?: string
@@ -50,6 +51,8 @@ class DawPage extends React.Component<Props, iStateDawPage> {
       config.debug.dbManager && console.log('[DB] db found, loading it', persistedDb);
       this.state = persistedDb
     }
+
+    buildSettingsObj(this.state.settings)
 
     startToneApp()
 
@@ -142,7 +145,10 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   }
 
   onSettingsUpdate = (settings:iSettingsItem[]) => {
-    this.setState({settings: settings})
+    this.setState({settings: settings}, () => {
+      // recreate the settings Obj
+      buildSettingsObj(this.state.settings)
+    })
   }
 
   public render() {
