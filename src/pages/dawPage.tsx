@@ -115,24 +115,28 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     let res = filter(this.state.settings, config => {
       return (config.type === 'event' && config.value === event.id)
     })
-    if (!res[0]) return
 
-    let eventName = res[0].eventName
-    let componentId = eventName.split('.')[0]
-    let action = eventName.replace(componentId+'.','')
-    let value = event.value
-    
-    // if the value of the event is the same than the current one registered for the action
-    // ie for buttons that sends the same value all the time, like 64/65 or 127, then make it varying of 1
-    // to trigger the refresh
-    let resEvent:iComponentEvent = {id: componentId, action, value}
-    let sameValueEvent = filter(this.state.events, item => item['id'] === resEvent.id && item['action'] === resEvent.action  && item['value'] === resEvent.value)
-    if (sameValueEvent) {
-      resEvent.value = random(0,1) ? resEvent.value - 1 : resEvent.value + 1
+    // Action found!
+    if (res[0]) {
+      let eventName = res[0].eventName
+      let componentId = eventName.split('.')[0]
+      let action = eventName.replace(componentId+'.','')
+      let value = event.value
+      
+      // if the value of the event is the same than the current one registered for the action
+      // ie for buttons that sends the same value all the time, like 64/65 or 127, then make it varying of 1
+      // to trigger the refresh
+      let resEvent:iComponentEvent = {id: componentId, action, value}
+      let sameValueEvent = filter(this.state.events, item => item['id'] === resEvent.id && item['action'] === resEvent.action  && item['value'] === resEvent.value)
+      if (sameValueEvent) {
+        resEvent.value = random(0,1) ? resEvent.value - 1 : resEvent.value + 1
+      }
+      config.debug.midiWatcher && console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)}`) // events ${JSON.stringify(this.state.events)}
+      this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
+    } else {
+      config.debug.midiWatcher && console.log(`[MIDI] midi event ${JSON.stringify(event)}, no action found`) 
     }
-    config.debug.midiWatcher && console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)}`) // events ${JSON.stringify(this.state.events)}
     
-    this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
   }
 
   onSettingsUpdate = (settings:iSettingsItem[]) => {
@@ -246,7 +250,9 @@ class DawPage extends React.Component<Props, iStateDawPage> {
         </Settings>
 
 
-        <MidiWatcher onUpdate={this.onMidiUpdate} debugPanel={this.state.midiDebugOpen}/>
+        <MidiWatcher 
+          onUpdate={this.onMidiUpdate} 
+          debugPanel={this.state.midiDebugOpen}/>
 
       </StyledApp>
     );

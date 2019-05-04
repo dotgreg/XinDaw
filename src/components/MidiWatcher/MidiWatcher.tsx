@@ -72,7 +72,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
     }
 
     handleMIDIMessage = (device:number) => (event:any) => {
-        console.log('handleMIDIMessage', event.data);
+        // console.log('handleMIDIMessage', event.data);
         
         if (event.data.length === 3) {
             // if we have a scroller, the message is the same, ie 63 for down and 65 for up, 
@@ -108,17 +108,17 @@ export default class MidiWatcher extends React.Component<Props,State> {
         return (
             <div>
                 <div className={cx(s.states.show(this.props.debugPanel) ,s.debug.fixedPopup(100))}>
-                    <div>
+                    {/* <div>
                         <BlockTitle s={12}>midi simulator</BlockTitle>
                         <Input type="number" value={this.state.simEvent} onChange={this.changeSimulatorEvent} />
                         <Input type="number" value={this.state.simValue} onChange={this.changeSimulatorValue} />
                         <Button onClick={this.simulateMidi}>trigger</Button>
-                    </div>
+                    </div> */}
                     {
                         this.state.lastEvent && 
                         <div>
-                            <BlockTitle>logger</BlockTitle>
-                            {this.state.lastEvent}
+                            {/* <BlockTitle>logger</BlockTitle> */}
+                            midi logger: {this.state.lastEvent}
                         </div>
                     }
                 </div>

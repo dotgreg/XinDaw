@@ -5,6 +5,7 @@ import Tone from 'tone'
 import {each} from 'lodash'
 import { iControlVar } from "../managers/types/control.type";
 import { analyzeCode } from "src/managers/code/analyzeCode";
+import { iPlayType } from "src/managers/types/general.types";
 
 interface optionsSoundTone {
     vars: iControlVar[] 
@@ -49,7 +50,8 @@ export class SoundTone {
     // LIFECYCLE FUNCTIONS
     //
 
-    play() {
+    
+    play(type?:iPlayType, note?:string, power?:number) {
         this.type === 'pattern' && Tone.Transport.scheduleOnce(t => {
             this.tone.mute = false
             this.tone.start(0)
@@ -57,7 +59,7 @@ export class SoundTone {
         console.log(this.type, this.tone);
         
         // for an event, it is just a function, so just starts it
-        this.type === 'event' && this.tone()
+        this.type === 'event' && this.tone(type, note, power)
         // this.type === 'event' && this.tone.play()
         // this.type === 'event' && this.tone.start()
     }

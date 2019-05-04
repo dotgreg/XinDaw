@@ -38,11 +38,11 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'event', value:65, eventName: 'soundsLibrary.list.down'},
                 {type: 'event', value:66, eventName: 'soundsLibrary.list.addToPart'},
 
-                {type: 'event', value:0, eventName: 'SoundPartManager.list.up'},
-                {type: 'event', value:0, eventName: 'SoundPartManager.list.down'},
-                {type: 'event', value:0, eventName: 'SoundPartManager.sound.pause'},
-                {type: 'event', value:0, eventName: 'SoundPartManager.sound.delete'},
-                {type: 'event', value:0, eventName: 'SoundPartManager.sound.play'},
+                {type: 'event', value:0, eventName: 'PartSoundsManager.list.up'},
+                {type: 'event', value:0, eventName: 'PartSoundsManager.list.down'},
+                {type: 'event', value:0, eventName: 'PartSoundsManager.sound.pause'},
+                {type: 'event', value:0, eventName: 'PartSoundsManager.sound.delete'},
+                {type: 'event', value:0, eventName: 'PartSoundsManager.sound.play'},
             ],
         }
 
