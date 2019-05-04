@@ -30,9 +30,12 @@ export default class SoundsLibrary extends React.Component<Props,{}> {
                 let event = this.props.eventIn
                 config.debug.SoundsLibrary && console.log('[SoundsLibrary] eventIn changed to', event)
                 let editedIndex = getEditedIndex(this.props.sounds)
-                if (event.action === 'list.up') this.editSound(this.props.sounds[editedIndex - 1]) 
-                if (event.action === 'list.down') this.editSound(this.props.sounds[editedIndex + 1]) 
-                if (event.action === 'list.addToPart') this.props.onAddCurrentPart(this.props.sounds[editedIndex]) 
+                
+                if (event.signalType.device === 'button' && event.signalType.event === 'pushDown') {
+                    if (event.action === 'list.up') this.editSound(this.props.sounds[editedIndex - 1]) 
+                    if (event.action === 'list.down') this.editSound(this.props.sounds[editedIndex + 1]) 
+                    if (event.action === 'list.addToPart') this.props.onAddCurrentPart(this.props.sounds[editedIndex]) 
+                }
             },
         })
     }
