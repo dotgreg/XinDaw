@@ -95,7 +95,11 @@ export default class Sound extends React.Component<Props,State> {
     //
     play = (midiInfos:iProcessedMidiInfos) => {
         config.debug.soundCompo && console.log(`[SOUND Comp] trigger play sound ${this.soundTone.type}`);
-        this.soundTone.play(midiInfos)
+        try {
+            this.soundTone.play(midiInfos)
+        } catch (error) {
+            alert(`[CODE ERROR] : ${error.message}`)
+        }
         this.setState({playStatus: 'playing'})
 
 

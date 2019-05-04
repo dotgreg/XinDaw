@@ -9,6 +9,7 @@ import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import Sound from 'src/components/Sound/Sound';
 import { BlockTitle, Li } from 'src/styles/components';
 import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
+import ErrorBoundary from '../ErrorBoundary';
 
 interface Props {
     part: iPart[]
@@ -84,14 +85,16 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                         {
                             this.props.sounds.map((sound,i) => (
                                 <Li key={i} className={cx( sound.edited && s.text.active)}>
-                                    <Sound
-                                        ref={`sound-${i}`}
-                                        sound={sound}   
-                                        controls={getItemFromId(sound.id,this.props.controls).controls}
-                                        playable={true}
-                                        onEdit={this.props.onTriggerSoundEdit}
-                                        onDelete={this.props.onRemoveSound}
-                                    />
+                                    <ErrorBoundary>
+                                        <Sound
+                                            ref={`sound-${i}`}
+                                            sound={sound}   
+                                            controls={getItemFromId(sound.id,this.props.controls).controls}
+                                            playable={true}
+                                            onEdit={this.props.onTriggerSoundEdit}
+                                            onDelete={this.props.onRemoveSound}
+                                        />
+                                    </ErrorBoundary>
                                 </Li>
                             ))
                         }

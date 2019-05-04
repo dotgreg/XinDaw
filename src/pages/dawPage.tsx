@@ -29,6 +29,7 @@ import config from 'src/config';
 import { consts } from 'src/constants';
 import { buildSettingsObj } from 'src/managers/settings.manager';
 import { getMidiSignalType } from 'src/managers/midi/signalType.midi';
+import ErrorBoundary from 'src/components/ErrorBoundary';
 
 interface Props {
   path?: string
@@ -169,18 +170,21 @@ class DawPage extends React.Component<Props, iStateDawPage> {
               />
 
         
-            <PartSoundsManager
-              part={getActiveItem(this.state.parts).sounds} 
-              // @ts-ignore
-              sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
-              controls={this.state.controls}
+                <ErrorBoundary>
+                  <PartSoundsManager
+                    // part={getActiveItem(this.state.parts).sounds} 
+                    // @ts-ignore
+                    sounds={getSoundsFromIds(getActiveItem(this.state.parts).sounds, this.state.sounds)} 
+                    controls={this.state.controls}
 
-              onUpdate={this.updateParts}
-              onRemoveSound={this.removeSoundToCurrentPart}
-              onTriggerSoundEdit={this.triggerSoundEdit}
+                    onUpdate={this.updateParts}
+                    onRemoveSound={this.removeSoundToCurrentPart}
+                    onTriggerSoundEdit={this.triggerSoundEdit}
 
-              eventIn={getItemFromId(consts.comps.partSoundsManager, this.state.events)}
-              />
+                    eventIn={getItemFromId(consts.comps.partSoundsManager, this.state.events)}
+                    />
+                </ErrorBoundary>
+              
           </Panel>
 
 
