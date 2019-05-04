@@ -66,7 +66,6 @@ export default class KeysBindingManager extends React.Component<Props,State> {
     initializeIfNothing = () => {
         if (typeof this.props.settings === 'undefined') {
             console.log('[SETTING] no settings found, init with the default ones', this.state.settings);
-            // this.setState({settings: this.state.settings})
             this.props.onUpdate(this.state.settings)
         } 
     }

@@ -123,17 +123,11 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   
 
   onMidiUpdate = (midiEvent:iMidiEvent) => {
-    console.log('onmidiupdate', midiEvent);
-    
     this.triggerEvent(midiEvent)
   }
 
   triggerEvent = (event: iMidiEvent) => {
-    console.log(this.state.settings);
-    
     let res = filter(this.state.settings, config => {
-      console.log(config.value, event.id);
-      
       return (config.type === 'event' && config.value === event.id)
     })
     if (!res[0]) return
@@ -144,7 +138,7 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     let value = event.value
 
     let resEvent:iComponentEvent = {id: componentId, action, value}
-    console.log(resEvent)
+    console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)}`)
 
     this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
   }
