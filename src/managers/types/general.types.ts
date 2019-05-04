@@ -5,5 +5,6 @@ export type iToneType = 'pattern'|'event'|'unknown'
 export interface iProcessedMidiInfos {
     type?:iPlayType, 
     note?:string, 
-    power?:number
+    power?:number,
+    rawNote?: number
 }

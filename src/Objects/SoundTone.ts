@@ -6,6 +6,7 @@ import {each} from 'lodash'
 import { iControlVar } from "../managers/types/control.type";
 import { analyzeCode } from "src/managers/code/analyzeCode";
 import { iPlayType, iToneType, iProcessedMidiInfos } from "src/managers/types/general.types";
+import { idKeyToNote } from "src/managers/keyboard";
 
 interface optionsSoundTone {
     vars: iControlVar[] 
@@ -59,7 +60,11 @@ export class SoundTone {
         // console.log(this.type, this.tone);
         
         // for an event, it is just a function, so just starts it
-        this.type === 'event' && this.tone(midiInfos.type, midiInfos.note, midiInfos.power)
+        let rest = {
+            rawNote: midiInfos.rawNote,
+            idKeyToNote: idKeyToNote
+        }
+        this.type === 'event' && this.tone(midiInfos.type, midiInfos.note, midiInfos.power, rest)
         // this.type === 'event' && this.tone.play()
         // this.type === 'event' && this.tone.start()
     }

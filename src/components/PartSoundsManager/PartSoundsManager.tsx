@@ -76,11 +76,11 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                     let note = idKeyToNote(event.raw.id)
                     console.log('keyboard event yay', event, idKeyToNote(event.raw.id));
                     if (event.signalType.event === 'pushDown') {
-                        editedSound.play({type: 'attack', note: note, power: event.raw.value}) 
+                        editedSound.play({type: 'attack', note: note, power: event.raw.value, rawNote: event.raw.id}) 
                     }
                     
                     if (event.signalType.event === 'pushUp') {
-                        editedSound.play({type: 'release', note: note, power: event.raw.value }) 
+                        editedSound.play({type: 'release', note: note, power: event.raw.value, rawNote: event.raw.id }) 
                     }
                     
                 }
