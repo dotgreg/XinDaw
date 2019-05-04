@@ -97,7 +97,14 @@ export default class Sound extends React.Component<Props,State> {
         config.debug.soundCompo && console.log(`[SOUND Comp] trigger play sound ${this.soundTone.type}`);
         this.soundTone.play(midiInfos)
         this.setState({playStatus: 'playing'})
-        if (this.soundTone.type === 'event') setTimeout(() => {this.setState({playStatus: 'paused'})}, 200)
+
+
+        if (this.soundTone.type === 'event') {
+            // if play is a general one or a release one, put it on pause after some time
+            if (!midiInfos.type || midiInfos.type === 'release') {
+                setTimeout(() => {this.setState({playStatus: 'paused'})}, 200)
+            }
+        }
     }
     pause = () => {
         config.debug.soundCompo && console.log('[SOUND Comp] trigger pause');
