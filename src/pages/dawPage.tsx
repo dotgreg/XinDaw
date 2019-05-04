@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import PartsManager from 'src/components/PartsManager/PartsManager';
-import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getItemFromId} from 'src/helpers/arrayHelper';
+import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayWithItem, updateIdArrayItem, getActiveItem, addSoundToPart, getSoundsFromIds, removeSoundToPart, getItemFromId, getItemFromProp} from 'src/helpers/arrayHelper';
 
 import { startToneApp } from 'src/managers/tone/startToneApp';
 import Controls from 'src/components/Controls/Controls';
 import MidiWatcher, { iMidiEvent } from 'src/components/MidiWatcher/MidiWatcher';
 
-import {filter} from 'lodash'
+import {filter,random} from 'lodash'
 import { iSound, tSound } from 'src/managers/types/sound.type';
 import { checkType, t } from 'src/managers/types/typeCheck';
 import { iPart, tPart } from 'src/managers/types/part.type';
@@ -122,8 +122,22 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     let action = eventName.replace(componentId+'.','')
     let value = event.value
 
+    
+    // if the value of the event is the same than the current one registered for the action
+    // ie for buttons that sends the same value all the time, like 64/65 or 127, then make it varying of 1
+    // to trigger the refresh
+    // if (this.state.events[resEvent.id])
+    // getItemFromProp('id')(resEvent.id)
     let resEvent:iComponentEvent = {id: componentId, action, value}
-    console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)}`, this.state.events)
+    let sameValueEvent = filter(this.state.events, item => item['id'] === resEvent.id && item['action'] === resEvent.action  && item['value'] === resEvent.value)
+    if (sameValueEvent) {
+      resEvent.value = random(0,1) ? resEvent.value - 1 : resEvent.value + 1
+      console.log(1);
+    }
+    console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)} // events ${JSON.stringify(this.state.events)}`)
+
+    //[MIDI] midi event {"id":64,"value":127} triggered action {"id":"soundsLibrary","action":"list.up","value":127} // events [{"id":"soundsLibrary","action":"list.up","value":127},{"id":"controls","action":"knob1","value":46}]
+
 
     
     this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
@@ -136,8 +150,6 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   public render() {
     // rerender everytime this.state changes, thus persist at that moment
     persistDB(this.state)
-    console.log(this.state.events);
-    
 
     return (
       <StyledApp> 

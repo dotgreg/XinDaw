@@ -33,10 +33,10 @@ export const getDB = ():any => {
     let raw = localStorage.getItem('DawPage') || "";
     let obj:iStateDawPage
     try {
-        obj = JSON.parse('dddd')
+        obj = JSON.parse(raw)
     } catch (error) {
         let backupKeyName = `backup-db-${random(0,1000000)}`
-        console.warn(`[DB] error when loading db, saving db in key ${backupKeyName} of localstorage and loading initial db:`, error);
+        console.warn(`[DB] error when loading db, saving db in key ${backupKeyName} of localstor[MIDI] midi event age and loading initial db:`, error);
         localStorage.setItem(backupKeyName, localStorage.getItem('DawPage') as string)
         obj = generateInitialDb()
     }

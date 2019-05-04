@@ -46,14 +46,6 @@ export default class KeysBindingManager extends React.Component<Props,State> {
             ],
         }
 
-        
-        // console.log('HEREREREREE', this.props.settings);
-        // if no settings found in props, put the default ones
-       
-        //console.log(this.props.settings);
-        // console.log(this.props.settings, 22);
-        
-
         this.propsListener = new ComponentPropsListener({
             'settings': () => {
                 // let settings = this.state.settings // to reinit settings
