@@ -26,6 +26,7 @@ import PartSoundsManager from 'src/components/PartSoundsManager/PartSoundsManage
 import hotkeys from 'hotkeys-js'
 import SoundsLibrary from 'src/components/SoundsLibrary/SoundsLibrary';
 import config from 'src/config';
+import { consts } from 'src/constants';
 
 interface Props {
   path?: string
@@ -105,7 +106,6 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   updateSoundControls = (soundControls:iSoundControls) => {
     this.setState({controls: updateIdArrayItem(soundControls)(this.state.controls)})
   }
-  
 
   onMidiSignal = (midiSignal:iMidiSignal) => {
     this.triggerEvent(midiSignal)
@@ -122,7 +122,8 @@ class DawPage extends React.Component<Props, iStateDawPage> {
       let componentId = eventName.split('.')[0]
       let action = eventName.replace(componentId+'.','')
       let value = midiSignal.value
-      let triggeredEvent:iComponentEvent = {id: componentId, action, value}
+      let state = midiSignal.state
+      let triggeredEvent:iComponentEvent = {id: componentId, action, value, state}
       
       // if the value of the event is the same than the current one registered for the action
       // ie for buttons that sends the same value all the time, like 64/65 or 127, then make it varying of 1
@@ -131,8 +132,6 @@ class DawPage extends React.Component<Props, iStateDawPage> {
       // if (sameValueEvent) {
       //   triggeredEvent.value = random(0,1) ? triggeredEvent.value - 1 : triggeredEvent.value + 1
       // }
-
-
 
       config.debug.midiWatcher && console.log(`[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered action ${JSON.stringify(triggeredEvent)}`) // events ${JSON.stringify(this.state.events)}
       this.setState({events: updateIdArrayItem(triggeredEvent)(this.state.events)})
@@ -172,7 +171,7 @@ class DawPage extends React.Component<Props, iStateDawPage> {
               onRemoveSound={this.removeSoundToCurrentPart}
               onTriggerSoundEdit={this.triggerSoundEdit}
 
-              eventIn={getItemFromId('PartSoundsManager', this.state.events)}
+              eventIn={getItemFromId(consts.comps.partSoundsManager, this.state.events)}
               />
           </Panel>
 
@@ -207,7 +206,7 @@ class DawPage extends React.Component<Props, iStateDawPage> {
               onUpdate={this.updateSounds}
               onAddCurrentPart={this.addSoundToCurrentPart}
 
-              eventIn={getItemFromId('soundsLibrary', this.state.events)}
+              eventIn={getItemFromId(consts.comps.soundsLibrary, this.state.events)}
               />
               
             <BlockTitle onClick={()=>{this.setState({settingsOpen: true})}}>Settings</BlockTitle> 

@@ -76,7 +76,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
         // console.log('handleMIDIMessage', event.data);
         if (event.data.length === 3) {
             
-            let res:iMidiSignal = {state:event.data[1],  id: event.data[1], value: event.data[2], device: device}
+            let res:iMidiSignal = {state:event.data[0],  id: event.data[1], value: event.data[2], device: device}
 
             // for watcher display
             this.setState({lastEvent: `${event.data[0]} ${event.data[1]} ${event.data[2]} on device ${res.device}`})

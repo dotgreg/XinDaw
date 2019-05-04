@@ -4,6 +4,7 @@ import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { iSettingsItem } from 'src/managers/types/settings.type';
 import { Input } from 'src/styles/components';
 import styled from 'react-emotion';
+import { consts } from 'src/constants';
 
 
 interface Props {
@@ -34,16 +35,16 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'event', value:56, key: 'controls.knob9'},
                 {type: 'event', value:57, key: 'controls.knob10'},
 
-                {type: 'event', value:64, key: 'soundsLibrary.list.up'},
-                {type: 'event', value:65, key: 'soundsLibrary.list.down'},
-                {type: 'event', value:66, key: 'soundsLibrary.list.addToPart'},
+                {type: 'event', value:64, key: `${consts.comps.soundsLibrary}.list.up`},
+                {type: 'event', value:65, key: `${consts.comps.soundsLibrary}.list.down`},
+                {type: 'event', value:66, key: `${consts.comps.soundsLibrary}.list.addToPart`},
 
-                {type: 'event', value:0, key: 'PartSoundsManager.list.up'},
-                {type: 'event', value:0, key: 'PartSoundsManager.list.down'},
-                {type: 'event', value:0, key: 'PartSoundsManager.sound.pause'},
-                {type: 'event', value:0, key: 'PartSoundsManager.sound.delete'},
-                {type: 'event', value:0, key: 'PartSoundsManager.sound.play'},
-                {type: 'event', value:0, key: 'PartSoundsManager.sound.toggle'},
+                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.list.up`},
+                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.list.down`},
+                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.pause`},
+                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.delete`},
+                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.play`},
+                {type: 'event', value:0, key: `${consts.comps.partSoundsManager}.sound.toggle`},
             ],
         }
 
@@ -57,7 +58,7 @@ export default class KeysBindingManager extends React.Component<Props,State> {
     }
 
     initializeIfNothing = () => {
-        if (typeof this.props.settings === 'undefined') {
+        if (typeof this.props.settings === 'undefined' || this.props.settings.length === 0) {
             console.log('[SETTING] no settings found, init with the default ones', this.state.settings);
             this.props.onUpdate(this.state.settings)
         } 
