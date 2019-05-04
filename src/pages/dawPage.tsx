@@ -5,7 +5,7 @@ import { getEditedItem, arrayWithItemsToNotEdited, arrayWithItemToEdited, arrayW
 
 import { startToneApp } from 'src/managers/tone/startToneApp';
 import Controls from 'src/components/Controls/Controls';
-import MidiWatcher, { iMidiEvent } from 'src/components/MidiWatcher/MidiWatcher';
+import MidiWatcher, { iMidiSignal }  from 'src/components/MidiWatcher/MidiWatcher';
 
 import {filter,random} from 'lodash'
 import { iSound, tSound } from 'src/managers/types/sound.type';
@@ -107,34 +107,37 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   }
   
 
-  onMidiUpdate = (midiEvent:iMidiEvent) => {
-    this.triggerEvent(midiEvent)
+  onMidiSignal = (midiSignal:iMidiSignal) => {
+    this.triggerEvent(midiSignal)
   }
 
-  triggerEvent = (event: iMidiEvent) => {
+  triggerEvent = (midiSignal: iMidiSignal) => {
     let res = filter(this.state.settings, config => {
-      return (config.type === 'event' && config.value === event.id)
+      return (config.type === 'event' && config.value === midiSignal.id)
     })
 
     // Action found!
     if (res[0]) {
-      let eventName = res[0].eventName
+      let eventName = res[0].key
       let componentId = eventName.split('.')[0]
       let action = eventName.replace(componentId+'.','')
-      let value = event.value
+      let value = midiSignal.value
+      let triggeredEvent:iComponentEvent = {id: componentId, action, value}
       
       // if the value of the event is the same than the current one registered for the action
       // ie for buttons that sends the same value all the time, like 64/65 or 127, then make it varying of 1
       // to trigger the refresh
-      let resEvent:iComponentEvent = {id: componentId, action, value}
-      let sameValueEvent = filter(this.state.events, item => item['id'] === resEvent.id && item['action'] === resEvent.action  && item['value'] === resEvent.value)
-      if (sameValueEvent) {
-        resEvent.value = random(0,1) ? resEvent.value - 1 : resEvent.value + 1
-      }
-      config.debug.midiWatcher && console.log(`[MIDI] midi event ${JSON.stringify(event)} triggered action ${JSON.stringify(resEvent)}`) // events ${JSON.stringify(this.state.events)}
-      this.setState({events: updateIdArrayItem(resEvent)(this.state.events)})
+      // let sameValueEvent = filter(this.state.events, item => item['id'] === triggeredEvent.id && item['action'] === triggeredEvent.action  && item['value'] === triggeredEvent.value)
+      // if (sameValueEvent) {
+      //   triggeredEvent.value = random(0,1) ? triggeredEvent.value - 1 : triggeredEvent.value + 1
+      // }
+
+
+
+      config.debug.midiWatcher && console.log(`[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered action ${JSON.stringify(triggeredEvent)}`) // events ${JSON.stringify(this.state.events)}
+      this.setState({events: updateIdArrayItem(triggeredEvent)(this.state.events)})
     } else {
-      config.debug.midiWatcher && console.log(`[MIDI] midi event ${JSON.stringify(event)}, no action found`) 
+      config.debug.midiWatcher && console.log(`[MIDI] midi signal ${JSON.stringify(midiSignal)}, no action found`) 
     }
     
   }
@@ -251,7 +254,7 @@ class DawPage extends React.Component<Props, iStateDawPage> {
 
 
         <MidiWatcher 
-          onUpdate={this.onMidiUpdate} 
+          onUpdate={this.onMidiSignal} 
           debugPanel={this.state.midiDebugOpen}/>
 
       </StyledApp>

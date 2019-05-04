@@ -56,7 +56,7 @@ export class SoundTone {
             this.tone.mute = false
             this.tone.start(0)
         }, 1)
-        console.log(this.type, this.tone);
+        // console.log(this.type, this.tone);
         
         // for an event, it is just a function, so just starts it
         this.type === 'event' && this.tone(type, note, power)

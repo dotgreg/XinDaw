@@ -104,7 +104,7 @@ export default class Sound extends React.Component<Props,State> {
         this.setState({playStatus: 'paused'})
     }
     togglePlay = () => {
-        // console.log(`togglePlay to ${}`);
+        console.log(`togglePlay to not ${this.state.playStatus}`);
         this.state.playStatus === 'paused' ? this.play() : this.pause()
     }
     stop = () => {

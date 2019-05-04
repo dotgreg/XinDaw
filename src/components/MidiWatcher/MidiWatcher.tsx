@@ -9,7 +9,8 @@ declare var navigator:any
 // const sound = new SoundTone(;dsadsadsa)
 
 
-export interface iMidiEvent {
+export interface iMidiSignal {
+    state: number
     id: number
     value: number
     device: number
@@ -73,31 +74,11 @@ export default class MidiWatcher extends React.Component<Props,State> {
 
     handleMIDIMessage = (device:number) => (event:any) => {
         // console.log('handleMIDIMessage', event.data);
-        
         if (event.data.length === 3) {
-            // if we have a scroller, the message is the same, ie 63 for down and 65 for up, 
-            // make that number varying to trigger react refresh
-            // console.log(333, event);
             
-            let val = event.data[2]
-            // if (event.data[2] === 63) {
-            //     this.scrollers.down = !this.scrollers.down
-            //     val = this.scrollers.down ? 63 : 62
-            // }
-            // if (event.data[2] === 65) {
-            //     this.scrollers.up = !this.scrollers.up
-            //     val = this.scrollers.up ? 65 : 66
-            // }
-            // if (event.data[2] === 64) {
-            //     this.scrollers.up = !this.scrollers.up
-            //     val = this.scrollers.up ? 61 : 67
-            // }
-            
-            this.lastEvent = val
+            let res:iMidiSignal = {state:event.data[1],  id: event.data[1], value: event.data[2], device: device}
 
-            let res:iMidiEvent = {id: event.data[1], value: val, device: device}
-            // config.debug.midiWatcher && console.log('[MIDI WATCHER] event: ', res)
-
+            // for watcher display
             this.setState({lastEvent: `${event.data[0]} ${event.data[1]} ${event.data[2]} on device ${res.device}`})
             
             this.props.onUpdate(res)

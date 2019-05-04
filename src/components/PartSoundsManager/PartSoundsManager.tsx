@@ -39,6 +39,7 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                 if (event.action === 'sound.delete' && this.props.sounds[editedIndex]) this.props.onRemoveSound(this.props.sounds[editedIndex]) 
                 if (event.action === 'sound.play' && editedSound)  editedSound.play()
                 if (event.action === 'sound.pause' && editedSound) editedSound.pause() 
+                if (event.action === 'sound.toggle' && editedSound) editedSound.togglePlay() 
             },
         })
     }
