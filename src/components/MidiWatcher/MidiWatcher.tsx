@@ -80,20 +80,20 @@ export default class MidiWatcher extends React.Component<Props,State> {
     }
 
     handleMIDIMessage = (event:any) => {
-        console.log('handleMIDIMessage', event);
+        // console.log('handleMIDIMessage', event);
         
         if (event.data.length === 3) {
             // if we have a scroller, the message is the same, ie 63 for down and 65 for up, 
             // make that number varying to trigger react refresh
             let val = event.data[2]
-            if (event.data[2] === 63) {
-                this.scrollers.down = !this.scrollers.down
-                val = this.scrollers.down ? 63 : 62
-            }
-            if (event.data[2] === 65) {
-                this.scrollers.up = !this.scrollers.up
-                val = this.scrollers.up ? 65 : 66
-            }
+            // if (event.data[2] === 63) {
+            //     this.scrollers.down = !this.scrollers.down
+            //     val = this.scrollers.down ? 63 : 62
+            // }
+            // if (event.data[2] === 65) {
+            //     this.scrollers.up = !this.scrollers.up
+            //     val = this.scrollers.up ? 65 : 66
+            // }
             // if (event.data[2] === 64) {
             //     this.scrollers.up = !this.scrollers.up
             //     val = this.scrollers.up ? 61 : 67

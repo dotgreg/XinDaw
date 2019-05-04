@@ -1,9 +1,9 @@
 const config = {
     debug: {
-        soundsCrud: true,
-        soundCompo: true,
+        soundsCrud: false,
+        soundCompo: false,
         
-        soundEditor: true,
+        soundEditor: false,
         codeEditor: false,
         codeEval: false,
         codeAnalyze: false,
@@ -13,7 +13,7 @@ const config = {
         SoundsLibrary: false,
         
         controls: false,
-        midiWatcher: true,
+        midiWatcher: false,
 
         ComponentPropsListener: false,
 

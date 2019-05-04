@@ -123,11 +123,17 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   
 
   onMidiUpdate = (midiEvent:iMidiEvent) => {
+    console.log('onmidiupdate', midiEvent);
+    
     this.triggerEvent(midiEvent)
   }
 
   triggerEvent = (event: iMidiEvent) => {
+    console.log(this.state.settings);
+    
     let res = filter(this.state.settings, config => {
+      console.log(config.value, event.id);
+      
       return (config.type === 'event' && config.value === event.id)
     })
     if (!res[0]) return
@@ -150,6 +156,8 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   public render() {
     // rerender everytime this.state changes, thus persist at that moment
     persistDB(this.state)
+    console.log(this.state.events);
+    
 
     return (
       <StyledApp> 
@@ -208,7 +216,7 @@ class DawPage extends React.Component<Props, iStateDawPage> {
               onUpdate={this.updateSounds}
               onAddCurrentPart={this.addSoundToCurrentPart}
 
-              eventIn={getItemFromId('SoundsLibrary', this.state.events)}
+              eventIn={getItemFromId('soundsLibrary', this.state.events)}
               />
               
             <BlockTitle onClick={()=>{this.setState({settingsOpen: true})}}>Settings</BlockTitle> 
@@ -228,7 +236,11 @@ class DawPage extends React.Component<Props, iStateDawPage> {
           </SettingsPart>
 
           <SettingsPart name="Interface" h={10}>
-            <Checkbox label="midi watcher panel enabled" initVal={this.state.midiDebugOpen} onChange={(res)=>{this.setState({midiDebugOpen: res})}} />
+            <Checkbox 
+              label="midi watcher panel enabled" 
+              initVal={this.state.midiDebugOpen} 
+              onChange={(res)=>{this.setState({midiDebugOpen: res})}
+            } />
           </SettingsPart>
 
           <SettingsPart name="Key Bindings" h={50}>

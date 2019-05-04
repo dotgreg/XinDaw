@@ -34,17 +34,25 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'event', value:56, eventName: 'controls.knob9'},
                 {type: 'event', value:57, eventName: 'controls.knob10'},
 
-                {type: 'event', value:58, eventName: 'soundsManager.list.up'},
-                {type: 'event', value:58, eventName: 'soundsManager.list.down'},
-                {type: 'event', value:60, eventName: 'soundsManager.list.addToPart'},
+                {type: 'event', value:64, eventName: 'soundsLibrary.list.up'},
+                {type: 'event', value:65, eventName: 'soundsLibrary.list.down'},
+                {type: 'event', value:66, eventName: 'soundsLibrary.list.addToPart'},
 
-                {type: 'event', value:61, eventName: 'SoundPartManager.list.up'},
-                {type: 'event', value:62, eventName: 'SoundPartManager.list.down'},
-                {type: 'event', value:63, eventName: 'SoundPartManager.sound.pause'},
-                {type: 'event', value:64, eventName: 'SoundPartManager.sound.delete'},
-                {type: 'event', value:65, eventName: 'SoundPartManager.sound.play'},
+                {type: 'event', value:0, eventName: 'SoundPartManager.list.up'},
+                {type: 'event', value:0, eventName: 'SoundPartManager.list.down'},
+                {type: 'event', value:0, eventName: 'SoundPartManager.sound.pause'},
+                {type: 'event', value:0, eventName: 'SoundPartManager.sound.delete'},
+                {type: 'event', value:0, eventName: 'SoundPartManager.sound.play'},
             ],
         }
+
+        
+        // console.log('HEREREREREE', this.props.settings);
+        // if no settings found in props, put the default ones
+       
+        //console.log(this.props.settings);
+        // console.log(this.props.settings, 22);
+        
 
         this.propsListener = new ComponentPropsListener({
             'settings': () => {
@@ -53,6 +61,14 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 this.setState({settings: settings})
             },
         })
+    }
+
+    initializeIfNothing = () => {
+        if (typeof this.props.settings === 'undefined') {
+            console.log('[SETTING] no settings found, init with the default ones', this.state.settings);
+            // this.setState({settings: this.state.settings})
+            this.props.onUpdate(this.state.settings)
+        } 
     }
     
     componentDidUpdate = () => { this.propsListener.listen(this.props) }
@@ -63,6 +79,8 @@ export default class KeysBindingManager extends React.Component<Props,State> {
     }
 
     render() {
+        this.initializeIfNothing()
+        
         return (
            <Styled>
                {
