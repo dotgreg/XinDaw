@@ -1,5 +1,6 @@
 import { t } from "./typeCheck";
 import { iMidiSignalType } from "../midi/signalType.midi";
+import { iMidiSignal } from "src/components/MidiWatcher/MidiWatcher";
 
 // export const tComponentEvent = t.type({
 //     id: t.string,
@@ -17,4 +18,5 @@ export interface iComponentEvent {
     value: number
     state: number
     signalType: iMidiSignalType
+    raw: iMidiSignal
 }

@@ -117,33 +117,37 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   }
 
   triggerEvent = (midiSignal: iMidiSignal) => {
-    let res = filter(this.state.settings, config => {
-      return (config.type === 'event' && config.value === midiSignal.id)
-    })
+    let log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} no action triggered`
+    let value = midiSignal.value
+    let state = midiSignal.state
+    let raw = midiSignal
+    let signalType = getMidiSignalType(midiSignal)
 
-    // Action found!
-    if (res[0]) {
-      let eventName = res[0].key
-      let componentId = eventName.split('.')[0]
-      let action = eventName.replace(componentId+'.','')
-      let value = midiSignal.value
-      let state = midiSignal.state
-      let signalType = getMidiSignalType(midiSignal)
-      let triggeredEvent:iComponentEvent = {id: componentId, action, value, state, signalType}
-      
-      // if the value of the event is the same than the current one registered for the action
-      // ie for buttons that sends the same value all the time, like 64/65 or 127, then make it varying of 1
-      // to trigger the refresh
-      // let sameValueEvent = filter(this.state.events, item => item['id'] === triggeredEvent.id && item['action'] === triggeredEvent.action  && item['value'] === triggeredEvent.value)
-      // if (sameValueEvent) {
-      //   triggeredEvent.value = random(0,1) ? triggeredEvent.value - 1 : triggeredEvent.value + 1
-      // }
-
-      config.debug.midiWatcher && console.log(`[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered action ${JSON.stringify(triggeredEvent)}`) // events ${JSON.stringify(this.state.events)}
-      this.setState({events: updateIdArrayItem(triggeredEvent)(this.state.events)})
-    } else {
-      config.debug.midiWatcher && console.log(`[MIDI] midi signal ${JSON.stringify(midiSignal)}, no action found`) 
+    if (signalType.device === 'button') {
+      let res = filter(this.state.settings, config => {
+        return (config.type === 'event' && config.value === midiSignal.id)
+      })
+  
+      // Action found!
+      if (res[0]) {
+        let eventName = res[0].key
+        let componentId = eventName.split('.')[0]
+        let action = eventName.replace(componentId+'.','')
+        let triggeredEvent:iComponentEvent = {id: componentId, action, value, state, signalType, raw}
+        
+        log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered BUTTON action ${JSON.stringify(triggeredEvent)}`
+        this.setState({events: updateIdArrayItem(triggeredEvent)(this.state.events)})
+      } 
     }
+
+    else if (signalType.device === 'keyboard') {
+      let value = midiSignal.value
+      let triggeredEvent:iComponentEvent = {id: consts.comps.partSoundsManager, action: "keyboard.pressed", value, state, signalType, raw}
+      log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered KEYBOARD action ${JSON.stringify(triggeredEvent)}`
+      this.setState({events: updateIdArrayItem(triggeredEvent)(this.state.events)})
+    }
+    
+    if (config.debug.midiWatcher && log) console.log(log)
     
   }
 

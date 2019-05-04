@@ -10,6 +10,7 @@ import Sound from 'src/components/Sound/Sound';
 import { BlockTitle, Li } from 'src/styles/components';
 import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import ErrorBoundary from '../ErrorBoundary';
+import { idKeyToNote } from 'src/managers/keyboard';
 
 interface Props {
     part: iPart[]
@@ -47,6 +48,7 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                     if (event.action === 'sound.toggle' && editedSound) editedSound.togglePlay() 
                 }
 
+                // for events1-10 push buttons, working with patterns and events
                 for (let i = 1; i <= 10; i++) {
                     if (event.action === `play.sound${i}`) {
                         // let sound = this.props.sounds[i-1]
@@ -67,6 +69,11 @@ export default class PartSoundsManager extends React.Component<Props,State> {
 
                         }
                     }                 
+                }
+
+                if (event.signalType.device === 'keyboard' ) {
+                    console.log('keyboard event yay', event, idKeyToNote(event.raw.id));
+                    
                 }
                 
             },
