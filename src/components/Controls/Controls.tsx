@@ -6,6 +6,9 @@ import { ComponentPropsListener } from 'src/Objects/ComponentPropsListener';
 import { iControlVar, iSoundControls } from 'src/managers/types/control.type';
 import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 import Knob from 'src/components/Knob/Knob';
+import { getSettingsObj } from 'src/managers/settings.manager';
+import { consts } from 'src/constants';
+import { interpolateValToNewRange } from 'src/helpers/interpolateRanges';
 
 interface Props {
     soundId: string
@@ -51,11 +54,35 @@ export default class Controls extends React.Component<Props,State> {
         if (this.state.initSoundControls) return this.setState({initSoundControls: false})
         let controls = this.state.controlVars
 
-        let knobIndex = 0
-        let knob = this.refs[`knob-${knobIndex}`] as Knob
+        // if it is a knob event, get which knob to update
+        let event = this.props.eventIn
+        if (!event || !event.signalType) return 
+        if (!event.action.startsWith('knob')) return
 
+        let knobIndex = parseInt(event.action.replace('knob',''))
+        if (typeof knobIndex !== 'number') return
+        // it starts by 1
+        knobIndex = knobIndex - 1
+        
+        let knob = this.refs[`knob-${knobIndex}`] as Knob
+        
         if (controls && controls[knobIndex] && knob) {
-            knob.modifyValue(this.props.eventIn.value)
+            // interpolate start and end value of knob from config to the current min/max of the knob
+            let minKnobHard = getSettingsObj()[consts.settings['knob.config.minValue']] as number
+            let maxKnobHard = getSettingsObj()[consts.settings['knob.config.maxValue']] as number
+
+            console.log(getSettingsObj());
+            
+            let newValueKnob = interpolateValToNewRange({
+                value: this.props.eventIn.value,
+                min: minKnobHard,
+                max: maxKnobHard,
+                minNew: knob.props.min,
+                maxNew: knob.props.max,
+            })
+
+
+            knob.modifyValue(newValueKnob)
         }
     }
 

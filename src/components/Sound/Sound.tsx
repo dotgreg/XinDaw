@@ -64,7 +64,7 @@ export default class Sound extends React.PureComponent<Props,State> {
         // if controls updated
         if (!areSame(this.props.controls, this.hist.controls)) {
             
-            console.log(`componentDIdUpdate Sound ${this.props.sound.name}`,this.props.controls);
+            // console.log(`componentDIdUpdate Sound ${this.props.sound.name}`,this.props.controls);
             
             this.soundTone.updateControls(this.props.controls || [])
 

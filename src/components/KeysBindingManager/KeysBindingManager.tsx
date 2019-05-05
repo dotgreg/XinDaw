@@ -22,7 +22,6 @@ export default class KeysBindingManager extends React.Component<Props,State> {
 
     constructor(props) {
         super(props)
-        console.log(consts.comps.soundsLibrary);
         
         this.state = {
             settings: [
@@ -64,14 +63,18 @@ export default class KeysBindingManager extends React.Component<Props,State> {
                 {type: 'settings', value:144, key: `${consts.settings['button.stateCode.pushDown']}`},
                 {type: 'settings', value:128, key: `${consts.settings['button.stateCode.pushUp']}`},
                 {type: 'settings', value:176, key: `${consts.settings['knob.stateCode.change']}`},
+
+                {type: 'settings', value:0, key: `${consts.settings['knob.config.minValue']}`},
+                {type: 'settings', value:127, key: `${consts.settings['knob.config.maxValue']}`},
             ],
         }
 
         this.propsListener = new ComponentPropsListener({
             'settings': () => {
                 // let settings = this.state.settings // to reinit settings
-                let settings = mergeArraysByProp('eventName', this.state.settings, this.props.settings)
-                this.setState({settings: settings})
+                // let settings = mergeArraysByProp('eventName', this.state.settings, this.props.settings)
+                // this.setState({settings: settings})
+                this.setState({settings: this.state.settings})
             },
         })
     }

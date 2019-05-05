@@ -9,6 +9,8 @@ export const consts = {
         ['button.stateCode.pushDown'] : 'button.stateCode.pushDown',
         ['button.stateCode.pushUp'] : 'button.stateCode.pushUp',
         ['knob.stateCode.change'] : 'knob.stateCode.change',
+        ['knob.config.maxValue'] : 'knob.config.maxValue',
+        ['knob.config.minValue'] : 'knob.config.minValue',
     }
 
 }
