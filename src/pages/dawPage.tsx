@@ -123,7 +123,7 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     let signalType = getMidiSignalType(midiSignal)
     let log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} no action triggered (${JSON.stringify(signalType)})`
 
-    if (signalType.device === 'button') {
+    if (signalType.device === 'button' || signalType.device === 'knob') {
       let res = filter(this.state.settings, config => {
         return (config.type === 'event' && config.value === midiSignal.id)
       })

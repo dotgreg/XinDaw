@@ -50,8 +50,13 @@ export default class Controls extends React.Component<Props,State> {
         // only updating after initSoundsControls is false
         if (this.state.initSoundControls) return this.setState({initSoundControls: false})
         let controls = this.state.controlVars
-        if (controls && controls[0]) controls[0].value = this.props.eventIn.value
-        this.setState({controlVars: controls})
+
+        let knobIndex = 0
+        let knob = this.refs[`knob-${knobIndex}`] as Knob
+
+        if (controls && controls[knobIndex] && knob) {
+            knob.modifyValue(this.props.eventIn.value)
+        }
     }
 
 
@@ -65,9 +70,10 @@ export default class Controls extends React.Component<Props,State> {
         return (
             <div>
                 {
-                    this.state.controlVars.map( (control,index) => (
-                        <div key={index}>
+                    this.state.controlVars.map( (control,i) => (
+                        <div key={i}>
                             <Knob
+                                ref={`knob-${i}`}
                                 id={control.id}
                                 name={control.name}
                                 val={control.value}

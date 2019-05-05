@@ -26,7 +26,7 @@ interface State {
     toneType: string|null
 }
 
-export default class Sound extends React.Component<Props,State> {
+export default class Sound extends React.PureComponent<Props,State> {
 
     hist:{
         sound: iSound | undefined
@@ -63,6 +63,8 @@ export default class Sound extends React.Component<Props,State> {
     componentDidUpdate () {
         // if controls updated
         if (!areSame(this.props.controls, this.hist.controls)) {
+            
+            console.log(`componentDIdUpdate Sound ${this.props.sound.name}`,this.props.controls);
             
             this.soundTone.updateControls(this.props.controls || [])
 

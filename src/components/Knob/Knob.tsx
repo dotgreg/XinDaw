@@ -71,7 +71,7 @@ export default class Knob extends React.Component<Props, State> {
     // @ts-ignore
     this.refs.input.value = round(panValue, this.state.precision)
 
-    this.changeValue()
+    this.triggerUpdateOnValueChange()
   }
 
   handlePanStart = e => {
@@ -81,8 +81,12 @@ export default class Knob extends React.Component<Props, State> {
 
   modifyValueByInput = e => {
     this.setState({val: parseFloat(e.target.value)}) 
-    
-    this.changeValue()
+    this.triggerUpdateOnValueChange()
+  }
+ 
+  modifyValue = (newKnobValue:number) => {
+    this.setState({val: newKnobValue}) 
+    this.triggerUpdateOnValueChange()
   }
 
   // UI
@@ -99,7 +103,7 @@ export default class Knob extends React.Component<Props, State> {
   // DATA FLOW
   //
 
-  changeValue = () => {
+  triggerUpdateOnValueChange = () => {
     this.props.onValueChange(this.props.id, this.state.val)
     this.updateCurrentPercentage()
   }

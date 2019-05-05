@@ -13,7 +13,7 @@ const config = {
         SoundsLibrary: false,
         
         controls: false,
-        midiWatcher: true,
+        midiWatcher: false,
 
         ComponentPropsListener: false,
 

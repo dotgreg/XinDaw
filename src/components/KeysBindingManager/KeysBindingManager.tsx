@@ -103,9 +103,7 @@ export default class KeysBindingManager extends React.Component<Props,State> {
 
     render() {
         this.initializeAppsSettings()  
-        console.log(this.state.settings );
-        
-        
+        // console.log(this.state.settings );
         return (
            <Styled>
                {

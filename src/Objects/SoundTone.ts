@@ -85,8 +85,8 @@ export class SoundTone {
             each(this.options.vars, varTone => {
                 if (varControl.id === varTone.id) {
                     // console.log(`controlvar modif sound ${varTone.name} to ${varControl.value}`)
-                    if (varTone.target && varTone.target.value) varTone.target.value = varControl.value
-                    else console.warn('[SOUNDTONE] cannot update varTone.target.value!')
+                    if (typeof varTone.target !== 'undefined' && varTone.target.value) varTone.target.value = varControl.value
+                    else console.warn('[SOUNDTONE] cannot update varTone.target.value!', this.options.vars, controlVars)
                 }
             })
         })
