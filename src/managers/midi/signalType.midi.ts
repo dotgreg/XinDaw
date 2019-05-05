@@ -2,8 +2,8 @@ import { iMidiSignal } from "src/components/MidiWatcher/MidiWatcher";
 import { getSettingsObj } from "../settings.manager";
 import { consts } from "src/constants";
 
-type idevice = 'keyboard' | 'button' | null
-type ievent = 'pushDown' | 'pushUp' | null
+type idevice = 'keyboard' | 'button' | 'knob' | null
+type ievent = 'pushDown' | 'pushUp' | 'changed' | null
 
 export interface iMidiSignalType {
     device: idevice
@@ -34,6 +34,12 @@ export const getMidiSignalType = (midiSignal:iMidiSignal):iMidiSignalType => {
         return {
             device: 'keyboard',
             event: 'pushDown',
+        }
+    }
+    else if (midiSignal.state === getSettingsObj()[consts.settings['knob.stateCode.change']]) {
+        return {
+            device: 'knob',
+            event: 'changed',
         }
     }
     else {

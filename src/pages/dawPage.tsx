@@ -117,11 +117,11 @@ class DawPage extends React.Component<Props, iStateDawPage> {
   }
 
   triggerEvent = (midiSignal: iMidiSignal) => {
-    let log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} no action triggered`
     let value = midiSignal.value
     let state = midiSignal.state
     let raw = midiSignal
     let signalType = getMidiSignalType(midiSignal)
+    let log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} no action triggered (${JSON.stringify(signalType)})`
 
     if (signalType.device === 'button') {
       let res = filter(this.state.settings, config => {
