@@ -97,7 +97,7 @@ export default class PartSoundsManager extends React.Component<Props,State> {
             <div className="sounds" >
                 <BlockTitle>Current Part</BlockTitle>
                 <div className="sounds" >
-                    <ul>
+                    <ol>
                         {
                             this.props.sounds.map((sound,i) => (
                                 <Li key={i} className={cx( sound.edited && s.text.active)}>
@@ -114,7 +114,7 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                                 </Li>
                             ))
                         }
-                    </ul>
+                    </ol>
                 </div>
             </div>
         )

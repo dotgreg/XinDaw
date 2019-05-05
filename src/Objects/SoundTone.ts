@@ -70,12 +70,12 @@ export class SoundTone {
     }
     
     pause() {
-        this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { this.tone.mute = true }, 1)
+        this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { if (this.tone) this.tone.mute = true }, 1)
         // if(this.type === 'event') this.tone.mute = true
     }
 
     destroy() {
-        this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { this.tone.stop().dispose() }, 1)
+        this.type === 'pattern' && Tone.Transport.scheduleOnce(t => { if (this.tone) this.tone.stop().dispose() }, 1)
         // this.type === 'event' && Tone.Transport.clear(this.tone)
     }
 

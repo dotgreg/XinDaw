@@ -8,5 +8,5 @@ export const startToneApp = () => {
     // @ts-ignore
     window.Tone = Tone
 
-    Tone.context.latencyHint = "interactive"
+    Tone.context.latencyHint = "fastest"
 }

@@ -37,6 +37,12 @@ export const Li = styled('li')`
     margin: 0px 0px 0px 10px;
 `
 
+export const Ol = styled('ol')`
+    ${fonts.base};
+    font-size: 12px;
+    margin: 0px 0px 0px 10px;
+`
+
 export const Input =  styled('input')`
   border: none;
   padding: 10px;
