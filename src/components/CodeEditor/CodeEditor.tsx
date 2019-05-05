@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 import config from 'src/config';
+// import styled from 'react-emotion';
+import styled from 'react-emotion';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/theme/monokai.css');
@@ -38,14 +40,25 @@ export default class CodeEditor extends React.Component<Props, {}> {
     }
 
 		return (
-      <div className="component-editor">
-        <CodeMirror
-          value={this.props.code}
-          onChange={(editor, data, value) => {
-            this.updateCode(value)
-          }}
-          options={options} />
-      </div>
+      <Styled>
+        <div className="component-editor">
+          <CodeMirror
+            value={this.props.code}
+            onChange={(editor, data, value) => {
+              this.updateCode(value)
+            }}
+            options={options} />
+        </div>
+      </Styled >
     )
   }
 }
+
+const Styled = styled('div')`
+    .component-editor {
+      .CodeMirror {
+        height: 60vh;
+        min-height: 300px;
+      }
+    }
+`
