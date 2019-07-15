@@ -46,11 +46,8 @@ export const getMidiSignalType = (midiSignal:iMidiSignal):iMidiSignalType => {
             event: 'changed',
         }
     }
-
-    console.log(`[SignalType]`,midiSignal,'->', res, getSettingsObj()[consts.settings['keyboard.stateCode.pushDown']], getSettingsObj()[consts.settings['button.stateCode.pushDown']]);
-    
+    // console.log(`[SignalType]`,midiSignal,'->', res, getSettingsObj()[consts.settings['keyboard.stateCode.pushDown']], getSettingsObj()[consts.settings['button.stateCode.pushDown']]);
 
     return res
-    
 }
 

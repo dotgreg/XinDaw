@@ -3,6 +3,7 @@ import config from 'src/config';
 import { cx } from 'emotion';
 import s from 'src/styles';
 import { Input, Button, BlockTitle } from 'src/styles/components';
+import { iComponentEvent } from 'src/managers/types/componentEvent.type';
 
 declare var navigator:any
 
@@ -19,6 +20,7 @@ export interface iMidiSignal {
 interface Props {
     onUpdate: Function
     debugPanel: boolean
+    eventIn: iComponentEvent[]
 }
 
 interface State {
@@ -86,6 +88,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
     }
 
     render() {
+        let lastActionTriggered = this.props.eventIn.length && this.props.eventIn[this.props.eventIn.length-1].action
         return (
             <div>
                 <div className={cx(s.states.show(this.props.debugPanel) ,s.debug.fixedPopup(100))}>
@@ -99,7 +102,7 @@ export default class MidiWatcher extends React.Component<Props,State> {
                         this.state.lastEvent && 
                         <div>
                             {/* <BlockTitle>logger</BlockTitle> */}
-                            midi logger: {this.state.lastEvent}
+                            midi logger: {this.state.lastEvent} -> {lastActionTriggered }
                         </div>
                     }
                 </div>

@@ -279,7 +279,9 @@ class DawPage extends React.Component<Props, iStateDawPage> {
 
         <MidiWatcher 
           onUpdate={this.onMidiSignal} 
-          debugPanel={this.state.midiDebugOpen}/>
+          debugPanel={this.state.midiDebugOpen}
+          eventIn={this.state.events}
+          />
 
       </StyledApp>
     );
