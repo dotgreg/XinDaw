@@ -12,41 +12,45 @@ export interface iMidiSignalType {
 
 export const getMidiSignalType = (midiSignal:iMidiSignal):iMidiSignalType => {
 
+    let res:iMidiSignalType = {
+        device: null,
+        event: null,
+    }
     if (midiSignal.state === getSettingsObj()[consts.settings['button.stateCode.pushDown']]) {
-        return {
+        res = {
             device: 'button',
             event: 'pushDown',
         }
     }
     else if (midiSignal.state === getSettingsObj()[consts.settings['button.stateCode.pushUp']]) {
-        return {
+        res = {
             device: 'button',
             event: 'pushUp',
         }
     }
     else if (midiSignal.state === getSettingsObj()[consts.settings['keyboard.stateCode.pushUp']]) {
-        return {
+        res = {
             device: 'keyboard',
             event: 'pushUp',
         }
     }
     else if (midiSignal.state === getSettingsObj()[consts.settings['keyboard.stateCode.pushDown']]) {
-        return {
+        res = {
             device: 'keyboard',
             event: 'pushDown',
         }
     }
     else if (midiSignal.state === getSettingsObj()[consts.settings['knob.stateCode.change']]) {
-        return {
+        res = {
             device: 'knob',
             event: 'changed',
         }
     }
-    else {
-        return {
-            device: null,
-            event: null,
-        }
-    }
+
+    console.log(`[SignalType]`,midiSignal,'->', res, getSettingsObj()[consts.settings['keyboard.stateCode.pushDown']], getSettingsObj()[consts.settings['button.stateCode.pushDown']]);
+    
+
+    return res
+    
 }
 

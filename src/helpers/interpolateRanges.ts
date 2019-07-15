@@ -6,7 +6,7 @@ export const interpolateValToNewRange = (c: {value:number, min:number, max:numbe
     let aPercentValueInNewRange = (c.maxNew - c.minNew) / 100
     let result = aPercentValueInNewRange * percentageInOldRange
 
-    console.log({result, aPercentValueInNewRange, percentageInOldRange, positionInOldRange, c});
+    // console.log({result, aPercentValueInNewRange, percentageInOldRange, positionInOldRange, c});
 
     result = result + c.minNew
     

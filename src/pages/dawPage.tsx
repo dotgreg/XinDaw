@@ -51,6 +51,10 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     
     if (persistedDb && persistedDb.sounds) {
       config.debug.dbManager && console.log('[DB] db found, loading it', persistedDb);
+
+      // reinit events to not have possible ancient events coming back from the death 
+      persistedDb.events = []
+
       this.state = persistedDb
     }
 
@@ -62,6 +66,7 @@ class DawPage extends React.Component<Props, iStateDawPage> {
       event.preventDefault() 
       this.setState({settingsOpen: !this.state.settingsOpen})
     });
+
 
     // if we have no sounds, import some defaults
     // if (this.state.sounds.length === 0)
@@ -123,24 +128,28 @@ class DawPage extends React.Component<Props, iStateDawPage> {
     let signalType = getMidiSignalType(midiSignal)
     let log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} no action triggered (${JSON.stringify(signalType)})`
 
+    // check inside settings if event exists
     if (signalType.device === 'button' || signalType.device === 'knob') {
       let res = filter(this.state.settings, config => {
         return (config.type === 'event' && config.value === midiSignal.id)
       })
   
-      // Action found!
+      // Action found for event
       if (res[0]) {
         let eventName = res[0].key
         let componentId = eventName.split('.')[0]
         let action = eventName.replace(componentId+'.','')
         let triggeredEvent:iComponentEvent = {id: componentId, action, value, state, signalType, raw}
         
-        log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered BUTTON action ${JSON.stringify(triggeredEvent)}`
+        log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered BUTTON/KNOB action ${JSON.stringify(triggeredEvent)}`
         this.setState({events: updateIdArrayItem(triggeredEvent)(this.state.events)})
       } 
     }
 
+    // if event type is keyboard, trigger that action
     else if (signalType.device === 'keyboard') {
+      console.log(2222);
+      
       let value = midiSignal.value
       let triggeredEvent:iComponentEvent = {id: consts.comps.partSoundsManager, action: "keyboard.pressed", value, state, signalType, raw}
       log = `[MIDI] midi signal ${JSON.stringify(midiSignal)} triggered KEYBOARD action ${JSON.stringify(triggeredEvent)}`

@@ -5,7 +5,7 @@ export const idKeyToNote = (note: number) => {
     // let notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
     let notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
     let res = `${notes[currentNoteId]}${currentOctave}`
-    console.log(note, res);
+    console.log(`[idKeyToNote] ${note} -> ${res}`);
     
     return res
 }

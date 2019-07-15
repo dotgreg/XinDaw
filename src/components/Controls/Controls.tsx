@@ -71,8 +71,6 @@ export default class Controls extends React.Component<Props,State> {
             let minKnobHard = getSettingsObj()[consts.settings['knob.config.minValue']] as number
             let maxKnobHard = getSettingsObj()[consts.settings['knob.config.maxValue']] as number
 
-            console.log(getSettingsObj());
-            
             let newValueKnob = interpolateValToNewRange({
                 value: this.props.eventIn.value,
                 min: minKnobHard,

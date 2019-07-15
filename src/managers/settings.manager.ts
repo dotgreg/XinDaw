@@ -13,7 +13,6 @@ export const buildSettingsObj = (stateSettingsArray: iSettingsItem[]) => {
             settings[el.key] = el.value
         }
     }
-    console.log(settings);
 }
 
 export const getSettingsObj = () => {
