@@ -38,10 +38,6 @@ export default class PartSoundsManager extends React.Component<Props,State> {
                 if (!event || !event.signalType) return 
                 let editedIndex = getEditedIndex(this.props.sounds)
                 let editedSound = this.refs[`sound-${editedIndex}`] as Sound
-                // editedSound.soundTone.type === ''
-
-                console.log(333, event);
-                
 
                 if (event.signalType.device === 'button' && event.signalType.event === 'pushDown') {
                     if (event.action === 'list.up') this.props.onTriggerSoundEdit(this.props.sounds[editedIndex - 1]) 

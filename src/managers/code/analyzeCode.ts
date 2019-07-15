@@ -53,6 +53,8 @@ export const analyzeCode = (code:string) => {
                         
                         if (!item3.elements) return
                         // for each array element
+                        console.log(item3.elements[1]);
+                        
                         let res:iControlVar = {
                             id: stringToId(getEsprimaElementValue(item3.elements[0])), 
                             name: getEsprimaElementValue(item3.elements[0]), 

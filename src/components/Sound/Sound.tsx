@@ -26,7 +26,7 @@ interface State {
     toneType: string|null
 }
 
-export default class Sound extends React.PureComponent<Props,State> {
+export default class Sound extends React.Component<Props,State> {
 
     hist:{
         sound: iSound | undefined
